@@ -11,10 +11,3 @@ const props = defineProps({
     }
 })
 </script>
-<style>
-.sidebar {
-    width: 180px;
-
-    background-color: lightseagreen
-}
-</style>
