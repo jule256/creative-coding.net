@@ -1,0 +1,99 @@
+body {
+    background-image: url("~/assets/hexagon_08.svg");
+    background-color: #333333;
+    font-size: 10px;
+    font-family: Verdana, Arial, SunSans-Regular, sans-serif;
+}
+
+.container {
+    margin: 40px auto 0px auto;
+    width: 740px;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+
+    .main {
+        position: relative;
+        width: 480px;
+        min-height: 600px;
+        background-color: #FFFFFF;
+        border: solid #336600;
+        border-width: 3px 3px 0 3px;
+        padding: 25px 20px 20px 20px;
+
+        &::before, &::after {
+            display: block;
+            width: 130px;
+            height: 18px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            content: '';
+            z-index: 1;
+            background: linear-gradient(13deg, rgba(67, 114, 67, 0) 46%, rgba(67, 114, 67, 0.8477591720281863) 83%, rgba(67, 114, 67, 1) 100%);
+            background-repeat: no-repeat;
+            background-position: 30px;
+        }
+
+        &::after {
+            z-index: 2;
+            background: repeating-linear-gradient(0deg,
+            #FFFFFF,
+            #FFFFFF 2px,
+            rgba(0, 0, 0, 0) 2px,
+            rgba(0, 0, 0, 0) 4px);
+        }
+    }
+
+    .sidebar {
+        position: relative;
+        width: 180px;
+        border: 3px solid #336600;
+        background-color: #FFFFFF;
+        padding: 25px 10px 10px 10px;
+
+        &::before,
+        &::after {
+            display: block;
+            width: 200px;
+            height: 18px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            content: '';
+            z-index: 1;
+            background: linear-gradient(13deg, rgba(67, 114, 67, 0) -40%, rgba(67, 114, 67, .848) 53%, #437243);
+            background-repeat: no-repeat;
+        }
+
+        &::after {
+            z-index: 2;
+            background: repeating-linear-gradient(0deg,
+                    #FFFFFF,
+                    #FFFFFF 2px,
+                    rgba(0, 0, 0, 0) 2px,
+                    rgba(0, 0, 0, 0) 4px);
+        }
+    }
+}
+
+a {
+    color: #000000;
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    &.multiline {
+        text-decoration: none;
+    }
+    
+    &.emphasized {
+        text-decoration: none;
+        font-weight: bold;
+    }
+}
