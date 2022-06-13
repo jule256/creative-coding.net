@@ -1,6 +1,6 @@
 body {
     background-image: url("~/assets/hexagon_08.svg");
-    background-color: #333333;
+    background-color: #333333; /* @todo ➔ make dynamic / themable */
     font-size: 10px;
     font-family: Verdana, Arial, SunSans-Regular, sans-serif;
 }
@@ -8,6 +8,7 @@ body {
 .container {
     margin: 40px auto 0px auto;
     width: 740px;
+    color: var(--font-color);
 }
 
 .content {
@@ -18,8 +19,8 @@ body {
         position: relative;
         width: 480px;
         min-height: 600px;
-        background-color: #FFFFFF;
-        border: solid #336600;
+        background-color: var(--background-color);
+        border: solid var(--border-color);
         border-width: 3px 3px 0 3px;
         padding: 25px 20px 20px 20px;
 
@@ -32,26 +33,33 @@ body {
             right: 0;
             content: '';
             z-index: 1;
-            background: linear-gradient(13deg, rgba(67, 114, 67, 0) 46%, rgba(67, 114, 67, 0.8477591720281863) 83%, rgba(67, 114, 67, 1) 100%);
+            background: linear-gradient(
+                13deg,
+                var(--transparent-color) 46%,
+                var(--gradient-color-light) 83%,
+                var(--gradient-color-dark) 100%
+            );
             background-repeat: no-repeat;
             background-position: 30px;
         }
 
         &::after {
             z-index: 2;
-            background: repeating-linear-gradient(0deg,
-            #FFFFFF,
-            #FFFFFF 2px,
-            rgba(0, 0, 0, 0) 2px,
-            rgba(0, 0, 0, 0) 4px);
+            background: repeating-linear-gradient(
+                0deg,
+                var(--background-color),
+                var(--background-color) 2px,
+                var(--transparent-color) 2px,
+                var(--transparent-color) 4px
+            );
         }
     }
 
     .sidebar {
         position: relative;
         width: 180px;
-        border: 3px solid #336600;
-        background-color: #FFFFFF;
+        border: 3px solid var(--border-color);
+        background-color: var(--background-color);
         padding: 25px 10px 10px 10px;
 
         &::before,
@@ -64,23 +72,29 @@ body {
             left: 0;
             content: '';
             z-index: 1;
-            background: linear-gradient(13deg, rgba(67, 114, 67, 0) -40%, rgba(67, 114, 67, .848) 53%, #437243);
+            background: linear-gradient(
+                13deg,
+                var(--transparent-color) -40%,
+                var(--gradient-color-light) 53%,
+                var(--gradient-color-dark) 100%
+            );
             background-repeat: no-repeat;
         }
 
         &::after {
             z-index: 2;
             background: repeating-linear-gradient(0deg,
-                    #FFFFFF,
-                    #FFFFFF 2px,
-                    rgba(0, 0, 0, 0) 2px,
-                    rgba(0, 0, 0, 0) 4px);
+                var(--background-color),
+                var(--background-color) 2px,
+                var(--transparent-color) 2px,
+                var(--transparent-color) 4px
+            );
         }
     }
 }
 
 a {
-    color: #000000;
+    color: var(--font-color);
     text-decoration: underline;
     cursor: pointer;
 
