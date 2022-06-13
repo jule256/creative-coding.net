@@ -4,7 +4,7 @@
             <div class="contact">
                 <h1>Julian Mollik</h1>
                 <p>
-                    <NuxtLink class="link3"
+                    <NuxtLink class="multiline"
                         to="https://www.google.ch/maps/search/saumackerstrasse+52+8048+Z%C3%BCrich+Switzerland/"
                         title="external link: Julian Mollik's address on Google Maps">
                         Saumackerstrasse 52<br>
@@ -46,86 +46,31 @@ onMounted(() => {
     emit('updateTitle', 'contact')
 })
 </script>
-<style>
-.content {
-    display: flex;
-    justify-content: space-between;
-}
-
-.main {
-    width: 480px;
-    min-height: 600px;
-    background-color: #FFFFFF;
-    border: solid #336600;
-    border-width: 3px 3px 0 3px;
-    padding: 25px 20px 20px 20px;
-
-    position: relative;
-}
-
-.main::before,
-.main::after {
-    display: block;
-    width: 130px;
-    height: 18px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    content: '';
-    z-index: 1;
-    background: linear-gradient(13deg, rgba(67, 114, 67, 0) 46%, rgba(67, 114, 67, 0.8477591720281863) 83%, rgba(67, 114, 67, 1) 100%);
-    background-repeat: no-repeat;
-    background-position: 30px;
-}
-
-.main::after {
-    z-index: 2;
-    background: repeating-linear-gradient(0deg,
-            #FFFFFF,
-            #FFFFFF 2px,
-            rgba(0, 0, 0, 0) 2px,
-            rgba(0, 0, 0, 0) 4px);
-}
-
+<style lang="postcss" scoped>
 .contact {
     width: 240px;
     margin: 100px auto 0px auto;
     line-height: 13px;
-}
 
+    h1 {
+        font-family: Verdana, Arial, SunSans-Regular, sans-serif;
+        font-size: 10px;
+        font-weight: bold;
+    }
 
-.contact h1 {
-    font-family: Verdana, Arial, SunSans-Regular, sans-serif;
-    font-size: 10px;
-    font-weight: bold;
-}
+    dl {
+        display: flex;
+        flex-flow: row wrap;
 
-.contact dl {
-    display: flex;
-    flex-flow: row wrap;
-}
+        dt {
+            width: 110px;
+        }
 
-.contact dt {
-    width: 110px;
-}
-
-.contact dd {
-    text-align: right;
-    flex-grow: 1;
-    margin: 0;
-}
-
-.contact .link2 {
-    color: #000000;
-    text-decoration: underline;
-}
-
-.contact .link2:hover {
-    text-decoration: none;
-}
-
-.contact .link3 {
-    color: #000000;
-    text-decoration: none;
+        dd {
+            text-align: right;
+            flex-grow: 1;
+            margin: 0;
+        }
+    }
 }
 </style>
