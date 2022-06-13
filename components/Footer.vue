@@ -27,9 +27,9 @@ const scrollToTop = () => {
     position: relative;
     width: 480px;
     height: 28px;
-    border: 3px solid #336600;
+    border: 3px solid var(--border-color);
     border-width: 0 3px 3px 3px;
-    background-color: #FFFFFF;
+    background-color: var(--background-color);
     padding: 0px 20px 0px 20px;
 
     &::before,
@@ -42,17 +42,20 @@ const scrollToTop = () => {
         left: 0;
         content: '';
         z-index: 1;
-        background: linear-gradient(193deg, rgba(67, 114, 67, 0) 46%, rgba(67, 114, 67, 0.8477591720281863) 83%, rgba(67, 114, 67, 1) 100%);
+        background: linear-gradient(193deg,
+                var(--transparent-color) 46%,
+                var(--gradient-color-light) 83%,
+                var(--gradient-color-dark) 100%);
         background-repeat: no-repeat;
     }
 
     &::after {
         z-index: 2;
         background: repeating-linear-gradient(0deg,
-                #FFFFFF,
-                #FFFFFF 2px,
-                rgba(0, 0, 0, 0) 2px,
-                rgba(0, 0, 0, 0) 4px);
+                var(--background-color),
+                var(--background-color) 2px,
+                var(--transparent-color) 2px,
+                var(--transparent-color) 4px);
     }
 
     .content {

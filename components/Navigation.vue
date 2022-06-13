@@ -42,8 +42,8 @@ const entries = ref([
     width: 520px;
     height: 30px;
 
-    background-color: #FFFFFF;
-    border: solid #336600;
+    background-color: var(--background-color);
+    border: solid var(--border-color);
     border-width: 3px 3px 0 3px;
 }
 
@@ -58,7 +58,7 @@ const entries = ref([
 .navigation ul li {
     width: 25%;
     height: 30px;
-    border-right: 3px solid #336600;
+    border-right: 3px solid var(--border-color);
 }
 
 .navigation ul li:last-of-type {
@@ -71,7 +71,7 @@ const entries = ref([
     text-align: center;
     line-height: 30px;
     text-decoration: none;
-    color: #000000;
+    color: var(--font-color);
     font-weight: bold;
     font-size: 13px;
 }
