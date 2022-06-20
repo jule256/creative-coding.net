@@ -12,5 +12,3 @@ onMounted(() => {
     emit('updateTitle', 'sitemap')
 })
 </script>
-<style>
-</style>
