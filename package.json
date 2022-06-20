@@ -10,5 +10,8 @@
     "nuxt": "3.0.0-rc.3",
     "postcss": "^8.4.14",
     "postcss-nested": "^5.0.6"
+  },
+  "dependencies": {
+    "marked": "^4.0.17"
   }
 }
