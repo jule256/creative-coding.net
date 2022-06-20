@@ -13,7 +13,7 @@ const props = defineProps({
 })
 </script>
 
-<style>
+<style lang="postcss" scoped>
 .header {
     position: relative;
     width: 514px;
@@ -38,21 +38,20 @@ const props = defineProps({
     top: 0;
     left: 0;
     content: '';
-    background-color: var(--background-color);
+    background-color: var(--background-color-content);
     z-index: -1;
 }
 
 .header::after {
     z-index: 0;
     background: repeating-linear-gradient(0deg,
-            var(--background-color),
-            var(--background-color) 2px,
+            var(--background-color-content),
+            var(--background-color-content) 2px,
             var(--transparent-color) 2px,
             var(--transparent-color) 4px);
 }
 
 .title {
-    margin: 0;
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
