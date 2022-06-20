@@ -29,7 +29,7 @@ const scrollToTop = () => {
     height: 28px;
     border: 3px solid var(--border-color);
     border-width: 0 3px 3px 3px;
-    background-color: var(--background-color);
+    background-color: var(--background-color-content);
     padding: 0px 20px 0px 20px;
 
     &::before,
@@ -52,8 +52,8 @@ const scrollToTop = () => {
     &::after {
         z-index: 2;
         background: repeating-linear-gradient(0deg,
-                var(--background-color),
-                var(--background-color) 2px,
+                var(--background-color-content),
+                var(--background-color-content) 2px,
                 var(--transparent-color) 2px,
                 var(--transparent-color) 4px);
     }
