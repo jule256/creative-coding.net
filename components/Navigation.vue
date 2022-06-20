@@ -37,32 +37,28 @@ const entries = ref([
 
 </script>
 
-<style>
+<style lang="postcss" scoped>
 .navigation {
     width: 520px;
     height: 30px;
 
-    background-color: var(--background-color);
+    background-color: var(--background-color-content);
     border: solid var(--border-color);
     border-width: 3px 3px 0 3px;
-}
 
-.navigation ul {
-    display: flex;
-    list-style-type: none;
-    /* @todo ➔ reset */
-    padding: 0;
-    margin: 0;
-}
+    ul {
+        display: flex;
 
-.navigation ul li {
-    width: 25%;
-    height: 30px;
-    border-right: 3px solid var(--border-color);
-}
+        li {
+            width: 25%;
+            height: 30px;
+            border-right: 3px solid var(--border-color);
 
-.navigation ul li:last-of-type {
-    border-right: 0;
+            &:last-of-type {
+                border-right: 0;
+            }
+        }
+    }
 }
 
 .entry {
@@ -74,9 +70,11 @@ const entries = ref([
     color: var(--font-color);
     font-weight: bold;
     font-size: 13px;
-}
 
-.entry:hover {
-    background-color: #EEEEEE;
+    transition: background-color var(--mouseover-transition-duration) ease-in;
+
+    &:hover {
+        background-color: var(--hover-color);
+    }
 }
 </style>
