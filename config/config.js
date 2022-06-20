@@ -1,0 +1,2 @@
+export const DEFAULT_NEWS_STORY_HEIGHT = 270
+export const OPEN_NEWS_STORIES_BY_DEFAULT = 1
