@@ -19,10 +19,11 @@ const themeVariables = computed(() => {
   return {
     '--font-color': themeLibrary[themeKey.value].fontColor,
     '--border-color': themeLibrary[themeKey.value].borderColor,
-    '--background-color': themeLibrary[themeKey.value].backgroundColor,
+    '--background-color-content': themeLibrary[themeKey.value].backgroundColorContent,
     '--transparent-color': themeLibrary[themeKey.value].transparentColor,
     '--gradient-color-light': themeLibrary[themeKey.value].gradientColorLight,
     '--gradient-color-dark': themeLibrary[themeKey.value].gradientColorDark,
+    '--hover-color': themeLibrary[themeKey.value].hoverColor,
   }
 })
 
