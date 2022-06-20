@@ -50,12 +50,9 @@ onMounted(() => {
 .contact {
     width: 240px;
     margin: 100px auto 0px auto;
-    line-height: 13px;
 
     h1 {
-        font-family: Verdana, Arial, SunSans-Regular, sans-serif;
-        font-size: 10px;
-        font-weight: bold;
+        margin-bottom: 10px;
     }
 
     dl {
