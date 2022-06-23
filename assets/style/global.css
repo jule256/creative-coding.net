@@ -61,6 +61,8 @@ body {
         border: 3px solid var(--border-color);
         background-color: var(--background-color-content);
         padding: 25px 10px 10px 10px;
+        height: 60vh;
+        overflow: hidden;
 
         &::before,
         &::after {
