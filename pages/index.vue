@@ -35,12 +35,12 @@
                 </div>
             </div>
             <div class="news">
-                <NewsEntry v-for="(newsEntry, index) in newsList" :data="newsEntry" @status-change="handleStatusChange"
+                <NewsEntry v-for="newsEntry in newsList" :data="newsEntry" @status-change="handleStatusChange"
                     @update-height="handleHeightUpdate" />
             </div>
         </main>
         <Sidebar class="sidebar" name="home">
-            <SidebarEntry v-for="(newsEntry, index) in newsList" :headline="newsEntry.headline" :id="newsEntry.id"
+            <SidebarEntry v-for="newsEntry in newsList" :headline="newsEntry.headline" :id="newsEntry.id"
                 @go-to="handleGoTo" @mouse-enter="enableHighlight" @mouse-leave="disableHighlight" />
         </Sidebar>
     </div>
@@ -51,6 +51,14 @@ import { news as newsListRaw } from '../api/news.js'
 import { DEFAULT_NEWS_STORY_HEIGHT, OPEN_NEWS_STORIES_BY_DEFAULT } from '../config/config.js'
 
 const newsList = ref([])
+
+const {
+    enableHighlight,
+    disableHighlight,
+    handleStatusChange,
+    handleHeightUpdate,
+    handleGoTo
+} = useEntryList(newsList, 'news')
 
 const emit = defineEmits(['updateTitle'])
 
@@ -72,53 +80,6 @@ const age = computed(() => {
     let age = today.getFullYear() - birthDate.getFullYear();
     return (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) ? age - 1 : age;
 })
-
-const isElementInViewport = (el, expandedHeight) => {
-    const lowerEnd = el.offsetTop + el.offsetHeight + expandedHeight
-    return lowerEnd < window.scrollY + window.innerHeight && lowerEnd > window.scrollY
-}
-
-const handleGoTo = id => {
-    const target = document.querySelector(`#news-entry-${id}`);
-    const index = newsList.value.findIndex(newsListEntry => newsListEntry.id === id)
-
-    if (isElementInViewport(target, newsList.value[index].height)) {
-        target.scrollIntoView({ behavior: "smooth" })
-        newsList.value[index].isExpanded = true
-    } else {
-        if (newsList.value[index].isExpanded) {
-            target.scrollIntoView({ behavior: "smooth" })
-        } else {
-            let scrollTimeout;
-            const scrollHandler = () => {
-                clearTimeout(scrollTimeout)
-                scrollTimeout = setTimeout(() => {
-                    console.log('Scroll ended')
-                    removeEventListener('scroll', scrollHandler)
-                    newsList.value[index].isExpanded = true
-                }, 100)
-            }
-            addEventListener('scroll', scrollHandler)
-            target.scrollIntoView({ behavior: "smooth" })
-        }
-    }
-}
-const enableHighlight = id => {
-    newsList.value[newsList.value.findIndex(newsListEntry => newsListEntry.id === id)].isHighlighted = true
-}
-const disableHighlight = id => {
-    newsList.value[newsList.value.findIndex(newsListEntry => newsListEntry.id === id)].isHighlighted = false
-}
-
-// @todo ➔ make "expand" & "collaps" re-usable constants
-const handleStatusChange = data => {
-    newsList.value[newsList.value.findIndex(newsListEntry => newsListEntry.id === data.id)].isExpanded = data.type === 'expand'
-}
-
-const handleHeightUpdate = data => {
-    newsList.value[newsList.value.findIndex(newsListEntry => newsListEntry.id === data.id)].height = parseInt(data.height, 10)
-}
-
 </script>
 <style lang="postcss" scoped>
 .intro {
