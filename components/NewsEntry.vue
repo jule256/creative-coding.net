@@ -15,7 +15,6 @@
                 <p class="footer">
                     {{ data.date }}
                 </p>
-                <h5>test</h5>
             </div>
         </transition>
     </article>
@@ -32,33 +31,14 @@ const props = defineProps({
     }
 })
 
-const isHover = ref(false);
-// estimate a max-height for the first toggle (should be higher, but now lower, than the measured height)
-const contentMaxHeight = ref(`${props.data.height} px`)
-
-const toggleTitle = computed(() => {
-    return props.data.isExpanded ? 'hide this entry' : 'show this entry'
-})
-
-const isHighlighted = computed(() => {
-    return isHover.value || props.data.isHighlighted
-})
-
-const handleUpdateHeight = el => {
-    const height = getComputedStyle(el).height
-    contentMaxHeight.value = height
-    if (height !== `${props.data.height} px`) {
-        // only emit update if the height has actually changed
-        emit('update-height', { id: props.data.id, height })
-    }
-}
-
-const handleToggle = () => {
-    emit(
-        'status-change',
-        { id: props.data.id, type: props.data.isExpanded ? 'collapse' : 'expand' }
-    )
-}
+const {
+    contentMaxHeight,
+    handleToggle,
+    handleUpdateHeight,
+    isHover,
+    isHighlighted,
+    toggleTitle,
+} = useEntry(props.data, emit)
 </script>
 
 <style lang="postcss" scoped>
