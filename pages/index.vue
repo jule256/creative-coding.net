@@ -4,8 +4,8 @@
             <div class="intro">
                 <div class="text">
                     <p>
-                        Welcome to my website. My Name is Julian Mollik, I am {{ age }} years old and I live in Zürich,
-                        Switzerland.
+                        Welcome to my website. My Name is Julian Mollik, I am {{ age }} years old and I live in
+                        Zürich, Switzerland.
                     </p>
                     <p>
                         In July 2006 I graduated from the University of Applied Sciences in Hagenberg, Upper Austria, in
@@ -31,12 +31,23 @@
                     </p>
                 </div>
                 <div class="picture">
-                    <img class="framed" src="/picture/julian.mollik.jpg" data-width="90" data-height="133">
+                    <img class="framed" src="/picture/julian.mollik.jpg">
                 </div>
             </div>
             <div class="news">
-                <NewsEntry v-for="newsEntry in newsList" :data="newsEntry" @status-change="handleStatusChange"
+                <div v-if="queryStatus.isLoading" style="text-align: center; padding: 30px;">
+                    ... is loading ... @todo
+                </div>
+                <NewsEntry v-else v-for="newsEntry in newsList" :data="newsEntry" @status-change="handleStatusChange"
                     @update-height="handleHeightUpdate" />
+            </div>
+            <div
+                style="border: 1px dashed deeppink; padding: 4px; margin: 4px; font-family: monospace; white-space: pre-wrap">
+                newsList.length ➔ {{ newsList.length }}<br />
+                queryStatus.isLoading ➔ {{ queryStatus.isLoading }}<br />
+                <!-- hateoasQuery.isLoading ➔ {{ hateoasQuery.isLoading }}<br /> -->
+                isHateoasLoading ➔ {{ isHateoasLoading }}<br />
+                <!-- hateoasQuery.data.links ➔ {{ hateoasQuery.data && hateoasQuery.data.links }}<br /> -->
             </div>
         </main>
         <Sidebar class="sidebar" name="home">
@@ -47,8 +58,10 @@
 </template>
 
 <script setup>
-import { news as newsListRaw } from '../api/news.js'
 import { DEFAULT_NEWS_STORY_HEIGHT, OPEN_NEWS_STORIES_BY_DEFAULT } from '../config/config.js'
+import { useQuery } from 'vue-query'
+import { fetchData } from '../helpers/network'
+const emit = defineEmits(['updateTitle']);
 
 const newsList = ref([])
 
@@ -60,17 +73,32 @@ const {
     handleGoTo
 } = useEntryList(newsList, 'news')
 
-const emit = defineEmits(['updateTitle'])
+const {
+    isHateoasLoading,
+    isHateoasError,
+    hateoasError,
+    getUrl,
+} = useHateoas()
 
-onMounted(() => {
-    emit('updateTitle', 'home')
+const newsQuery = reactive(useQuery(
+    ['news'],
+    () => fetchData(getUrl('news')),
+    { staleTime: 10000000 }
+))
 
-    newsList.value = newsListRaw.reverse().map((newsListEntry, index) => {
-        newsListEntry.isHighlighted = false
-        newsListEntry.isExpanded = index < OPEN_NEWS_STORIES_BY_DEFAULT
-        newsListEntry.height = DEFAULT_NEWS_STORY_HEIGHT
-        return newsListEntry
-    })
+const queryStatus = reactive({
+    isLoading: computed(
+        () => newsQuery.isLoading || isHateoasLoading.value
+    ),
+    isError: computed(
+        () => newsQuery.isError || isHateoasError.value
+    ),
+    error: computed(
+        () => queryStatus.isError ? (newsQuery.error || hateoasError.value) : ''
+    ),
+    newsList: computed(
+        () => newsQuery && newsQuery.data
+    ),
 })
 
 const age = computed(() => {
@@ -80,6 +108,23 @@ const age = computed(() => {
     let age = today.getFullYear() - birthDate.getFullYear();
     return (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) ? age - 1 : age;
 })
+
+watch(queryStatus, newValue => {
+    if (toRaw(newValue).newsList.value?.data) {
+        const newsListRaw = toRaw(newValue).newsList.value.data
+        newsList.value = toRaw(newsListRaw).reverse().map((newsListEntry, index) => {
+            newsListEntry.isHighlighted = false
+            newsListEntry.isExpanded = index < OPEN_NEWS_STORIES_BY_DEFAULT
+            newsListEntry.height = DEFAULT_NEWS_STORY_HEIGHT
+            return newsListEntry
+        })
+    }
+})
+
+onMounted(() => {
+    emit('updateTitle', 'home')
+})
+
 </script>
 <style lang="postcss" scoped>
 .intro {
