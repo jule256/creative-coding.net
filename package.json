@@ -12,6 +12,7 @@
     "postcss-nested": "^5.0.6"
   },
   "dependencies": {
-    "marked": "^4.0.17"
+    "marked": "^4.0.17",
+    "vue-query": "^1.25.0"
   }
 }
