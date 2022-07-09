@@ -35,6 +35,16 @@
                     </dd>
                 </dl>
             </div>
+            <div class="techstack">
+                <h1>made with <span class="love">♥️</span> and</h1>
+                <ul>
+                    <li v-for="(tech, index) in techSorted">
+                        <NuxtLink :href="tech.url" :title="`external link: ${tech.title}`">{{ tech.text }}</NuxtLink>
+                        <template v-if="(index === techSorted.length - 2)">&nbsp;&&nbsp;</template>
+                        <template v-else-if="(index < techSorted.length - 1)">,&nbsp;</template>
+                    </li>
+                </ul>
+            </div>
         </main>
     </div>
 </template>
@@ -42,19 +52,70 @@
 <script setup>
 // @todo ➔ add badges (Nuxt, CSS, Javascript, HTML, ...)
 const emit = defineEmits(['updateTitle']);
+
+const techRaw = [
+    {
+        url: 'https://postcss.org/',
+        title: 'A tool for transforming CSS with JavaScript',
+        text: 'PostCSS'
+    },
+    {
+        url: 'https://vuejs.org/',
+        title: 'The Progressive JavaScript Framework',
+        text: 'Vue.js'
+    },
+    {
+        url: 'https://code.visualstudio.com/',
+        title: 'Code editing. Redefined.',
+        text: 'Visual Studio Code'
+    },
+    {
+        url: 'https://developer.chrome.com/docs/devtools/',
+        title: 'Chrome DevTools is a set of web developer tools built directly into the Google Chrome browser.',
+        text: 'Chrome DevTools'
+    },
+    {
+        url: 'https://de.wikipedia.org/wiki/Cascading_Style_Sheets',
+        title: 'Cascading Style Sheets',
+        text: 'CSS'
+    },
+    {
+        url: 'https://nuxtjs.org/',
+        title: 'The Intuitive Vue Framework',
+        text: 'NuxtJS'
+    },
+    {
+        url: 'https://github.com/',
+        title: 'Where the world builds software',
+        text: 'GitHub'
+    },
+    {
+        url: 'https://en.wikipedia.org/wiki/HATEOAS',
+        title: 'Hypermedia as the Engine of Application State',
+        text: 'HATEOAS'
+    },
+]
+
+const techSorted = computed(() => {
+    return techRaw.sort((a, b) => (a.text > b.text) ? 1 : ((b.text > a.text) ? -1 : 0))
+})
+
 onMounted(() => {
     emit('updateTitle', 'contact')
 })
 </script>
 <style lang="postcss" scoped>
-.contact {
+.contact,
+.techstack {
     width: 240px;
     margin: 100px auto 0px auto;
 
     h1 {
         margin-bottom: 10px;
     }
+}
 
+.contact {
     dl {
         display: flex;
         flex-flow: row wrap;
@@ -68,6 +129,21 @@ onMounted(() => {
             flex-grow: 1;
             margin: 0;
         }
+    }
+}
+
+.techstack {
+    margin-top: 50px;
+
+    .love {
+        color: rgb(147, 24, 24);
+        font-size: 200%;
+        vertical-align: sub;
+    }
+
+    ul {
+        display: flex;
+        flex-wrap: wrap;
     }
 }
 </style>
