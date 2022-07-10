@@ -13,7 +13,7 @@
             <div v-if="data.isExpanded" class="story">
                 <p v-for="paragraph in data.content" v-html="parseInline(paragraph)" />
                 <p class="footer">
-                    {{ data.date }} // {{ formatDate(data.date2) }}
+                    {{ formatDate(data.date) }}
                 </p>
             </div>
         </transition>
