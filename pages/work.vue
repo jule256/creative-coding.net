@@ -68,7 +68,6 @@ watch(
     }
 )
 
-
 onMounted(() => {
     emit('updateTitle', 'work')
     workList.value = enrichEntryList(queryStatus, 'work')
