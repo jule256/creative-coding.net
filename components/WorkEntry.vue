@@ -37,7 +37,7 @@
                     </li>
                 </ul>
                 <p class="footer">
-                    updated {{ data.date }}
+                    updated {{ formatDate(data.date) }}
                 </p>
             </div>
         </transition>
@@ -45,6 +45,7 @@
 </template>
 <script setup>
 import { parseInline } from 'marked'
+import { formatDate } from '../helpers/helpers.js'
 
 const emit = defineEmits(['status-change', 'update-height'])
 

@@ -13,7 +13,7 @@
             <div v-if="data.isExpanded" class="story">
                 <p v-for="paragraph in data.content" v-html="parseInline(paragraph)" />
                 <p class="footer">
-                    {{ data.date }}
+                    {{ data.date }} // {{ formatDate(data.date2) }}
                 </p>
             </div>
         </transition>
@@ -21,6 +21,7 @@
 </template>
 <script setup>
 import { parseInline } from 'marked'
+import { formatDate } from '../helpers/helpers.js'
 
 const emit = defineEmits(['status-change', 'update-height'])
 
