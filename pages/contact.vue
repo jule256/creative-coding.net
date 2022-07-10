@@ -94,6 +94,21 @@ const techRaw = [
         title: 'Hypermedia as the Engine of Application State',
         text: 'HATEOAS'
     },
+    {
+        url: 'https://github.com/DamianOsipiuk/vue-query',
+        title: 'Hooks for fetching, caching and updating asynchronous data in Vue',
+        text: 'vue-query'
+    },
+    {
+        url: 'https://en.wikipedia.org/wiki/HTML',
+        title: 'HyperText Markup Language',
+        text: 'HTML'
+    },
+    {
+        url: 'https://en.wikipedia.org/wiki/Scalable_Vector_Graphics',
+        title: 'Scalable Vector Graphics',
+        text: 'SVG'
+    },
 ]
 
 const techSorted = computed(() => {
@@ -134,6 +149,10 @@ onMounted(() => {
 
 .techstack {
     margin-top: 50px;
+
+    h1 {
+        margin-bottom: 7px;
+    }
 
     .love {
         color: rgb(147, 24, 24);
