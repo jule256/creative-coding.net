@@ -38,21 +38,21 @@
                 <div v-if="queryStatus.isLoading" style="text-align: center; padding: 30px;">
                     ... is loading ... @todo
                 </div>
-                <NewsEntry v-else v-for="newsEntry in newsList" :data="newsEntry" @status-change="handleStatusChange"
-                    @update-height="handleHeightUpdate" />
+                <NewsEntry v-else v-for="newsEntry in newsList.slice().reverse()" :data="newsEntry"
+                    @status-change="handleStatusChange" @update-height="handleHeightUpdate" />
             </div>
             <div
                 style="border: 1px dashed deeppink; padding: 4px; margin: 4px; font-family: monospace; white-space: pre-wrap">
                 newsList.length ➔ {{ newsList.length }}<br />
-                queryStatus.isLoading ➔ {{ queryStatus.isLoading }}<br />
-                <!-- hateoasQuery.isLoading ➔ {{ hateoasQuery.isLoading }}<br /> -->
-                isHateoasLoading ➔ {{ isHateoasLoading }}<br />
-                <!-- hateoasQuery.data.links ➔ {{ hateoasQuery.data && hateoasQuery.data.links }}<br /> -->
+                <!-- newsList ➔ {{ newsList }}<br /> -->
+                <!-- queryStatus.isLoading ➔ {{ queryStatus.isLoading }}<br /> -->
+                <!-- isHateoasLoading ➔ {{ isHateoasLoading }}<br /> -->
+                <!-- queryStatus.newsList ➔ {{ queryStatus.newsList }}<br /> -->
             </div>
         </main>
         <Sidebar class="sidebar" name="home">
-            <SidebarEntry v-for="newsEntry in newsList" :headline="newsEntry.headline" :id="newsEntry.id"
-                @go-to="handleGoTo" @mouse-enter="enableHighlight" @mouse-leave="disableHighlight" />
+            <SidebarEntry v-for="newsEntry in newsList.slice().reverse()" :headline="newsEntry.headline"
+                :id="newsEntry.id" @go-to="handleGoTo" @mouse-enter="enableHighlight" @mouse-leave="disableHighlight" />
         </Sidebar>
     </div>
 </template>
@@ -61,7 +61,7 @@
 import { DEFAULT_NEWS_STORY_HEIGHT, OPEN_NEWS_STORIES_BY_DEFAULT } from '../config/config.js'
 import { useQuery } from 'vue-query'
 import { fetchData } from '../helpers/network'
-const emit = defineEmits(['updateTitle']);
+const emit = defineEmits(['updateTitle'])
 
 const newsList = ref([])
 
@@ -102,27 +102,41 @@ const queryStatus = reactive({
 })
 
 const age = computed(() => {
-    const today = new Date();
-    const birthDate = new Date('1981/02/13');
-    const m = today.getMonth() - birthDate.getMonth();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    return (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) ? age - 1 : age;
+    const today = new Date()
+    const birthDate = new Date('1981/02/13')
+    const m = today.getMonth() - birthDate.getMonth()
+    let age = today.getFullYear() - birthDate.getFullYear()
+    return (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) ? age - 1 : age
 })
 
-watch(queryStatus, newValue => {
-    if (toRaw(newValue).newsList.value?.data) {
-        const newsListRaw = toRaw(newValue).newsList.value.data
-        newsList.value = toRaw(newsListRaw).reverse().map((newsListEntry, index) => {
+const enrichNewsList = queryStatus => {
+    if (toRaw(queryStatus).newsList.value?.data) {
+        const newsListRaw = toRaw(queryStatus).newsList.value.data
+        return toRaw(newsListRaw).map((newsListEntry, index) => {
             newsListEntry.isHighlighted = false
-            newsListEntry.isExpanded = index < OPEN_NEWS_STORIES_BY_DEFAULT
+            newsListEntry.isExpanded = false // @todo ➔ index < OPEN_NEWS_STORIES_BY_DEFAULT
             newsListEntry.height = DEFAULT_NEWS_STORY_HEIGHT
             return newsListEntry
         })
+    } else {
+        return []
     }
-})
+}
+
+watch(
+    () => queryStatus.newsList?.data.length || 0,
+    (newLength, oldLength) => {
+        if (newLength !== oldLength) {
+            // only enrich newslist with the status-values if the data was freshly fetched
+            newsList.value = enrichNewsList(queryStatus)
+        }
+    }
+)
 
 onMounted(() => {
     emit('updateTitle', 'home')
+
+    newsList.value = enrichNewsList(queryStatus)
 })
 
 </script>
