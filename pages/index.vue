@@ -104,7 +104,7 @@ const age = computed(() => {
 const enrichNewsList = queryStatus => {
     if (queryStatus.newsList?.data) {
         return toRaw(queryStatus.newsList.data)
-            .sort((a, b) => new Date(b.date2) - new Date(a.date2))
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
             .map((newsListEntry, index) => {
                 newsListEntry.isHighlighted = false
                 newsListEntry.isExpanded = index < OPEN_NEWS_STORIES_BY_DEFAULT
