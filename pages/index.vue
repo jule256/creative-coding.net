@@ -50,9 +50,9 @@
 </template>
 
 <script setup>
-import { DEFAULT_NEWS_STORY_HEIGHT, OPEN_NEWS_STORIES_BY_DEFAULT } from '../config/config.js'
 import { useQuery } from 'vue-query'
 import { fetchData } from '../helpers/network'
+import { enrichEntryList } from '../helpers/helpers'
 const emit = defineEmits(['updateTitle'])
 
 const newsList = ref([])
@@ -88,7 +88,7 @@ const queryStatus = reactive({
     error: computed(
         () => queryStatus.isError ? (newsQuery.error || hateoasError.value) : ''
     ),
-    newsList: computed(
+    entryList: computed(
         () => newsQuery && newsQuery.data
     ),
 })
@@ -101,34 +101,19 @@ const age = computed(() => {
     return (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) ? age - 1 : age
 })
 
-const enrichNewsList = queryStatus => {
-    if (queryStatus.newsList?.data) {
-        return toRaw(queryStatus.newsList.data)
-            .sort((a, b) => new Date(b.date) - new Date(a.date))
-            .map((newsListEntry, index) => {
-                newsListEntry.isHighlighted = false
-                newsListEntry.isExpanded = index < OPEN_NEWS_STORIES_BY_DEFAULT
-                newsListEntry.height = DEFAULT_NEWS_STORY_HEIGHT
-                return newsListEntry
-            })
-    } else {
-        return []
-    }
-}
-
 watch(
-    () => queryStatus.newsList?.data.length || 0,
+    () => queryStatus.entryList?.data.length || 0,
     (newLength, oldLength) => {
         if (newLength !== oldLength) {
-            // only enrich newslist with the status-values if the data was freshly fetched
-            newsList.value = enrichNewsList(queryStatus)
+            // only enrich news-list with the status-values if the data was freshly fetched
+            newsList.value = enrichEntryList(queryStatus, 'news')
         }
     }
 )
 
 onMounted(() => {
     emit('updateTitle', 'home')
-    newsList.value = enrichNewsList(queryStatus)
+    newsList.value = enrichEntryList(queryStatus, 'news')
 })
 
 </script>

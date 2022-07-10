@@ -15,10 +15,9 @@
 </template>
 
 <script setup>
-import { work as workListRaw } from '../api/work.js'
-import { DEFAULT_WORK_STORY_HEIGHT, OPEN_WORK_STORIES_BY_DEFAULT } from '../config/config.js'
 import { useQuery } from 'vue-query'
 import { fetchData } from '../helpers/network'
+import { enrichEntryList } from '../helpers/helpers'
 const emit = defineEmits(['updateTitle'])
 
 const workList = ref([])
@@ -54,32 +53,17 @@ const queryStatus = reactive({
     error: computed(
         () => queryStatus.isError ? (workQuery.error || hateoasError.value) : ''
     ),
-    workList: computed(
+    entryList: computed(
         () => workQuery && workQuery.data
     ),
 })
 
-const enrichWorkList = queryStatus => {
-    if (queryStatus.workList?.data) {
-        return toRaw(queryStatus.workList.data)
-            .sort((a, b) => new Date(b.date) - new Date(a.date))
-            .map((workListEntry, index) => {
-                workListEntry.isHighlighted = false
-                workListEntry.isExpanded = index < OPEN_WORK_STORIES_BY_DEFAULT
-                workListEntry.height = DEFAULT_WORK_STORY_HEIGHT
-                return workListEntry
-            })
-    } else {
-        return []
-    }
-}
-
 watch(
-    () => queryStatus.workList?.data.length || 0,
+    () => queryStatus.entryList?.data.length || 0,
     (newLength, oldLength) => {
         if (newLength !== oldLength) {
-            // only enrich newslist with the status-values if the data was freshly fetched
-            workList.value = enrichWorkList(queryStatus)
+            // only enrich work-list with the status-values if the data was freshly fetched
+            workList.value = enrichEntryList(queryStatus, 'work')
         }
     }
 )
@@ -87,8 +71,7 @@ watch(
 
 onMounted(() => {
     emit('updateTitle', 'work')
-
-    workList.value = enrichWorkList(queryStatus)
+    workList.value = enrichEntryList(queryStatus, 'work')
 })
 </script>
 <style lang="postcss" scoped>
