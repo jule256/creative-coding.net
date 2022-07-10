@@ -42,7 +42,7 @@
                     @update-height="handleHeightUpdate" />
             </div>
         </main>
-        <Sidebar :is-loading="queryStatus.isLoading" class="sidebar" name="home">
+        <Sidebar :is-loading="queryStatus.isLoading" class="sidebar">
             <SidebarEntry v-for="newsEntry in newsList" :headline="newsEntry.headline" :id="newsEntry.id"
                 @go-to="handleGoTo" @mouse-enter="enableHighlight" @mouse-leave="disableHighlight" />
         </Sidebar>
@@ -104,13 +104,7 @@ const age = computed(() => {
 const enrichNewsList = queryStatus => {
     if (queryStatus.newsList?.data) {
         return toRaw(queryStatus.newsList.data)
-            .sort((a, b) => {
-                const partsA = a.date.split('/')
-                const partsB = b.date.split('/')
-                const dateA = new Date(Number(partsA[2]), Number(partsA[1]) - 1, Number(partsA[0]))
-                const dateB = new Date(Number(partsB[2]), Number(partsB[1]) - 1, Number(partsB[0]))
-                return dateB - dateA
-            })
+            .sort((a, b) => new Date(b.date2) - new Date(a.date2))
             .map((newsListEntry, index) => {
                 newsListEntry.isHighlighted = false
                 newsListEntry.isExpanded = index < OPEN_NEWS_STORIES_BY_DEFAULT
