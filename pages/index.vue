@@ -38,21 +38,13 @@
                 <div v-if="queryStatus.isLoading" style="text-align: center; padding: 30px;">
                     ... is loading ... @todo
                 </div>
-                <NewsEntry v-else v-for="newsEntry in newsList.slice().reverse()" :data="newsEntry"
-                    @status-change="handleStatusChange" @update-height="handleHeightUpdate" />
-            </div>
-            <div
-                style="border: 1px dashed deeppink; padding: 4px; margin: 4px; font-family: monospace; white-space: pre-wrap">
-                newsList.length ➔ {{ newsList.length }}<br />
-                <!-- newsList ➔ {{ newsList }}<br /> -->
-                <!-- queryStatus.isLoading ➔ {{ queryStatus.isLoading }}<br /> -->
-                <!-- isHateoasLoading ➔ {{ isHateoasLoading }}<br /> -->
-                <!-- queryStatus.newsList ➔ {{ queryStatus.newsList }}<br /> -->
+                <NewsEntry v-else v-for="newsEntry in newsList" :data="newsEntry" @status-change="handleStatusChange"
+                    @update-height="handleHeightUpdate" />
             </div>
         </main>
-        <Sidebar class="sidebar" name="home">
-            <SidebarEntry v-for="newsEntry in newsList.slice().reverse()" :headline="newsEntry.headline"
-                :id="newsEntry.id" @go-to="handleGoTo" @mouse-enter="enableHighlight" @mouse-leave="disableHighlight" />
+        <Sidebar :is-loading="queryStatus.isLoading" class="sidebar" name="home">
+            <SidebarEntry v-for="newsEntry in newsList" :headline="newsEntry.headline" :id="newsEntry.id"
+                @go-to="handleGoTo" @mouse-enter="enableHighlight" @mouse-leave="disableHighlight" />
         </Sidebar>
     </div>
 </template>
@@ -110,14 +102,21 @@ const age = computed(() => {
 })
 
 const enrichNewsList = queryStatus => {
-    if (toRaw(queryStatus).newsList.value?.data) {
-        const newsListRaw = toRaw(queryStatus).newsList.value.data
-        return toRaw(newsListRaw).map((newsListEntry, index) => {
-            newsListEntry.isHighlighted = false
-            newsListEntry.isExpanded = false // @todo ➔ index < OPEN_NEWS_STORIES_BY_DEFAULT
-            newsListEntry.height = DEFAULT_NEWS_STORY_HEIGHT
-            return newsListEntry
-        })
+    if (queryStatus.newsList?.data) {
+        return toRaw(queryStatus.newsList.data)
+            .sort((a, b) => {
+                const partsA = a.date.split('/')
+                const partsB = b.date.split('/')
+                const dateA = new Date(Number(partsA[2]), Number(partsA[1]) - 1, Number(partsA[0]))
+                const dateB = new Date(Number(partsB[2]), Number(partsB[1]) - 1, Number(partsB[0]))
+                return dateB - dateA
+            })
+            .map((newsListEntry, index) => {
+                newsListEntry.isHighlighted = false
+                newsListEntry.isExpanded = index < OPEN_NEWS_STORIES_BY_DEFAULT
+                newsListEntry.height = DEFAULT_NEWS_STORY_HEIGHT
+                return newsListEntry
+            })
     } else {
         return []
     }
@@ -135,7 +134,6 @@ watch(
 
 onMounted(() => {
     emit('updateTitle', 'home')
-
     newsList.value = enrichNewsList(queryStatus)
 })
 
