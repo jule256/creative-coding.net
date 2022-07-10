@@ -124,13 +124,13 @@ onMounted(() => {
 .techstack {
     width: 240px;
     margin: 100px auto 0px auto;
-
-    h1 {
-        margin-bottom: 10px;
-    }
 }
 
 .contact {
+    h1 {
+        margin-bottom: 10px;
+    }
+
     dl {
         display: flex;
         flex-flow: row wrap;
@@ -155,6 +155,7 @@ onMounted(() => {
     }
 
     .love {
+        /* @todo ➔ move color to theme-variables */
         color: rgb(147, 24, 24);
         font-size: 200%;
         vertical-align: sub;
