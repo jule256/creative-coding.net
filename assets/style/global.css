@@ -1,5 +1,5 @@
 body {
-    background-image: url("~/assets/hexagon_08.svg");
+    background-image: url("~/assets/background_hexagon.svg");
     background-color: #333333; /* @todo ➔ make dynamic / themable */
     font-size: 10px;
     font-family: Verdana, Arial, SunSans-Regular, sans-serif;
