@@ -109,6 +109,11 @@ const techRaw = [
         title: 'Scalable Vector Graphics',
         text: 'SVG'
     },
+    {
+        url: 'https://boxy-svg.com/',
+        title: 'Scalable Vector Graphics Editor',
+        text: 'BOXY SVG Editor'
+    },
 ]
 
 const techSorted = computed(() => {
