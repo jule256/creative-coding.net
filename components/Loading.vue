@@ -1,40 +1,71 @@
 <template>
     <div class="wrapper">
-        <!--                                              -->
-        <!--          __    __    __    __    __          -->
-        <!--       __/a0\__/a1\__/a2\__/a3\__/a4\__       -->
-        <!--      /b0\__/b1\__/b2\__/b3\__/b4\__/b5\      -->
-        <!--      \__/c0\__/c1\__/c2\__/c3\__/c4\__/      -->
-        <!--      /d0\__/d1\__/d2\__/d3\__/d4\__/d5\      -->
-        <!--      \__/e0\__/e1\__/e2\__/e3\__/e4\__/      -->
-        <!--      /f0\__/f1\__/f2\__/f3\__/f4\__/f5\      -->
-        <!--      \__/g0\__/g1\__/g2\__/g3\__/g4\__/      -->
-        <!--      /h0\__/h1\__/h2\__/h3\__/h4\__/h5\      -->
-        <!--      \__/i0\__/i1\__/i2\__/i3\__/i4\__/      -->
-        <!--         \__/  \__/  \__/  \__/  \__/         -->
-        <!--                                              -->
+        <!--                                                    -->
+        <!--          __    __    __    __    __    __          -->
+        <!--       __/a0\__/a1\__/a2\__/a3\__/a4\__/a5\__       -->
+        <!--      /b0\__/b1\__/b2\__/b3\__/b4\__/b5\__/b6\      -->
+        <!--      \__/c0\__/c1\__/c2\__/c3\__/c4\__/c5\__/      -->
+        <!--      /d0\__/d1\__/d2\__/d3\__/d4\__/d5\__/d6\      -->
+        <!--      \__/e0\__/e1\__/e2\__/e3\__/e4\__/e5\__/      -->
+        <!--      /f0\__/f1\__/f2\__/f3\__/f4\__/f5\__/f6\      -->
+        <!--      \__/g0\__/g1\__/g2\__/g3\__/g4\__/g6\__/      -->
+        <!--      /h0\__/h1\__/h2\__/h3\__/h4\__/h5\__/h6\      -->
+        <!--      \__/i0\__/i1\__/i2\__/i3\__/i4\__/i5\__/      -->
+        <!--         \__/  \__/  \__/  \__/  \__/  \__/         -->
+        <!--                                                    -->
         <div v-for="(row, letter) in isActive">
             <template v-for="(column, index) in isActive[letter]">
-                <LoadingHexagon v-if="!column.hidden" :class="`${letter}${index}`"
-                    :is-active="getStatus(`${letter}${index}`)" />
+                <LoadingHexagon v-if="!column.hidden" :class="`${letter}${index}`" :is-active="getStatus(letter, index)"
+                    :is-text="loadingHexagons.includes(`${letter}${index}`)" />
+                <div v-if="`${LOADING_ROW}0` == `${letter}${index}`" class="loading" :class="`${letter}${index}`">
+                    <div v-for="letter in loadingTextArray">{{ letter }}</div>
+                </div>
             </template>
         </div>
     </div>
 </template>
 
 <script setup>
-const getStatus = position => {
-    const row = position[0]
-    const col = position[1]
-    if (!isActive.value[row][col].hidden) {
-        return isActive.value[row][col].active
+const LOADING_ROW = 'd' // the row where the "loadingText" will appear
+const UPDATE_FREQUENCY = 500 // frequency between hexagon updates
+const UPDATES_PER_INTERVAL = 4 // number of hexagon updates per UPDATE_FREQUENCY milliseconds
+
+const props = defineProps({
+    loadingText: {
+        type: String,
+        default: 'loading',
+    },
+})
+
+const truncateLoadingText = (loadingText, isActive) => {
+    if (loadingText.length > isActive[LOADING_ROW].length) {
+        const truncatedLoadingText = loadingText.substr(0, isActive[LOADING_ROW].length)
+        console.warn(`Loading.vue truncated loadingText from '${loadingText}' to '${truncatedLoadingText}'`)
+        return truncatedLoadingText
     }
+    return loadingText
 }
 
+const loadingTextArray = computed(() => {
+    const maxLength = isActive.value[LOADING_ROW].length
+    const loadingText = truncateLoadingText(props.loadingText, isActive.value)
+    const prefix = Math.floor((maxLength - loadingText.length) / 2)
+    const suffix = Math.ceil((maxLength - loadingText.length) / 2)
+    return [...`${' '.repeat(prefix)}${loadingText}${' '.repeat(suffix)}`]
+})
+
+const loadingHexagons = computed(() => {
+    const loadingTextLength = truncateLoadingText(props.loadingText, isActive.value).length
+    const prefix = Math.floor((isActive.value[LOADING_ROW].length - loadingTextLength) / 2)
+    const suffix = Math.ceil((isActive.value[LOADING_ROW].length - loadingTextLength) / 2)
+    return Array.from({ length: isActive.value[LOADING_ROW].length }, (_, index) => `${LOADING_ROW}${index}`)
+        .filter((_, index, array) => index >= prefix && index < array.length - suffix)
+})
+
+const getStatus = (row, col) => isActive.value[row][col].hidden ? false : isActive.value[row][col].active
+
 const toggleStatus = (row, col) => {
-    if (!isActive.value[row][col].hidden) {
-        isActive.value[row][col].active = !isActive.value[row][col].active
-    }
+    isActive.value[row][col].active = isActive.value[row][col].hidden ? false : !isActive.value[row][col].active
 }
 
 const isActive = ref({
@@ -42,11 +73,13 @@ const isActive = ref({
         { active: false, hidden: true },
         { active: false, hidden: false },
         { active: false, hidden: false },
+        { active: false, hidden: false },
         { active: false, hidden: true },
         { active: false, hidden: false },
     ],
     b: [
         { active: false, hidden: true },
+        { active: false, hidden: false },
         { active: false, hidden: false },
         { active: false, hidden: false },
         { active: false, hidden: false },
@@ -59,6 +92,7 @@ const isActive = ref({
         { active: false, hidden: false },
         { active: false, hidden: false },
         { active: false, hidden: false },
+        { active: false, hidden: false },
     ],
     d: [
         { active: false, hidden: false },
@@ -66,9 +100,11 @@ const isActive = ref({
         { active: false, hidden: false },
         { active: false, hidden: false },
         { active: false, hidden: false },
-        { active: false, hidden: true },
+        { active: false, hidden: false },
+        { active: false, hidden: false },
     ],
     e: [
+        { active: false, hidden: false },
         { active: false, hidden: false },
         { active: false, hidden: false },
         { active: false, hidden: false },
@@ -82,8 +118,10 @@ const isActive = ref({
         { active: false, hidden: false },
         { active: false, hidden: false },
         { active: false, hidden: false },
+        { active: false, hidden: false },
     ],
     g: [
+        { active: false, hidden: false },
         { active: false, hidden: false },
         { active: false, hidden: false },
         { active: false, hidden: false },
@@ -97,295 +135,250 @@ const isActive = ref({
         { active: false, hidden: false },
         { active: false, hidden: false },
         { active: false, hidden: false },
+        { active: false, hidden: false },
     ],
     i: [
         { active: false, hidden: true },
         { active: false, hidden: false },
         { active: false, hidden: true },
-        { active: false, hidden: true },
         { active: false, hidden: false },
+        { active: false, hidden: true },
+        { active: false, hidden: true },
     ],
 })
 
-const rows = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
-const colsOdd = ['0', '1', '2', '3', '4']
-const colsEven = ['0', '1', '2', '3', '4', '5']
-let rowIndex
-let row
-let col
-const changesPerInterval = 4
-let i
+const rows = computed(() => Object.keys(isActive.value))
+const colsOdd = computed(() => [...Array(isActive.value[Object.keys(isActive.value)[0]].length).keys()])
+const colsEven = computed(() => [...Array(isActive.value[Object.keys(isActive.value)[1]].length).keys()])
+let rowIndex, row, col
 const interval = setInterval(() => {
-    [...Array(changesPerInterval)].map(() => {
-        rowIndex = Math.floor(Math.random() * rows.length)
-        row = rows[rowIndex]
-        col = rowIndex % 2 === 0 ? colsOdd[Math.floor(Math.random() * colsOdd.length)] : colsEven[Math.floor(Math.random() * colsEven.length)]
+    [...Array(UPDATES_PER_INTERVAL)].map(() => {
+        // random hexagon toggling (may also unset a "loading" hexagon):
+        rowIndex = Math.floor(Math.random() * rows.value.length)
+        row = rows.value[rowIndex]
+        col = rowIndex % 2 === 0 ?
+            colsOdd.value[Math.floor(Math.random() * colsOdd.value.length)] :
+            colsEven.value[Math.floor(Math.random() * colsEven.value.length)]
         toggleStatus(row, col)
+        // random "loading" hexagon toggling:
+        const hexagon = loadingHexagons.value[Math.floor(Math.random() * loadingHexagons.value.length)]
+        toggleStatus(hexagon[0], hexagon[1])
     })
-}, 500)
+}, UPDATE_FREQUENCY)
 
 onUnmounted(() => {
     clearInterval(interval)
 })
-
 </script>
 
 <style lang="postcss" scoped>
 .wrapper {
     position: relative;
     height: 61px;
-    width: 125px;
+    width: 147px;
     margin: 50px auto 0;
 
     * {
         position: absolute;
     }
 
-    .a0 {
+    .a0,
+    .a1,
+    .a2,
+    .a3,
+    .a4,
+    .a5 {
+        top: 0;
+    }
+
+    .a0,
+    .c0,
+    .e0,
+    .g0,
+    .i0 {
         left: 11px;
     }
 
-    .a1 {
+    .a1,
+    .c1,
+    .e1,
+    .g1,
+    .i1 {
         left: 33px;
     }
 
-    .a2 {
+    .a2,
+    .c2,
+    .e2,
+    .g2,
+    .i2 {
         left: 55px;
     }
 
-    .a3 {
+    .a3,
+    .c3,
+    .e3,
+    .g3,
+    .i3 {
         left: 77px;
     }
 
-    .a4 {
+    .a4,
+    .c4,
+    .e4,
+    .g4,
+    .i4 {
         left: 99px;
     }
 
-    .b0 {
+    .a5,
+    .c5,
+    .e5,
+    .g5,
+    .i5 {
+        left: 121px;
+    }
+
+    .b0,
+    .b1,
+    .b2,
+    .b3,
+    .b4,
+    .b5,
+    .b6 {
         top: 6px;
-        left: 0px;
     }
 
-    .b1 {
-        top: 6px;
-        left: 22px;
-    }
-
-    .b2 {
-        top: 6px;
-        left: 44px;
-    }
-
-    .b3 {
-        top: 6px;
-        left: 66px;
-    }
-
-    .b4 {
-        top: 6px;
-        left: 88px;
-    }
-
-    .b5 {
-        top: 6px;
-        left: 110px;
-    }
-
-    .c0 {
-        top: 12px;
-        left: 11px;
-    }
-
-    .c1 {
-        top: 12px;
-        left: 33px;
-    }
-
-    .c2 {
-        top: 12px;
-        left: 55px;
-    }
-
-    .c3 {
-        top: 12px;
-        left: 77px;
-    }
-
-    .c4 {
-        top: 12px;
-        left: 99px;
-    }
-
-    .d0 {
-        top: 18px;
-        left: 0px;
-    }
-
-    .d1 {
-        top: 18px;
-        left: 22px;
-    }
-
-    .d2 {
-        top: 18px;
-        left: 44px;
-    }
-
-    .d3 {
-        top: 18px;
-        left: 66px;
-    }
-
-    .d4 {
-        top: 18px;
-        left: 88px;
-    }
-
-    .d5 {
-        top: 18px;
-        left: 110px;
-    }
-
-    .e0 {
-        top: 24px;
-        left: 11px;
-    }
-
-    .e1 {
-        top: 24px;
-        left: 33px;
-    }
-
-    .e2 {
-        top: 24px;
-        left: 55px;
-    }
-
-    .e3 {
-        top: 24px;
-        left: 77px;
-    }
-
-    .e4 {
-        top: 24px;
-        left: 99px;
-    }
-
-    .f0 {
-        top: 30px;
-        left: 0px;
-    }
-
-    .f1 {
-        top: 30px;
-        left: 22px;
-    }
-
-    .f2 {
-        top: 30px;
-        left: 44px;
-    }
-
-    .f3 {
-        top: 30px;
-        left: 66px;
-    }
-
-    .f4 {
-        top: 30px;
-        left: 88px;
-    }
-
-    .f5 {
-        top: 30px;
-        left: 110px;
-    }
-
-    .g0 {
-        top: 36px;
-        left: 11px;
-    }
-
-    .g1 {
-        top: 36px;
-        left: 33px;
-    }
-
-    .g2 {
-        top: 36px;
-        left: 55px;
-    }
-
-    .g3 {
-        top: 36px;
-        left: 77px;
-    }
-
-    .g4 {
-        top: 36px;
-        left: 99px;
-    }
-
+    .b0,
+    .d0,
+    .f0,
     .h0 {
-        top: 42px;
         left: 0px;
     }
 
+    .b1,
+    .d1,
+    .f1,
     .h1 {
-        top: 42px;
         left: 22px;
     }
 
+    .b2,
+    .d2,
+    .f2,
     .h2 {
-        top: 42px;
         left: 44px;
     }
 
+    .b3,
+    .d3,
+    .f3,
     .h3 {
-        top: 42px;
         left: 66px;
     }
 
+    .b4,
+    .d4,
+    .f4,
     .h4 {
-        top: 42px;
         left: 88px;
     }
 
+    .b5,
+    .d5,
+    .f5,
     .h5 {
-        top: 42px;
         left: 110px;
+    }
+
+    .b6,
+    .d6,
+    .f6,
+    .h6 {
+        left: 132px;
+    }
+
+    .c0,
+    .c1,
+    .c2,
+    .c3,
+    .c4,
+    .c5 {
+        top: 12px;
+    }
+
+    .d0,
+    .d1,
+    .d2,
+    .d3,
+    .d4,
+    .d5,
+    .d6 {
+        top: 18px;
+    }
+
+    .e0,
+    .e1,
+    .e2,
+    .e3,
+    .e4,
+    .e5 {
+        top: 24px;
+    }
+
+    .f0,
+    .f1,
+    .f2,
+    .f3,
+    .f4,
+    .f5,
+    .f6 {
+        top: 30px;
+    }
+
+    .g0,
+    .g1,
+    .g2,
+    .g3,
+    .g4,
+    .g5 {
+        top: 36px;
+    }
+
+    .h0,
+    .h1,
+    .h2,
+    .h3,
+    .h4,
+    .h5,
+    .h6 {
+        top: 42px;
     }
 
     .i0,
     .i1,
     .i2,
     .i3,
-    .i4 {
+    .i4,
+    .i5 {
         top: 48px;
     }
 
-    .i0 {
-        left: 11px;
-    }
+    .loading {
+        width: 147px;
+        height: 13px;
+        display: flex;
+        justify-content: space-between;
+        text-transform: uppercase;
+        z-index: 1;
+        left: 0;
 
-    .i1 {
-        left: 33px;
+        div {
+            width: 14px;
+            position: unset;
+            text-align: center;
+            color: var(--loading-color-base);
+        }
     }
-
-    .i2 {
-        left: 55px;
-    }
-
-    .i3 {
-        left: 77px;
-    }
-
-    .i4 {
-        left: 99px;
-    }
-}
-
-.row2 {
-    margin-top: -2px;
 }
 </style>
