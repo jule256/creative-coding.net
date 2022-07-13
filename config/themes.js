@@ -8,6 +8,12 @@ export const themes = {
         gradientColorLight: '#427142',
         gradientColorDark: '#437243',
         hoverColor: '#EEEEEE',
+        loadingColorLine: '#FFFFFF', //  '#931818',
+        loadingColorBase: '#FFFFFF',
+        loadingColorActive1: '#EEEEEE',
+        loadingColorActive2: '#AAAAAA',
+        loadingColorActive3: '#999999',
+        loadingColorActive4: '#666666',
     },
     'crazy': {
         fontColor: 'rgb(139, 90, 30)',
@@ -18,5 +24,10 @@ export const themes = {
         gradientColorLight: '#FF0000',
         gradientColorDark: '#FFFF00',
         hoverColor: '#00FFEE',
+        loadingColorBase: '#FFFFFF', // @todo ➔ make crazy
+        loadingColorActive1: '#EEEEEE', // @todo ➔ make crazy
+        loadingColorActive2: '#000000', // @todo ➔ make crazy
+        loadingColorActive3: '#333333', // @todo ➔ make crazy
+        loadingColorActive4: '#666666', // @todo ➔ make crazy
     }
 }
