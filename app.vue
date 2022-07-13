@@ -30,6 +30,7 @@ const themeVariables = computed(() => {
     '--loading-color-active-2': themeLibrary[themeKey.value].loadingColorActive2,
     '--loading-color-active-3': themeLibrary[themeKey.value].loadingColorActive3,
     '--loading-color-active-4': themeLibrary[themeKey.value].loadingColorActive4,
+    '--loading-color-active-text': themeLibrary[themeKey.value].loadingColorActiveText,
   }
 })
 

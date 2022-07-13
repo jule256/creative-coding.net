@@ -14,6 +14,7 @@ export const themes = {
         loadingColorActive2: '#AAAAAA',
         loadingColorActive3: '#999999',
         loadingColorActive4: '#666666',
+        loadingColorActiveText: '#666666',
     },
     'crazy': {
         fontColor: 'rgb(139, 90, 30)',
@@ -29,5 +30,6 @@ export const themes = {
         loadingColorActive2: '#000000', // @todo ➔ make crazy
         loadingColorActive3: '#333333', // @todo ➔ make crazy
         loadingColorActive4: '#666666', // @todo ➔ make crazy
+        loadingColorActiveText: '#000000', // @todo ➔ make crazy
     }
 }
