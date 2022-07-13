@@ -24,6 +24,12 @@ const themeVariables = computed(() => {
     '--gradient-color-light': themeLibrary[themeKey.value].gradientColorLight,
     '--gradient-color-dark': themeLibrary[themeKey.value].gradientColorDark,
     '--hover-color': themeLibrary[themeKey.value].hoverColor,
+    '--loading-color-line': themeLibrary[themeKey.value].loadingColorLine,
+    '--loading-color-base': themeLibrary[themeKey.value].loadingColorBase,
+    '--loading-color-active-1': themeLibrary[themeKey.value].loadingColorActive1,
+    '--loading-color-active-2': themeLibrary[themeKey.value].loadingColorActive2,
+    '--loading-color-active-3': themeLibrary[themeKey.value].loadingColorActive3,
+    '--loading-color-active-4': themeLibrary[themeKey.value].loadingColorActive4,
   }
 })
 
