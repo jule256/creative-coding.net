@@ -11,6 +11,10 @@ const props = defineProps({
     isActive: {
         type: Boolean,
         default: false,
+    },
+    isText: {
+        type: Boolean,
+        default: false,
     }
 })
 
@@ -22,7 +26,7 @@ let activeClassIndex = ref(1)
 
 watch(() => props.isActive, (newValue, oldValue) => {
     if (newValue) {
-        activeClassIndex.value = Math.floor(Math.random() * 4)
+        activeClassIndex.value = props.isText ? 'text' : Math.floor(Math.random() * 4)
     }
 })
 
@@ -50,6 +54,10 @@ watch(() => props.isActive, (newValue, oldValue) => {
 
     &.is-active-4 {
         fill: var(--loading-color-active-4);
+    }
+
+    &.is-active-text {
+        fill: var(--loading-color-active-text);
     }
 }
 </style>
