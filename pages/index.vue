@@ -35,11 +35,15 @@
                 </div>
             </div>
             <div class="news">
-                <div v-if="queryStatus.isLoading" style="text-align: center; padding: 30px;">
-                    ... is loading ... @todo
-                </div>
-                <NewsEntry v-else v-for="newsEntry in newsList" :data="newsEntry" @status-change="handleStatusChange"
-                    @update-height="handleHeightUpdate" />
+                <transition name="loading" @after-leave="onLoadingComplete">
+                    <Loading v-if="queryStatus.isLoading" />
+                </transition>
+                <transition name="loading">
+                    <div v-if="showLoadedContent">
+                        <NewsEntry v-for="newsEntry in newsList" :data="newsEntry" @status-change="handleStatusChange"
+                            @update-height="handleHeightUpdate" />
+                    </div>
+                </transition>
             </div>
         </main>
         <Sidebar :is-loading="queryStatus.isLoading" class="sidebar">
@@ -68,14 +72,23 @@ const {
 const {
     isHateoasLoading,
     isHateoasError,
+    isHateoasSuccess,
     hateoasError,
     getUrl,
 } = useHateoas()
 
+const {
+    showLoadedContent,
+    onLoadingComplete,
+} = useLoading()
+
 const newsQuery = reactive(useQuery(
     ['news'],
     () => fetchData(getUrl('news')),
-    { staleTime: 10000000 }
+    {
+        staleTime: 10000000,
+        enabled: isHateoasSuccess
+    }
 ))
 
 const queryStatus = reactive({
@@ -114,8 +127,11 @@ watch(
 onMounted(() => {
     emit('updateTitle', 'home')
     newsList.value = enrichEntryList(queryStatus, 'news')
-})
 
+    // @todo ➔ implement some system to be able to expand selected news entries
+    // const route = useRoute()
+    // console.log('route', route)
+})  
 </script>
 <style lang="postcss" scoped>
 .intro {
