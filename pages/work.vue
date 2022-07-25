@@ -1,11 +1,15 @@
 <template>
     <div class="content">
         <main class="main">
-            <div v-if="queryStatus.isLoading" style="text-align: center; padding: 30px;">
-                ... is loading ... @todo
-            </div>
-            <WorkEntry v-else v-for="(WorkEntry, index) in workList" :data="WorkEntry" :index="index"
-                @status-change="handleStatusChange" @update-height="handleHeightUpdate" />
+            <transition name="loading" @after-leave="onLoadingComplete">
+                <Loading v-if="queryStatus.isLoading" />
+            </transition>
+            <transition name="loading">
+                <div v-if="showLoadedContent">
+                    <WorkEntry v-for="(workEntry, index) in workList" :data="workEntry" :index="index"
+                        @status-change="handleStatusChange" @update-height="handleHeightUpdate" />
+                </div>
+            </transition>
         </main>
         <Sidebar :is-loading="queryStatus.isLoading" class="sidebar">
             <SidebarEntry v-for="workEntry in workList" :headline="workEntry.headline" :id="workEntry.id"
@@ -36,6 +40,11 @@ const {
     hateoasError,
     getUrl,
 } = useHateoas()
+
+const {
+    showLoadedContent,
+    onLoadingComplete,
+} = useLoading()
 
 const workQuery = reactive(useQuery(
     ['work'],
