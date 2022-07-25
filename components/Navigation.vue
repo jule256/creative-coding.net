@@ -1,40 +1,14 @@
 <template>
     <nav class="navigation">
         <ul>
-            <li v-for="entry in entries">
+            <li v-for="entry in SECTIONS">
                 <NuxtLink :to="entry.to" class="entry">{{ entry.title['en'] }}</NuxtLink>
             </li>
         </ul>
     </nav>
 </template>
 <script setup>
-const entries = ref([
-    {
-        title: {
-            en: 'home'
-        },
-        to: '/'
-    },
-    {
-        title: {
-            en: 'work'
-        },
-        to: 'work'
-    },
-    {
-        title: {
-            en: 'cv'
-        },
-        to: 'cv'
-    },
-    {
-        title: {
-            en: 'contact'
-        },
-        to: 'contact'
-    },
-])
-
+import { SECTIONS } from '../config/sections.js'
 </script>
 
 <style lang="postcss" scoped>
