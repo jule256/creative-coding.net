@@ -35,27 +35,117 @@ const props = defineProps({
         type: String,
         default: 'loading',
     },
+    config: {
+        type: Object,
+        default: () => ({
+            a: [
+                { hidden: true },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: true },
+                { hidden: false },
+            ],
+            b: [
+                { hidden: true },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: true },
+            ],
+            c: [
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+            ],
+            d: [
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+            ],
+            e: [
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+            ],
+            f: [
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+            ],
+            g: [
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+            ],
+            h: [
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+                { hidden: false },
+            ],
+            i: [
+                { hidden: true },
+                { hidden: false },
+                { hidden: true },
+                { hidden: false },
+                { hidden: true },
+                { hidden: true },
+            ],
+        }),
+    },
 })
 
-const truncateLoadingText = (loadingText, isActive) => {
-    if (loadingText.length > isActive[LOADING_ROW].length) {
-        const truncatedLoadingText = loadingText.substr(0, isActive[LOADING_ROW].length)
-        console.warn(`Loading.vue truncated loadingText from '${loadingText}' to '${truncatedLoadingText}'`)
+const sanitizeLoadingText = (loadingText, isActive) => {
+    const loadingTextWithBlanks = loadingText
+        .split('')
+        .map((letter, index) => index < isActive[LOADING_ROW].length && isActive[LOADING_ROW][index].hidden ? ' ' : letter)
+        .join('')
+
+    if (loadingText !== loadingTextWithBlanks) {
+        console.warn(`Loading.vue disabled one or more characters due to hidden hexagons from '${loadingText}' to '${loadingTextWithBlanks}'`)
+    }
+
+    if (loadingTextWithBlanks.length > isActive[LOADING_ROW].length) {
+        const truncatedLoadingText = loadingTextWithBlanks.substr(0, isActive[LOADING_ROW].length)
+        console.warn(`Loading.vue truncated loadingText from '${loadingTextWithBlanks}' to '${truncatedLoadingText}'`)
         return truncatedLoadingText
     }
-    return loadingText
+    return loadingTextWithBlanks
 }
 
 const loadingTextArray = computed(() => {
     const maxLength = isActive.value[LOADING_ROW].length
-    const loadingText = truncateLoadingText(props.loadingText, isActive.value)
+    const loadingText = sanitizeLoadingText(props.loadingText, isActive.value)
     const prefix = Math.floor((maxLength - loadingText.length) / 2)
     const suffix = Math.ceil((maxLength - loadingText.length) / 2)
     return [...`${' '.repeat(prefix)}${loadingText}${' '.repeat(suffix)}`]
 })
 
 const loadingHexagons = computed(() => {
-    const loadingTextLength = truncateLoadingText(props.loadingText, isActive.value).length
+    const loadingTextLength = sanitizeLoadingText(props.loadingText, isActive.value).length
     const prefix = Math.floor((isActive.value[LOADING_ROW].length - loadingTextLength) / 2)
     const suffix = Math.ceil((isActive.value[LOADING_ROW].length - loadingTextLength) / 2)
     return Array.from({ length: isActive.value[LOADING_ROW].length }, (_, index) => `${LOADING_ROW}${index}`)
@@ -70,87 +160,87 @@ const toggleStatus = (row, col) => {
 
 const isActive = ref({
     a: [
-        { active: false, hidden: true },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: true },
-        { active: false, hidden: false },
+        { active: false, hidden: props.config.a[0].hidden },
+        { active: false, hidden: props.config.a[1].hidden },
+        { active: false, hidden: props.config.a[2].hidden },
+        { active: false, hidden: props.config.a[3].hidden },
+        { active: false, hidden: props.config.a[4].hidden },
+        { active: false, hidden: props.config.a[5].hidden },
     ],
     b: [
-        { active: false, hidden: true },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: true },
+        { active: false, hidden: props.config.b[0].hidden },
+        { active: false, hidden: props.config.b[1].hidden },
+        { active: false, hidden: props.config.b[2].hidden },
+        { active: false, hidden: props.config.b[3].hidden },
+        { active: false, hidden: props.config.b[4].hidden },
+        { active: false, hidden: props.config.b[5].hidden },
+        { active: false, hidden: props.config.b[6].hidden },
     ],
     c: [
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
+        { active: false, hidden: props.config.c[0].hidden },
+        { active: false, hidden: props.config.c[1].hidden },
+        { active: false, hidden: props.config.c[2].hidden },
+        { active: false, hidden: props.config.c[3].hidden },
+        { active: false, hidden: props.config.c[4].hidden },
+        { active: false, hidden: props.config.c[5].hidden },
     ],
     d: [
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
+        { active: false, hidden: props.config.d[0].hidden },
+        { active: false, hidden: props.config.d[1].hidden },
+        { active: false, hidden: props.config.d[2].hidden },
+        { active: false, hidden: props.config.d[3].hidden },
+        { active: false, hidden: props.config.d[4].hidden },
+        { active: false, hidden: props.config.d[5].hidden },
+        { active: false, hidden: props.config.d[6].hidden },
     ],
     e: [
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
+        { active: false, hidden: props.config.e[0].hidden },
+        { active: false, hidden: props.config.e[1].hidden },
+        { active: false, hidden: props.config.e[2].hidden },
+        { active: false, hidden: props.config.e[3].hidden },
+        { active: false, hidden: props.config.e[4].hidden },
+        { active: false, hidden: props.config.e[5].hidden },
     ],
     f: [
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
+        { active: false, hidden: props.config.f[0].hidden },
+        { active: false, hidden: props.config.f[1].hidden },
+        { active: false, hidden: props.config.f[2].hidden },
+        { active: false, hidden: props.config.f[3].hidden },
+        { active: false, hidden: props.config.f[4].hidden },
+        { active: false, hidden: props.config.f[5].hidden },
+        { active: false, hidden: props.config.f[6].hidden },
     ],
     g: [
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
+        { active: false, hidden: props.config.g[0].hidden },
+        { active: false, hidden: props.config.g[1].hidden },
+        { active: false, hidden: props.config.g[2].hidden },
+        { active: false, hidden: props.config.g[3].hidden },
+        { active: false, hidden: props.config.g[4].hidden },
+        { active: false, hidden: props.config.g[5].hidden },
     ],
     h: [
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
-        { active: false, hidden: false },
+        { active: false, hidden: props.config.h[0].hidden },
+        { active: false, hidden: props.config.h[1].hidden },
+        { active: false, hidden: props.config.h[2].hidden },
+        { active: false, hidden: props.config.h[3].hidden },
+        { active: false, hidden: props.config.h[4].hidden },
+        { active: false, hidden: props.config.h[5].hidden },
+        { active: false, hidden: props.config.h[6].hidden },
     ],
     i: [
-        { active: false, hidden: true },
-        { active: false, hidden: false },
-        { active: false, hidden: true },
-        { active: false, hidden: false },
-        { active: false, hidden: true },
-        { active: false, hidden: true },
+        { active: false, hidden: props.config.i[0].hidden },
+        { active: false, hidden: props.config.i[1].hidden },
+        { active: false, hidden: props.config.i[2].hidden },
+        { active: false, hidden: props.config.i[3].hidden },
+        { active: false, hidden: props.config.i[4].hidden },
+        { active: false, hidden: props.config.i[5].hidden },
     ],
 })
 
 const rows = computed(() => Object.keys(isActive.value))
 const colsOdd = computed(() => [...Array(isActive.value[Object.keys(isActive.value)[0]].length).keys()])
 const colsEven = computed(() => [...Array(isActive.value[Object.keys(isActive.value)[1]].length).keys()])
-let rowIndex, row, col
+let rowIndex, row, col, hexagon
 const interval = setInterval(() => {
     [...Array(UPDATES_PER_INTERVAL)].map(() => {
         // random hexagon toggling (may also unset a "loading" hexagon):
@@ -160,9 +250,11 @@ const interval = setInterval(() => {
             colsOdd.value[Math.floor(Math.random() * colsOdd.value.length)] :
             colsEven.value[Math.floor(Math.random() * colsEven.value.length)]
         toggleStatus(row, col)
-        // random "loading" hexagon toggling:
-        const hexagon = loadingHexagons.value[Math.floor(Math.random() * loadingHexagons.value.length)]
-        toggleStatus(hexagon[0], hexagon[1])
+        // random "loading" hexagon toggling (if loading text exists):
+        if (loadingHexagons.value.length) {
+            hexagon = loadingHexagons.value[Math.floor(Math.random() * loadingHexagons.value.length)]
+            toggleStatus(hexagon[0], hexagon[1])
+        }
     })
 }, UPDATE_FREQUENCY)
 
@@ -172,6 +264,7 @@ onUnmounted(() => {
 </script>
 
 <style lang="postcss" scoped>
+/* @todo ➔ make position configurabe using CSS variables */
 .wrapper {
     position: relative;
     height: 61px;
