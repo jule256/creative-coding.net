@@ -114,6 +114,11 @@ const techRaw = [
         title: 'Scalable Vector Graphics Editor',
         text: 'BOXY SVG Editor'
     },
+    {
+        url: 'https://stackoverflow.com/',
+        title: 'Where Developers Learn, Share, & Build Careers',
+        text: 'Stackoverflow'
+    },
 ]
 
 const techSorted = computed(() => {
