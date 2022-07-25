@@ -24,7 +24,7 @@ const activeClass = computed(() => {
 
 let activeClassIndex = ref(1)
 
-watch(() => props.isActive, (newValue, oldValue) => {
+watch(() => props.isActive, newValue => {
     if (newValue) {
         activeClassIndex.value = props.isText ? 'text' : Math.floor(Math.random() * 4)
     }
