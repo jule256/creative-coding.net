@@ -10,6 +10,9 @@ export const useHateoas = () => {
     ))
 
     const getUrl = type => {
+        if (!hateoasQuery.data) {
+            throw new Error(`getUrl() no data set! ${JSON.stringify(hateoasQuery)}`)
+        }
         return hateoasQuery.data.links.find(link => link.rel === type).href
     }
 
@@ -22,6 +25,9 @@ export const useHateoas = () => {
         ),
         hateoasError: computed(
             () => hateoasQuery.error
+        ),
+        isHateoasSuccess: computed(
+            () => hateoasQuery.isSuccess
         )
     })
 
