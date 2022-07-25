@@ -117,3 +117,27 @@ a {
 .framed {
     border: 3px double var(--border-color);
 }
+
+.loading-enter-active,
+.loading-leave-active {
+    transition: opacity 0.25s ease;
+}
+
+.loading-enter-from,
+.loading-leave-to {
+    opacity: 0;
+}
+
+ul.sitemap {
+    li {
+        margin-bottom: 5px;
+        padding-left: 11px;
+        /* making sure a potential second line of text is indented: */
+        text-indent: -11px;
+
+        &::before {
+            content: '»';
+            margin-right: 5px;
+        }
+    }
+}
