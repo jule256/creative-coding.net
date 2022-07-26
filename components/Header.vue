@@ -1,7 +1,7 @@
 <template>
     <header class="header">
         <transition name="loading">
-            <h1 v-if="title != ''" class="title">{{ title }}</h1>
+            <h1 v-if="title !== ''" class="title">{{ title }}</h1>
         </transition>
     </header>
 </template>
