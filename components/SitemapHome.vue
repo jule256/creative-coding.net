@@ -27,12 +27,6 @@ const {
     getUrl,
 } = useHateoas()
 
-const {
-    compactLoadingConfig,
-    onLoadingComplete,
-    showLoadedContent,
-} = useLoading()
-
 const newsQuery = reactive(useQuery(
     ['news'],
     () => fetchData(getUrl('news')),
@@ -56,6 +50,12 @@ const queryStatus = reactive({
         () => newsQuery && newsQuery.data
     ),
 })
+
+const {
+    compactLoadingConfig,
+    onLoadingComplete,
+    showLoadedContent,
+} = useLoading(queryStatus)
 
 watch(
     () => queryStatus.entryList?.data.length || 0,

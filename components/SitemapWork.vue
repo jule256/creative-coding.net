@@ -7,7 +7,7 @@
             <li v-for="workEntry in workList">
                 <!-- @todo ➔ expand selected id on work-page
                            ➔ make :to attribute work properly -->
-                <NuxtLink :to="`work/?id=${workEntry.id}&foo=bar`">{{ workEntry.headline }}</NuxtLink>
+                <NuxtLink :to="`work/?id=${workEntry.id}`">{{ workEntry.headline }}</NuxtLink>
             </li>
         </ul>
     </transition>
@@ -23,20 +23,18 @@ const workList = ref([])
 const {
     isHateoasLoading,
     isHateoasError,
+    isHateoasSuccess,
     hateoasError,
     getUrl,
 } = useHateoas()
 
-const {
-    compactLoadingConfig,
-    onLoadingComplete,
-    showLoadedContent,
-} = useLoading()
-
 const workQuery = reactive(useQuery(
     ['work'],
     () => fetchData(getUrl('work')),
-    { staleTime: 10000000 }
+    {
+        staleTime: 10000000,
+        enabled: isHateoasSuccess
+    }
 ))
 
 const queryStatus = reactive({
@@ -53,6 +51,12 @@ const queryStatus = reactive({
         () => workQuery && workQuery.data
     ),
 })
+
+const {
+    compactLoadingConfig,
+    onLoadingComplete,
+    showLoadedContent,
+} = useLoading(queryStatus)
 
 watch(
     () => queryStatus.entryList?.data.length || 0,
