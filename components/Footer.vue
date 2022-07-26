@@ -4,9 +4,11 @@
             <div class="copyright">
                 &copy; Julian Mollik {{ new Date().getFullYear() }}
             </div>
-            <div>
-                <NuxtLink class="emphasized" @click="scrollToTop">top</NuxtLink>
-            </div>
+            <transition name="loading">
+                <div v-if="scrollY > 0">
+                    <NuxtLink class="emphasized" @click="scrollToTop">top</NuxtLink>
+                </div>
+            </transition>
             <div>
                 <NuxtLink to="sitemap" class="emphasized">sitemap</NuxtLink>
             </div>
@@ -15,8 +17,26 @@
 </template>
 
 <script setup>
+import useDebouncedRef from '../composables/useDebouncedRef'
+
+const HEADER_OFFSET_TOP = 40
+
+const scrollY = useDebouncedRef(0, 1000)
+
+const scrollHandler = () => {
+    scrollY.value = window.scrollY - HEADER_OFFSET_TOP
+}
+
+onMounted(() => {
+    addEventListener('scroll', scrollHandler)
+})
+
+onUnmounted(() => {
+    removeEventListener('scroll', scrollHandler)
+
+})
+
 const scrollToTop = () => {
-    // @todo ➔ only show "top" if top-of-page is not visible
     window.scrollTo(0, 0);
 }
 </script>
