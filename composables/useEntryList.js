@@ -21,13 +21,14 @@ export const useEntryList = (list, type) => {
     const handleGoTo = id => {
         const target = document.querySelector(`#${type}-entry-${id}`);
         const index = list.value.findIndex(entry => entry.id === id)
+        const scrollOptions = { behavior: 'smooth' }
 
         if (isElementInViewport(target, list.value[index].height)) {
-            target.scrollIntoView({ behavior: "smooth" })
+            target.scrollIntoView(scrollOptions)
             list.value[index].isExpanded = true
         } else {
             if (list.value[index].isExpanded) {
-                target.scrollIntoView({ behavior: "smooth" })
+                target.scrollIntoView(scrollOptions)
             } else {
                 let scrollTimeout;
                 const scrollHandler = () => {
@@ -38,7 +39,7 @@ export const useEntryList = (list, type) => {
                     }, 100)
                 }
                 addEventListener('scroll', scrollHandler)
-                target.scrollIntoView({ behavior: "smooth" })
+                target.scrollIntoView(scrollOptions)
             }
         }
     }
