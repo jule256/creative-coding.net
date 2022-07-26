@@ -46,7 +46,7 @@
                 </transition>
             </div>
         </main>
-        <Sidebar :is-loading="queryStatus.isLoading" class="sidebar">
+        <Sidebar :is-loading="queryStatus.isLoading" :show-content="showLoadedContent" class="sidebar">
             <SidebarEntry v-for="newsEntry in newsList" :headline="newsEntry.headline" :id="newsEntry.id"
                 @go-to="handleGoTo" @mouse-enter="enableHighlight" @mouse-leave="disableHighlight" />
         </Sidebar>
@@ -77,11 +77,6 @@ const {
     getUrl,
 } = useHateoas()
 
-const {
-    showLoadedContent,
-    onLoadingComplete,
-} = useLoading()
-
 const newsQuery = reactive(useQuery(
     ['news'],
     () => fetchData(getUrl('news')),
@@ -105,6 +100,11 @@ const queryStatus = reactive({
         () => newsQuery && newsQuery.data
     ),
 })
+
+const {
+    showLoadedContent,
+    onLoadingComplete,
+} = useLoading(queryStatus)
 
 const age = computed(() => {
     const today = new Date()

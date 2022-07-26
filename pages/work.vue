@@ -11,7 +11,7 @@
                 </div>
             </transition>
         </main>
-        <Sidebar :is-loading="queryStatus.isLoading" class="sidebar">
+        <Sidebar :is-loading="queryStatus.isLoading" :show-content="showLoadedContent" class="sidebar">
             <SidebarEntry v-for="workEntry in workList" :headline="workEntry.headline" :id="workEntry.id"
                 @go-to="handleGoTo" @mouse-enter="enableHighlight" @mouse-leave="disableHighlight" />
         </Sidebar>
@@ -41,11 +41,6 @@ const {
     getUrl,
 } = useHateoas()
 
-const {
-    showLoadedContent,
-    onLoadingComplete,
-} = useLoading()
-
 const workQuery = reactive(useQuery(
     ['work'],
     () => fetchData(getUrl('work')),
@@ -66,6 +61,11 @@ const queryStatus = reactive({
         () => workQuery && workQuery.data
     ),
 })
+
+const {
+    showLoadedContent,
+    onLoadingComplete,
+} = useLoading(queryStatus)
 
 watch(
     () => queryStatus.entryList?.data.length || 0,
