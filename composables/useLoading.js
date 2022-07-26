@@ -1,4 +1,4 @@
-export const useLoading = () => {
+export const useLoading = queryStatus => {
 
     const showLoadedContent = ref(false)
 
@@ -84,6 +84,12 @@ export const useLoading = () => {
             { hidden: true },
         ],
     }
+
+    onMounted(() => {
+        if (queryStatus?.entryList?.data.length) {
+            showLoadedContent.value = true
+        }
+    })
 
     return {
         compactLoadingConfig,
