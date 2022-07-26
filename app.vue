@@ -11,7 +11,7 @@
 <script setup>
 import { themes as themeLibrary } from './config/themes.js'
 
-const title = ref('...')
+const title = ref('')
 const setTitle = newTitle => title.value = newTitle;
 
 const themeKey = ref('default')
