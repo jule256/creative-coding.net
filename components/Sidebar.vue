@@ -1,10 +1,10 @@
 <template>
     <aside class="sidebar">
-        <transition name="loading" @after-leave="onLoadingComplete">
+        <transition name="loading">
             <Loading class="loading" v-if="isLoading" loading-text="" :config="compactLoadingConfig" />
         </transition>
         <transition name="loading">
-            <div v-if="showLoadedContent">
+            <div v-if="showContent">
                 <template>
                     <slot></slot>
                 </template>
@@ -18,12 +18,14 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
+    showContent: {
+        type: Boolean,
+        default: false
+    },
 })
 
 const {
     compactLoadingConfig,
-    onLoadingComplete,
-    showLoadedContent,
 } = useLoading()
 
 </script>
