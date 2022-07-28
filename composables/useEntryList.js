@@ -10,7 +10,6 @@ export const useEntryList = (list, type) => {
         list.value[list.value.findIndex(entry => entry.id === id)].isHighlighted = false
     }
 
-    // @todo ➔ make "expand" & "collaps" re-usable constants
     const handleStatusChange = data => {
         list.value[list.value.findIndex(entry => entry.id === data.id)].isExpanded = data.type === ENTRY_CONFIG.STATUS_TYPE_EXPAND
     }
