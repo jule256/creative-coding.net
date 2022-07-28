@@ -3,6 +3,8 @@ export const themes = {
         fontColor: '#000000',
         borderColor: '#336600',
         backgroundColorContent: '#FFFFFF',
+        backgroundColorBody: '#333333',
+        backgroundImageBody: 'assets/background_hexagon.svg',
         backgroundColorOuter: '#333333',
         transparentColor: 'transparent',
         gradientColorLight: '#427142',
@@ -15,21 +17,26 @@ export const themes = {
         loadingColorActive3: '#999999',
         loadingColorActive4: '#666666',
         loadingColorActiveText: '#666666',
+        extraAccentColor: '#931818',
     },
     'crazy': {
-        fontColor: 'rgb(139, 90, 30)',
-        borderColor: 'deeppink',
-        backgroundColorContent: 'lightblue',
+        fontColor: '#8B5A1E',
+        borderColor: '#FF1493',
+        backgroundColorContent: '#00FFEE',
+        backgroundColorBody: '#3B783A',
+        backgroundImageBody: 'assets/background_hexagon_crazy.svg',
         backgroundColorOuter: '#333333',
         transparentColor: 'transparent',
         gradientColorLight: '#FF0000',
         gradientColorDark: '#FFFF00',
         hoverColor: '#00FFEE',
-        loadingColorBase: '#FFFFFF', // @todo ➔ make crazy
-        loadingColorActive1: '#EEEEEE', // @todo ➔ make crazy
-        loadingColorActive2: '#000000', // @todo ➔ make crazy
-        loadingColorActive3: '#333333', // @todo ➔ make crazy
-        loadingColorActive4: '#666666', // @todo ➔ make crazy
-        loadingColorActiveText: '#000000', // @todo ➔ make crazy
+        loadingColorLine: '#00EDDD',
+        loadingColorBase: '#00FFEE',
+        loadingColorActive1: '#FF0000',
+        loadingColorActive2: '#882828',
+        loadingColorActive3: '#B12828',
+        loadingColorActive4: '#C43838',
+        loadingColorActiveText: '#FF4A15',
+        extraAccentColor: '#E43BFF',
     }
 }
