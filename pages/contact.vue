@@ -165,8 +165,7 @@ onMounted(() => {
     }
 
     .love {
-        /* @todo ➔ move color to theme-variables */
-        color: rgb(147, 24, 24);
+        color: var(--extra-accent-color);
         font-size: 200%;
         vertical-align: sub;
     }
