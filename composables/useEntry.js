@@ -1,3 +1,5 @@
+import { ENTRY_CONFIG } from '../config/config.js'
+
 export const useEntry = (data, emit) => {
 
     const isHover = ref(false);
@@ -8,7 +10,7 @@ export const useEntry = (data, emit) => {
     const handleToggle = () => {
         emit(
             'status-change',
-            { id: data.id, type: data.isExpanded ? 'collapse' : 'expand' }
+            { id: data.id, type: data.isExpanded ? ENTRY_CONFIG.STATUS_TYPE_COLLAPSE : ENTRY_CONFIG.STATUS_TYPE_EXPAND }
         )
     }
 

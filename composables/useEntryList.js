@@ -1,4 +1,5 @@
 import { isElementInViewport } from '../helpers/helpers.js'
+import { ENTRY_CONFIG } from '../config/config.js'
 
 export const useEntryList = (list, type) => {
     const enableHighlight = id => {
@@ -11,7 +12,7 @@ export const useEntryList = (list, type) => {
 
     // @todo ➔ make "expand" & "collaps" re-usable constants
     const handleStatusChange = data => {
-        list.value[list.value.findIndex(entry => entry.id === data.id)].isExpanded = data.type === 'expand'
+        list.value[list.value.findIndex(entry => entry.id === data.id)].isExpanded = data.type === ENTRY_CONFIG.STATUS_TYPE_EXPAND
     }
 
     const handleHeightUpdate = data => {
