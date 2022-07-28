@@ -50,7 +50,6 @@
 </template>
 
 <script setup>
-// @todo ➔ add badges (Nuxt, CSS, Javascript, HTML, ...)
 const emit = defineEmits(['updateTitle']);
 
 const techRaw = [
