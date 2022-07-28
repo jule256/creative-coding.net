@@ -13,7 +13,7 @@
             <div v-if="data.isExpanded" class="story">
                 <div class="wrapper" :class="{ 'reverse': (index % 2 !== 0) }">
                     <div class="picture">
-                        <img class="framed" :src="imageSrc" :title="data.image[0].title.de"
+                        <img class="framed" :src="data.image[0].src" :title="data.image[0].title.de"
                             :alt="data.image[0].alt.de" />
                     </div>
                     <div class="text">
@@ -58,10 +58,6 @@ const props = defineProps({
         type: Number,
         default: 0
     }
-})
-
-const imageSrc = computed(() => {
-    return `/assets/picture/${props.data.image[0].src}`
 })
 
 const {
