@@ -118,6 +118,11 @@ const techRaw = [
         title: 'Where Developers Learn, Share, & Build Careers',
         text: 'Stackoverflow'
     },
+    {
+        url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties',
+        title: 'Using CSS custom properties (variables)',
+        text: 'CSS variables'
+    },
 ]
 
 const techSorted = computed(() => {
@@ -143,6 +148,7 @@ onMounted(() => {
     dl {
         display: flex;
         flex-flow: row wrap;
+        line-height: 14px;
 
         dt {
             width: 110px;
