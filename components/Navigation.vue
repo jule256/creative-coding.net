@@ -2,13 +2,22 @@
     <nav class="navigation">
         <ul>
             <li v-for="entry in SECTIONS">
-                <NuxtLink :to="entry.to" class="entry">{{ entry.title['en'] }}</NuxtLink>
+                <NuxtLink :to="buildTo(entry)" class="entry">{{ entry.title['en'] }}
+                </NuxtLink>
             </li>
         </ul>
     </nav>
 </template>
 <script setup>
 import { SECTIONS } from '../config/sections.js'
+import { navigationState } from '@/helpers/navigation'
+
+const buildTo = entry => {
+    const activeEntries = navigationState.get(entry.id)
+    const parameters = activeEntries.length === 0 ? '' : `/${activeEntries.join('/')}`
+    return `${entry.to}${parameters}`
+}
+
 </script>
 
 <style lang="postcss" scoped>
