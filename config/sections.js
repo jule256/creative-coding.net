@@ -12,20 +12,20 @@ export const SECTIONS = [
         title: {
             en: 'work'
         },
-        to: 'work'
+        to: '/work'
     },
     {
         id: 'cv',
         title: {
             en: 'cv'
         },
-        to: 'cv'
+        to: '/cv'
     },
     {
         id: 'contact',
         title: {
             en: 'contact'
         },
-        to: 'contact'
+        to: '/contact'
     },
 ]
