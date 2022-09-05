@@ -1,5 +1,6 @@
 import { isElementInViewport } from '../helpers/helpers.js'
 import { ENTRY_CONFIG } from '../config/config.js'
+import { navigationState } from '@/helpers/navigation'
 
 export const useEntryList = (list, type) => {
     const enableHighlight = id => {
@@ -11,6 +12,7 @@ export const useEntryList = (list, type) => {
     }
 
     const handleStatusChange = data => {
+        updateIdInPath(data.id, data.type)
         list.value[list.value.findIndex(entry => entry.id === data.id)].isExpanded = data.type === ENTRY_CONFIG.STATUS_TYPE_EXPAND
     }
 
@@ -25,7 +27,8 @@ export const useEntryList = (list, type) => {
 
         if (isElementInViewport(target, list.value[index].height)) {
             target.scrollIntoView(scrollOptions)
-            list.value[index].isExpanded = true
+            expandByIndex(index)
+            updateIdInPath(id)
         } else {
             if (list.value[index].isExpanded) {
                 target.scrollIntoView(scrollOptions)
@@ -35,7 +38,8 @@ export const useEntryList = (list, type) => {
                     clearTimeout(scrollTimeout)
                     scrollTimeout = setTimeout(() => {
                         removeEventListener('scroll', scrollHandler)
-                        list.value[index].isExpanded = true
+                        expandByIndex(index)
+                        updateIdInPath(id)
                     }, 100)
                 }
                 addEventListener('scroll', scrollHandler)
@@ -44,11 +48,60 @@ export const useEntryList = (list, type) => {
         }
     }
 
+    const expandDefaults = type => {
+        const entryIndices = [...Array(ENTRY_CONFIG[`OPEN_${type.toUpperCase()}_ENTRIES_BY_DEFAULT`]).keys()]
+        expandByIndex(entryIndices)
+    }
+
+    const expandByIndex = entryIndices => {
+        if (list.value.length === 0) {
+            return
+        }
+        if (!Array.isArray(entryIndices)) {
+            entryIndices = [entryIndices]
+        }
+        entryIndices.map(index => {
+            list.value[index].isExpanded = true
+        })
+    }
+
+    const expandById = entryIds => {
+        const entryIndices = list.value
+            .filter(entry => entryIds.includes(entry.id.toString()))
+            .map(entry => entry.index)
+        expandByIndex(entryIndices)
+    }
+
+    const updateIdInPath = (id, status = ENTRY_CONFIG.STATUS_TYPE_EXPAND) => {
+        let activeIds = window.location.pathname
+            .split('/')
+            .filter(value => !Number.isNaN(parseInt(value)))
+        console.log('updateIdInPath() activeIds', activeIds)
+        if (status === ENTRY_CONFIG.STATUS_TYPE_EXPAND) {
+            activeIds = activeIds
+                .concat([id.toString()])
+                .sort((a, b) => a - b)
+                .filter((value, index, array) => array.indexOf(value) == index)
+        } else { // STATUS_TYPE_COLLAPSE
+            activeIds = activeIds
+                .filter(value => Number(value) !== id)
+        }
+        navigationState.update(type, activeIds)
+        history.pushState(
+            {},
+            null,
+            `/${type}/${activeIds.join('/')}`
+        )
+    }
+
     return {
         enableHighlight,
+        expandByIndex,
+        expandById,
+        expandDefaults,
         disableHighlight,
         handleStatusChange,
         handleHeightUpdate,
-        handleGoTo
+        handleGoTo,
     }
 }
