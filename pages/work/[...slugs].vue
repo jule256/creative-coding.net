@@ -1,10 +1,6 @@
 <template>
     <div class="content">
         <main class="main">
-            <div
-                style="border: 1px dashed red; padding: 4px; margin: 4px; font-family: monospace; white-space: pre-wrap">
-                navigationState.get('work') ➔ {{ navigationState.get('work').join(', ') }}<br />
-            </div>
             <transition name="loading" @after-leave="onLoadingComplete">
                 <Loading v-if="queryStatus.isLoading" />
             </transition>
