@@ -1,4 +1,4 @@
-import { ENTRY_CONFIG } from '../config/config.js'
+import { ENTRY_CONFIG } from '@/config/config.js'
 
 export const isElementInViewport = (el, expandedHeight) => {
     const lowerEnd = el.offsetTop + el.offsetHeight + expandedHeight
@@ -16,8 +16,8 @@ export const enrichEntryList = (queryStatus, type) => {
             .sort((a, b) => new Date(b.date) - new Date(a.date))
             .map((entry, index) => {
                 entry.isHighlighted = false
-                entry.isExpanded = index < ENTRY_CONFIG[`OPEN_${type.toUpperCase()}_ENTRIES_BY_DEFAULT`]
                 entry.height = ENTRY_CONFIG[`DEFAULT_${type.toUpperCase()}_ENTRY_HEIGHT`]
+                entry.index = index
                 return entry
             })
     } else {
