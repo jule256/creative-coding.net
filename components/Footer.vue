@@ -10,7 +10,7 @@
                 </div>
             </transition>
             <div>
-                <NuxtLink to="sitemap" class="emphasized">sitemap</NuxtLink>
+                <NuxtLink to="/sitemap" class="emphasized">sitemap</NuxtLink>
             </div>
         </div>
     </footer>
