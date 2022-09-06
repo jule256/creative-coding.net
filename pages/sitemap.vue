@@ -4,7 +4,7 @@
             <template v-for="entry in entries">
                 <section :class="entry.id">
                     <h1>
-                        <NuxtLink :to="entry.to" class="entry">{{ entry.title['en'] }}</NuxtLink>
+                        <NuxtLink :to="navigationState.buildTo(entry)" class="entry">{{ entry.title['en'] }}</NuxtLink>
                     </h1>
                     <Component :is="entry.component" />
                 </section>
@@ -16,6 +16,7 @@
 <script setup>
 import { SitemapHome, SitemapWork, SitemapCv, SitemapContact } from '#components'
 import { SECTIONS } from '../config/sections.js'
+import { navigationState } from '@/helpers/navigation'
 const emit = defineEmits(['updateTitle'])
 
 const getComponent = id => {
