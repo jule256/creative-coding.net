@@ -14,4 +14,8 @@ export const navigationState = reactive({
     get(type) {
         return state.value[type]
     },
+    buildTo(entry) {
+        const parameters = state.value[entry.id].length === 0 ? '' : `/${state.value[entry.id].join('/')}`
+        return `${entry.to}${parameters}`
+    }
 })
