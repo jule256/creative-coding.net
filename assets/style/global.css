@@ -1,6 +1,6 @@
 body {
     background-color: var(--background-color-body);
-    background-image: var(--background-image-body, url(/assets/background_hexagon.svg));
+    background-image: var(--background-image-body, url('/background/background_hexagon.svg'));
     font-size: 10px;
     font-family: Verdana, Arial, SunSans-Regular, sans-serif;
 }
