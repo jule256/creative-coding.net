@@ -36,7 +36,7 @@ const entries = computed(() => {
     const result = SECTIONS.map(section => {
         return {
             ...section,
-            component: getComponent(section.id) // resolveComponent(`SitemapHome`)
+            component: getComponent(section.id)
         }
     })
     return result
