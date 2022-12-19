@@ -7,4 +7,4 @@ export const ENTRY_CONFIG = {
     STATUS_TYPE_EXPAND: 'expand',
 }
 
-export const HATEOAS_INDEX = 'http://api.creative-coding.net/'
+export const HATEOAS_INDEX = 'https://api.creative-coding.net/'
