@@ -4,7 +4,7 @@ export const themes = {
         borderColor: '#336600',
         backgroundColorContent: '#FFFFFF',
         backgroundColorBody: '#333333',
-        backgroundImageBodyY: '/background/background_hexagon.svg',
+        backgroundImageBody: '/background/background_hexagon.svg',
         backgroundColorOuter: '#333333',
         transparentColor: 'transparent',
         gradientColorLight: '#427142',
