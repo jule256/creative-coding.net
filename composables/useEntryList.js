@@ -46,7 +46,7 @@ export const useEntryList = (list, type) => {
     }
 
     const expandDefaults = type => {
-        const entryIndices = [...Array(ENTRY_CONFIG[`OPEN_${type.toUpperCase()}_ENTRIES_BY_DEFAULT`]).keys()]
+        const entryIndices = [...Array(ENTRY_CONFIG[`OPEN_${type.toUpperCase()}_ENTRIES_BY_DEFAULT`]).keys()].slice(0, list.value.length)
         expandByIndex(entryIndices)
     }
 
