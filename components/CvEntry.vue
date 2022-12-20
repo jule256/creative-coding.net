@@ -11,7 +11,33 @@
         </div>
         <transition name="toggle" @after-enter="handleUpdateHeight" @before-leave="handleUpdateHeight">
             <div v-if="data.isExpanded" class="story">
-                foobar? hello!
+                <ul>
+                    <li v-for="(content, index) in data.content" class="section-entry">
+                        <span class="key">
+                            {{ content.key['en'] }}<br />
+                            [ hide ]
+                        </span>
+                        <span class="value">
+                            <template v-if="Array.isArray(content.value['en'])">
+                                <ul>
+                                    <li v-for="(entry) in content.value['en']">
+                                        <template v-if="Array.isArray(entry)">
+                                            <template v-for="line in entry">
+                                                {{ line }}<br />
+                                            </template>
+                                        </template>
+                                        <template v-else>
+                                            {{ entry }}
+                                        </template>
+                                    </li>
+                                </ul>
+                            </template>
+                            <template v-else>
+                                {{ content.value['en'] }}
+                            </template>
+                        </span>
+                    </li>
+                </ul>
             </div>
         </transition>
     </article>
@@ -92,51 +118,28 @@ const {
     h2 {
         display: inline;
     }
-
-    ul {
-        li {
-            position: relative;
-            padding-left: 12px;
-            margin-top: 5px;
-
-            &::before {
-                content: '» ';
-                position: absolute;
-                left: 0;
-            }
-        }
-    }
-
-    p {
-        text-indent: 12px;
-        text-align: justify;
-        margin-bottom: 6px;
-
-        &.footer {
-            text-align: right;
-            margin-top: 10px;
-        }
-    }
 }
 
-.wrapper {
+.section-entry {
     display: grid;
-    gap: 0 8px;
-    grid-template-columns: 210px 260px;
-
-    &.reverse {
-        gap: 0 14px;
-        grid-template-columns: 260px 210px;
-
-        .picture {
-            order: 1;
-        }
-    }
-
+    grid-template-columns: 150px fit-content(320px);
+    gap: 0 12px;
     margin-bottom: 10px;
 
-    .picture {
-        width: 200px;
+    &:first-of-type {
+        margin-top: 5px;
+    }
+
+    li {
+        position: relative;
+        padding-left: 12px;
+        margin-bottom: 3px;
+
+        &::before {
+            content: '» ';
+            position: absolute;
+            left: 0;
+        }
     }
 }
 </style>
