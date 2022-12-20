@@ -22,7 +22,6 @@
 import { useQuery } from 'vue-query'
 import { fetchData } from '@/helpers/network'
 import { enrichEntryList } from '@/helpers/helpers'
-import { navigationState } from '@/helpers/navigation'
 const emit = defineEmits(['updateTitle'])
 
 const route = useRoute()
