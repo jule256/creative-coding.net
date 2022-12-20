@@ -5,7 +5,9 @@
     <transition name="loading">
         <ul v-if="showLoadedContent" class="sitemap">
             <li v-for="workEntry in workList">
-                <NuxtLink :to="`work${getParameter(workEntry.id)}`">{{ workEntry.headline }}</NuxtLink>
+                <NuxtLink :to="`work${getSitemapLinkParameter(workEntry.id, 'work', workList)}`">{{ workEntry.headline
+                }}
+                </NuxtLink>
             </li>
         </ul>
     </transition>
@@ -14,8 +16,7 @@
 <script setup>
 import { useQuery } from 'vue-query'
 import { fetchData } from '../helpers/network'
-import { enrichEntryList } from '../helpers/helpers'
-import { ENTRY_CONFIG } from '../config/config.js'
+import { enrichEntryList, getSitemapLinkParameter } from '../helpers/helpers'
 
 const workList = ref([])
 
@@ -56,11 +57,6 @@ const {
     onLoadingComplete,
     showLoadedContent,
 } = useLoading(queryStatus)
-
-const getParameter = id => {
-    const alwaysOpenEntries = workList.value.slice(0, ENTRY_CONFIG[`OPEN_WORK_ENTRIES_BY_DEFAULT`])
-    return alwaysOpenEntries.find(entry => entry.id === id) ? '' : `/${id}`
-}
 
 watch(
     () => queryStatus.entryList?.data.length || 0,
