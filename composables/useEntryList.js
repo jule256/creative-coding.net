@@ -12,7 +12,6 @@ export const useEntryList = (list, type) => {
     }
 
     const handleStatusChange = data => {
-        updateIdInPath(data.id, data.type)
         list.value[list.value.findIndex(entry => entry.id === data.id)].isExpanded = data.type === ENTRY_CONFIG.STATUS_TYPE_EXPAND
     }
 
@@ -28,7 +27,6 @@ export const useEntryList = (list, type) => {
         if (isElementInViewport(target, list.value[index].height)) {
             target.scrollIntoView(scrollOptions)
             expandByIndex(index)
-            updateIdInPath(id)
         } else {
             if (list.value[index].isExpanded) {
                 target.scrollIntoView(scrollOptions)
@@ -39,7 +37,6 @@ export const useEntryList = (list, type) => {
                     scrollTimeout = setTimeout(() => {
                         removeEventListener('scroll', scrollHandler)
                         expandByIndex(index)
-                        updateIdInPath(id)
                     }, 100)
                 }
                 addEventListener('scroll', scrollHandler)
