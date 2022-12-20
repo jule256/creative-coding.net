@@ -17,6 +17,8 @@
 <script setup>
 import { themes as themeLibrary } from './config/themes.js'
 
+const route = useRoute()
+
 const title = ref('')
 const setTitle = newTitle => title.value = newTitle;
 
@@ -45,6 +47,9 @@ const rootVariables = computed(() => ({
   backgroundImageBody: themeLibrary[themeKey.value].backgroundImageBody
 }))
 
+if (route.fullPath === '/') {
+  await navigateTo('/home', { redirectCode: 301 })
+}
 </script>
 <style lang="postcss" scoped>
 .temp {
