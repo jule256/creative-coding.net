@@ -25,3 +25,11 @@ export const enrichEntryList = (queryStatus, type) => {
         return []
     }
 }
+
+export const setExpandState = (type, slugs = [], expandById, expandDefaults) => {
+    if (slugs.length > 0) {
+        expandById(slugs)
+    } else {
+        expandDefaults(type)
+    }
+}
