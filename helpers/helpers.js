@@ -16,6 +16,7 @@ export const enrichEntryList = (queryStatus, type) => {
             .sort((a, b) => new Date(b.date) - new Date(a.date))
             .map((entry, index) => {
                 entry.isHighlighted = false
+                entry.isExpanded = false
                 entry.height = ENTRY_CONFIG[`DEFAULT_${type.toUpperCase()}_ENTRY_HEIGHT`]
                 entry.index = index
                 return entry
