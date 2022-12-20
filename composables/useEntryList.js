@@ -69,28 +69,6 @@ export const useEntryList = (list, type) => {
         expandByIndex(entryIndices)
     }
 
-    const updateIdInPath = (id, status = ENTRY_CONFIG.STATUS_TYPE_EXPAND) => {
-        let activeIds = window.location.pathname
-            .split('/')
-            .filter(value => !Number.isNaN(parseInt(value)))
-        console.log('updateIdInPath() activeIds', activeIds)
-        if (status === ENTRY_CONFIG.STATUS_TYPE_EXPAND) {
-            activeIds = activeIds
-                .concat([id.toString()])
-                .sort((a, b) => a - b)
-                .filter((value, index, array) => array.indexOf(value) == index)
-        } else { // STATUS_TYPE_COLLAPSE
-            activeIds = activeIds
-                .filter(value => Number(value) !== id)
-        }
-        navigationState.update(type, activeIds)
-        history.pushState(
-            {},
-            null,
-            `/${type}/${activeIds.join('/')}`
-        )
-    }
-
     return {
         enableHighlight,
         expandByIndex,
