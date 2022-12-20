@@ -72,15 +72,21 @@ const {
     onLoadingComplete,
 } = useLoading(queryStatus)
 
+const setExpandState = type => {
+    if (route.params.slugs.length > 0) {
+        expandById(route.params.slugs)
+    } else {
+        expandDefaults('work')
+    }
+}
+
 watch(
     () => queryStatus.entryList?.data.length || 0,
     (newLength, oldLength) => {
         if (newLength !== oldLength) {
             // only enrich work-list with the status-values if the data was freshly fetched
             workList.value = enrichEntryList(queryStatus, 'work')
-            expandDefaults('work')
-            expandById(route.params.slugs)
-            navigationState.update('work', route.params.slugs)
+            setExpandState('work')
         }
     }
 )
@@ -88,8 +94,7 @@ watch(
 onMounted(() => {
     emit('updateTitle', 'work')
     workList.value = enrichEntryList(queryStatus, 'work')
-    expandDefaults('work')
-    expandById(route.params.slugs)
+    setExpandState('work')
 })
 
 </script>
