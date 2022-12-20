@@ -21,8 +21,7 @@
 <script setup>
 import { useQuery } from 'vue-query'
 import { fetchData } from '@/helpers/network'
-import { enrichEntryList } from '@/helpers/helpers'
-import { navigationState } from '@/helpers/navigation'
+import { enrichEntryList, setExpandState } from '@/helpers/helpers'
 const emit = defineEmits(['updateTitle'])
 
 const route = useRoute()
@@ -78,9 +77,7 @@ watch(
         if (newLength !== oldLength) {
             // only enrich work-list with the status-values if the data was freshly fetched
             workList.value = enrichEntryList(queryStatus, 'work')
-            expandDefaults('work')
-            expandById(route.params.slugs)
-            navigationState.update('work', route.params.slugs)
+            setExpandState('work', route.params.slugs, expandById, expandDefaults)
         }
     }
 )
@@ -88,8 +85,7 @@ watch(
 onMounted(() => {
     emit('updateTitle', 'work')
     workList.value = enrichEntryList(queryStatus, 'work')
-    expandDefaults('work')
-    expandById(route.params.slugs)
+    setExpandState('work', route.params.slugs, expandById, expandDefaults)
 })
 
 </script>

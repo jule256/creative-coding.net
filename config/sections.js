@@ -5,7 +5,7 @@ export const SECTIONS = [
         title: {
             en: 'home'
         },
-        to: '/'
+        to: '/home'
     },
     {
         id: 'work',

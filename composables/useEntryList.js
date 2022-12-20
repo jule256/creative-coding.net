@@ -12,7 +12,6 @@ export const useEntryList = (list, type) => {
     }
 
     const handleStatusChange = data => {
-        updateIdInPath(data.id, data.type)
         list.value[list.value.findIndex(entry => entry.id === data.id)].isExpanded = data.type === ENTRY_CONFIG.STATUS_TYPE_EXPAND
     }
 
@@ -28,7 +27,6 @@ export const useEntryList = (list, type) => {
         if (isElementInViewport(target, list.value[index].height)) {
             target.scrollIntoView(scrollOptions)
             expandByIndex(index)
-            updateIdInPath(id)
         } else {
             if (list.value[index].isExpanded) {
                 target.scrollIntoView(scrollOptions)
@@ -39,7 +37,6 @@ export const useEntryList = (list, type) => {
                     scrollTimeout = setTimeout(() => {
                         removeEventListener('scroll', scrollHandler)
                         expandByIndex(index)
-                        updateIdInPath(id)
                     }, 100)
                 }
                 addEventListener('scroll', scrollHandler)
@@ -70,28 +67,6 @@ export const useEntryList = (list, type) => {
             .filter(entry => entryIds.includes(entry.id.toString()))
             .map(entry => entry.index)
         expandByIndex(entryIndices)
-    }
-
-    const updateIdInPath = (id, status = ENTRY_CONFIG.STATUS_TYPE_EXPAND) => {
-        let activeIds = window.location.pathname
-            .split('/')
-            .filter(value => !Number.isNaN(parseInt(value)))
-        console.log('updateIdInPath() activeIds', activeIds)
-        if (status === ENTRY_CONFIG.STATUS_TYPE_EXPAND) {
-            activeIds = activeIds
-                .concat([id.toString()])
-                .sort((a, b) => a - b)
-                .filter((value, index, array) => array.indexOf(value) == index)
-        } else { // STATUS_TYPE_COLLAPSE
-            activeIds = activeIds
-                .filter(value => Number(value) !== id)
-        }
-        navigationState.update(type, activeIds)
-        history.pushState(
-            {},
-            null,
-            `/${type}/${activeIds.join('/')}`
-        )
     }
 
     return {
