@@ -56,7 +56,7 @@
 <script setup>
 import { useQuery } from 'vue-query'
 import { fetchData } from '@/helpers/network'
-import { enrichEntryList } from '@/helpers/helpers'
+import { enrichEntryList, setExpandState } from '@/helpers/helpers'
 const emit = defineEmits(['updateTitle'])
 
 const route = useRoute()
@@ -118,21 +118,13 @@ const age = computed(() => {
     return (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) ? age - 1 : age
 })
 
-const setExpandState = type => {
-    if (route.params.slugs.length > 0) {
-        expandById(route.params.slugs)
-    } else {
-        expandDefaults('news')
-    }
-}
-
 watch(
     () => queryStatus.entryList?.data.length || 0,
     (newLength, oldLength) => {
         if (newLength !== oldLength) {
             // only enrich news-list with the status-values if the data was freshly fetched
             newsList.value = enrichEntryList(queryStatus, 'news')
-            setExpandState('news')
+            setExpandState('news', route.params.slugs, expandById, expandDefaults)
         }
     }
 )
@@ -140,11 +132,7 @@ watch(
 onMounted(() => {
     emit('updateTitle', 'home')
     newsList.value = enrichEntryList(queryStatus, 'news')
-    setExpandState('news')
-
-    // @todo ➔ implement some system to be able to expand selected news entries
-    // const route = useRoute()
-    // console.log('route', route)
+    setExpandState('news', route.params.slugs, expandById, expandDefaults)
 })  
 </script>
 <style lang="postcss" scoped>
