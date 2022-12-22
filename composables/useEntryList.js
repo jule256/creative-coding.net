@@ -1,6 +1,5 @@
 import { isElementInViewport } from '../helpers/helpers.js'
 import { ENTRY_CONFIG } from '../config/config.js'
-import { navigationState } from '@/helpers/navigation'
 
 export const useEntryList = (list, type) => {
     const enableHighlight = id => {
