@@ -2,10 +2,9 @@ import { ENTRY_CONFIG } from '../config/config.js'
 
 export const useEntry = (data, emit) => {
 
-    const isHover = ref(false);
+    const isHover = ref(false)
 
-    // estimate a max-height for the first toggle (should be higher, but now lower, than the measured height)
-    const contentMaxHeight = ref(`${data.height}px`)
+    const contentMaxHeight = ref(`${data.height ? data.height + 'px' : 'none'}`)
 
     const handleToggle = () => {
         emit(
@@ -20,7 +19,6 @@ export const useEntry = (data, emit) => {
         if (height !== `${data.height}px`) {
             // only emit update if the height has actually changed
             emit('update-height', { id: data.id, height })
-
         }
     }
 
@@ -28,16 +26,17 @@ export const useEntry = (data, emit) => {
         return isHover.value || data.isHighlighted
     })
 
+    // @todo → identical in useEntry and useSection
     const toggleTitle = computed(() => {
         return data.isExpanded ? 'hide this entry' : 'show this entry'
     })
 
     return {
         contentMaxHeight,
-        handleToggle,
+        handleToggle, // @todo → refactor to "isEntryHover"
         handleUpdateHeight,
-        isHover,
-        isHighlighted,
+        isHover, // @todo → refactor to "isEntryHover"
+        isHighlighted, // @todo → refactor to "isEntryHighlighted"
         toggleTitle,
     }
 }
