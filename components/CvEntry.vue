@@ -1,5 +1,5 @@
 <template>
-    <article class="entry" :class="{ 'is-highlighted': isHighlighted }" :id="`cv-entry-${data.id}`">
+    <article class="entry XXX" :class="{ 'is-highlighted': isHighlighted }" :id="`cv-entry-${data.id}`">
         <div class="header">
             <h2>{{ data.headline['en'] }}</h2>
             <div class="control">
@@ -12,39 +12,16 @@
         <transition name="toggle" @after-enter="handleUpdateHeight" @before-leave="handleUpdateHeight">
             <div v-if="data.isExpanded" class="story">
                 <ul>
-                    <li v-for="(content, index) in data.content" class="section-entry">
-                        <span class="key">
-                            {{ content.key['en'] }}<br />
-                            [ hide ]
-                        </span>
-                        <span class="value">
-                            <template v-if="Array.isArray(content.value['en'])">
-                                <ul>
-                                    <li v-for="(entry) in content.value['en']">
-                                        <template v-if="Array.isArray(entry)">
-                                            <template v-for="line in entry">
-                                                {{ line }}<br />
-                                            </template>
-                                        </template>
-                                        <template v-else>
-                                            {{ entry }}
-                                        </template>
-                                    </li>
-                                </ul>
-                            </template>
-                            <template v-else>
-                                {{ content.value['en'] }}
-                            </template>
-                        </span>
-                    </li>
+                    <CvSection v-for="(content, index) in data.content" :content="content" :index="index"
+                        @content-status-change="handleContentStatusChange"
+                        @update-content-height="handleContentHeightUpdate" />
                 </ul>
             </div>
         </transition>
     </article>
 </template>
 <script setup>
-import { parseInline } from 'marked'
-import { formatDate } from '../helpers/helpers.js'
+import { ENTRY_CONFIG } from '../config/config.js'
 
 const emit = defineEmits(['status-change', 'update-height'])
 
@@ -60,19 +37,36 @@ const props = defineProps({
 })
 
 const {
-    contentMaxHeight,
+    contentMaxHeight, // @todo → maybe refactor "content"
     handleToggle,
     handleUpdateHeight,
     isHover,
     isHighlighted,
     toggleTitle,
 } = useEntry(props.data, emit)
+
+const handleContentStatusChange = payload => {
+    props.data.content[props.data.content.findIndex(section => section.id === payload.id)].hidden = payload.type === ENTRY_CONFIG.STATUS_TYPE_COLLAPSE
+}
+
+const handleContentHeightUpdate = payload => {
+    props.data.content[props.data.content.findIndex(section => section.id === payload.id)].height = parseInt(payload.height, 10)
+}
+
 </script>
 
 <style lang="postcss" scoped>
 .story {
     overflow: hidden;
     max-height: v-bind(contentMaxHeight);
+    margin: 0 -6px;
+    padding: 0 6px;
+
+    margin-bottom: 10px;
+
+    h2 {
+        display: inline;
+    }
 }
 
 .toggle-enter-active {
@@ -109,37 +103,6 @@ const {
 
     .control {
         text-align: right;
-    }
-}
-
-.story {
-    margin-bottom: 10px;
-
-    h2 {
-        display: inline;
-    }
-}
-
-.section-entry {
-    display: grid;
-    grid-template-columns: 150px fit-content(320px);
-    gap: 0 12px;
-    margin-bottom: 10px;
-
-    &:first-of-type {
-        margin-top: 5px;
-    }
-
-    li {
-        position: relative;
-        padding-left: 12px;
-        margin-bottom: 3px;
-
-        &::before {
-            content: '» ';
-            position: absolute;
-            left: 0;
-        }
     }
 }
 </style>
