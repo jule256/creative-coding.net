@@ -46,7 +46,8 @@ const {
 } = useEntry(props.data, emit)
 
 const handleContentStatusChange = payload => {
-    props.data.content[props.data.content.findIndex(section => section.id === payload.id)].hidden = payload.type === ENTRY_CONFIG.STATUS_TYPE_COLLAPSE
+    props.data.content[props.data.content.findIndex(section => section.id === payload.id)].isExpanded = payload.type === ENTRY_CONFIG.STATUS_TYPE_EXPAND
+
 }
 
 const handleContentHeightUpdate = payload => {

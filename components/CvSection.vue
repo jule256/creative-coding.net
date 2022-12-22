@@ -2,15 +2,15 @@
     <li class="section-entry" :class="{ 'is-section-highlighted': isSectionHighlighted }">
         <div class="key">
             {{ content.key['en'] }}
-            <div v-if="content.hideable" class="control">
+            <div v-if="content.isExpandable" class="control">
                 [ <NuxtLink @mouseover="isSectionHover = true" @mouseleave="isSectionHover = false"
-                    @click="handleSectionToggle" :title="toggleTitle">{{ content.hidden ?
-                            'show' : 'hide'
+                    @click="handleSectionToggle" :title="toggleTitle">{{ content.isExpanded ?
+                            'hide' : 'show'
                     }}</NuxtLink> ]
             </div>
         </div>
         <transition name="toggle" @after-enter="handleUpdateHeight" @before-leave="handleUpdateHeight">
-            <div v-if="!content.hidden" class="value toggle-enter-active toggle-enter-to">
+            <div v-if="content.isExpanded" class="value">
                 <template v-if="Array.isArray(content.value['en'])">
                     <ul>
                         <li v-for="(entry) in content.value['en']">
@@ -19,9 +19,8 @@
                                     {{ line }}<br />
                                 </template>
                             </template>
-                            <template v-else>
-                                {{ entry }}
-                            </template>
+                            <div v-html="`${parseInline(entry)}`" v-else>
+                            </div>
                         </li>
                     </ul>
                 </template>
@@ -33,7 +32,7 @@
     </li>
 </template>
 <script setup>
-// @todo → "parse" links and make them clickable
+import { parseInline } from 'marked'
 
 const emit = defineEmits(['content-status-change', 'update-content-height'])
 

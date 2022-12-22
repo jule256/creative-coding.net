@@ -7,10 +7,9 @@ export const useSection = (content, emit) => {
     const contentMaxHeight = ref(`${content.height ? content.height + 'px' : 'none'}`)
 
     const handleSectionToggle = () => {
-        console.log(`handleSectionToggle()`, content)
         emit(
             'content-status-change',
-            { id: content.id, type: content.hidden ? ENTRY_CONFIG.STATUS_TYPE_EXPAND : ENTRY_CONFIG.STATUS_TYPE_COLLAPSE }
+            { id: content.id, type: content.isExpanded ? ENTRY_CONFIG.STATUS_TYPE_COLLAPSE : ENTRY_CONFIG.STATUS_TYPE_EXPAND }
         )
     }
 
@@ -24,12 +23,12 @@ export const useSection = (content, emit) => {
     }
 
     const isSectionHighlighted = computed(() => {
-        return isSectionHover.value
+        return isSectionHover.value || content.isHighlighted // @todo → check if this breaks something
     })
 
     // @todo → identical in useEntry and useSection
     const toggleTitle = computed(() => {
-        return content.hidden ? 'show this entry' : 'hide this entry'
+        return content.isExpanded ? 'hide this entry' : 'show this entry'
     })
 
     return {
