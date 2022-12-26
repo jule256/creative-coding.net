@@ -1,4 +1,5 @@
-import { ENTRY_CONFIG } from '@/config/config.js'
+import { ENTRY_CONFIG } from '@/config/config'
+import { PAGES } from '@/config/pages'
 
 export const isElementInViewport = (el, expandedHeight) => {
     const lowerEnd = el.offsetTop + el.offsetHeight + expandedHeight
@@ -40,4 +41,9 @@ export const getSitemapLinkParameter = (id, type, list, ignoreOpenDefaultEntries
         alwaysOpenEntries = list.slice(0, ENTRY_CONFIG[`OPEN_${type.toUpperCase()}_ENTRIES_BY_DEFAULT`])
     }
     return alwaysOpenEntries.find(entry => entry.id === id) ? '' : `/${id}`
+}
+
+export const setHeadTitle = id => {
+    const title = PAGES.find(page => page.id === id).title.head['en']
+    return `Julian Mollik » ${title}`
 }
