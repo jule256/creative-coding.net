@@ -4,7 +4,7 @@ export const useEntry = (data, emit) => {
 
     const isHover = ref(false)
 
-    const contentMaxHeight = ref(`${data.height ? data.height + 'px' : 'none'}`)
+    const maxHeight = ref(`${data.height ? data.height + 'px' : 'none'}`)
 
     const handleToggle = () => {
         emit(
@@ -15,7 +15,7 @@ export const useEntry = (data, emit) => {
 
     const handleUpdateHeight = el => {
         const height = getComputedStyle(el).height
-        contentMaxHeight.value = height
+        maxHeight.value = height
         if (height !== `${data.height}px`) {
             // only emit update if the height has actually changed
             emit('update-height', { id: data.id, height })
@@ -26,17 +26,16 @@ export const useEntry = (data, emit) => {
         return isHover.value || data.isHighlighted
     })
 
-    // @todo → identical in useEntry and useSection
     const toggleTitle = computed(() => {
         return data.isExpanded ? 'hide this entry' : 'show this entry'
     })
 
     return {
-        contentMaxHeight,
-        handleToggle, // @todo → refactor to "isEntryHover"
+        maxHeight,
+        handleToggle,
         handleUpdateHeight,
-        isHover, // @todo → refactor to "isEntryHover"
-        isHighlighted, // @todo → refactor to "isEntryHighlighted"
+        isHover,
+        isHighlighted,
         toggleTitle,
     }
 }
