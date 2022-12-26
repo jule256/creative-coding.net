@@ -50,7 +50,13 @@
 </template>
 
 <script setup>
-const emit = defineEmits(['updateTitle']);
+import { setHeadTitle } from '@/helpers/helpers'
+const emit = defineEmits(['updateTitle'])
+const pageId = 'contact'
+
+useHead({
+    title: setHeadTitle(pageId)
+})
 
 const techRaw = [
     {
@@ -79,9 +85,9 @@ const techRaw = [
         text: 'CSS'
     },
     {
-        url: 'https://nuxtjs.org/',
-        title: 'The Intuitive Vue Framework',
-        text: 'NuxtJS'
+        url: 'https://nuxt.com/v3',
+        title: 'The Intuitive Web Framework',
+        text: 'Nuxt'
     },
     {
         url: 'https://github.com/',
@@ -130,7 +136,7 @@ const techSorted = computed(() => {
 })
 
 onMounted(() => {
-    emit('updateTitle', 'contact')
+    emit('updateTitle', pageId)
 })
 </script>
 <style lang="postcss" scoped>
