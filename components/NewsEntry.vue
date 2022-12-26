@@ -33,7 +33,7 @@ const props = defineProps({
 })
 
 const {
-    contentMaxHeight,
+    maxHeight,
     handleToggle,
     handleUpdateHeight,
     isHover,
@@ -45,7 +45,7 @@ const {
 <style lang="postcss" scoped>
 .story {
     overflow: hidden;
-    max-height: v-bind(contentMaxHeight);
+    max-height: v-bind(maxHeight);
 }
 
 .toggle-enter-active {
