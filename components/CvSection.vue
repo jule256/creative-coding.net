@@ -5,9 +5,9 @@
             {{ content.key['en'] }}
             <div v-if="content.isExpandable" class="control">
                 [ <NuxtLink @mouseover="isHover = true" @mouseleave="isHover = false" @click="handleToggle"
-                    :title="toggleTitle">{{ content.isExpanded ?
-                            'hide' : 'show'
-                    }}</NuxtLink> ]
+                    :title="toggleTitle">
+                    {{ content.isExpanded ? 'hide' : 'show' }}
+                </NuxtLink> ]
             </div>
         </div>
         <transition name="toggle" @after-enter="handleUpdateHeight" @before-leave="handleUpdateHeight">
