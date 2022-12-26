@@ -1,4 +1,5 @@
 <template>
+  <!-- @todo ➔ implement light/dark/auto theme functionality -->
   <div class="container" id="top" :style="appVariables">
     <component :is="'style'">
       :root {
@@ -7,7 +8,7 @@
       }
     </component>
     <button class="temp" @click="themeKey = themeKey === 'default' ? 'crazy' : 'default'">changeTheme ({{ themeKey
-    }})</button>
+}})</button>
     <Header :title="title" />
     <Navigation />
     <NuxtPage @updateTitle="setTitle" />
@@ -15,12 +16,15 @@
   </div>
 </template>
 <script setup>
-import { themes as themeLibrary } from './config/themes.js'
+import { PAGES } from '@/config/pages'
+import { themes as themeLibrary } from './config/themes'
 
 const route = useRoute()
 
 const title = ref('')
-const setTitle = newTitle => title.value = newTitle;
+const setTitle = id => {
+  title.value = PAGES.find(page => page.id === id).title.header['en']
+}
 
 const themeKey = ref('default')
 const appVariables = computed(() => ({
