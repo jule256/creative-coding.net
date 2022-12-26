@@ -1,17 +1,18 @@
 <template>
-    <li class="section-entry" :class="{ 'is-section-highlighted': isSectionHighlighted }">
+    <li class="section-entry" :class="{ 'is-section-highlighted': isHighlighted, 'is-compact': isCompact }">
+        <!-- @todo add no-padding-no-margin class if the v-else below applies   -->
         <div class="key">
             {{ content.key['en'] }}
             <div v-if="content.isExpandable" class="control">
-                [ <NuxtLink @mouseover="isSectionHover = true" @mouseleave="isSectionHover = false"
-                    @click="handleSectionToggle" :title="toggleTitle">{{ content.isExpanded ?
+                [ <NuxtLink @mouseover="isHover = true" @mouseleave="isHover = false" @click="handleToggle"
+                    :title="toggleTitle">{{ content.isExpanded ?
                             'hide' : 'show'
                     }}</NuxtLink> ]
             </div>
         </div>
         <transition name="toggle" @after-enter="handleUpdateHeight" @before-leave="handleUpdateHeight">
             <div v-if="content.isExpanded" class="value">
-                <template v-if="Array.isArray(content.value['en'])">
+                <template v-if="!isCompact">
                     <ul>
                         <li v-for="(entry) in content.value['en']">
                             <template v-if="Array.isArray(entry)">
@@ -34,7 +35,7 @@
 <script setup>
 import { parseInline } from 'marked'
 
-const emit = defineEmits(['content-status-change', 'update-content-height'])
+const emit = defineEmits(['status-change', 'update-height'])
 
 const props = defineProps({
     content: {
@@ -47,14 +48,18 @@ const props = defineProps({
     }
 })
 
+const isCompact = computed(() => {
+    return !Array.isArray(props.content.value['en'])
+})
+
 const {
-    contentMaxHeight,
-    handleSectionToggle,
+    maxHeight,
+    handleToggle,
     handleUpdateHeight,
-    isSectionHover,
-    isSectionHighlighted,
+    isHover,
+    isHighlighted,
     toggleTitle,
-} = useSection(props.content, emit)
+} = useEntry(props.content, emit)
 </script>
 
 <style lang="postcss" scoped>
@@ -92,12 +97,19 @@ const {
     .control {
         margin-top: 10px;
     }
+
+    &.is-compact {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-top: 0;
+        padding-bottom: 3px;
+    }
 }
 
 /* note that the max-height animation does NOT work if the .value {} is defined nested within .section-entry 🤦🏻‍♂️ */
 .value {
     overflow: hidden;
-    max-height: v-bind(contentMaxHeight);
+    max-height: v-bind(maxHeight);
 }
 
 .toggle-enter-active {
