@@ -34,7 +34,10 @@ export const setExpandState = (type, slugs = [], expandById, expandDefaults) => 
     }
 }
 
-export const getSitemapLinkParameter = (id, type, list) => {
-    const alwaysOpenEntries = list.slice(0, ENTRY_CONFIG[`OPEN_${type.toUpperCase()}_ENTRIES_BY_DEFAULT`])
+export const getSitemapLinkParameter = (id, type, list, ignoreOpenDefaultEntries = false) => {
+    let alwaysOpenEntries = []
+    if (!ignoreOpenDefaultEntries) {
+        alwaysOpenEntries = list.slice(0, ENTRY_CONFIG[`OPEN_${type.toUpperCase()}_ENTRIES_BY_DEFAULT`])
+    }
     return alwaysOpenEntries.find(entry => entry.id === id) ? '' : `/${id}`
 }

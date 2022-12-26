@@ -1,7 +1,7 @@
 <template>
-    <article class="entry" :class="{ 'is-highlighted': isHighlighted }" :id="`news-entry-${data.id}`">
+    <article class="entry" :class="{ 'is-highlighted': isHighlighted }" :id="`cv-entry-${data.id}`">
         <div class="header">
-            <h2>{{ data.headline }}</h2>
+            <h2>{{ data.headline['en'] }}</h2>
             <div class="control">
                 [ <NuxtLink @mouseover="isHover = true" @mouseleave="isHover = false" @click="handleToggle"
                     :title="toggleTitle">{{ data.isExpanded ?
@@ -11,17 +11,16 @@
         </div>
         <transition name="toggle" @after-enter="handleUpdateHeight" @before-leave="handleUpdateHeight">
             <div v-if="data.isExpanded" class="story">
-                <p v-for="paragraph in data.content" v-html="parseInline(paragraph)" />
-                <p class="footer">
-                    {{ formatDate(data.date) }}
-                </p>
+                <ul>
+                    <CvSection v-for="(content, index) in data.content" :content="content" :index="index"
+                        @status-change="handleContentStatusChange" @update-height="handleContentHeightUpdate" />
+                </ul>
             </div>
         </transition>
     </article>
 </template>
 <script setup>
-import { parseInline } from 'marked'
-import { formatDate } from '../helpers/helpers.js'
+import { ENTRY_CONFIG } from '../config/config.js'
 
 const emit = defineEmits(['status-change', 'update-height'])
 
@@ -29,6 +28,10 @@ const props = defineProps({
     data: {
         type: Object,
         default: () => { }
+    },
+    index: {
+        type: Number,
+        default: 0
     }
 })
 
@@ -40,12 +43,30 @@ const {
     isHighlighted,
     toggleTitle,
 } = useEntry(props.data, emit)
+
+const handleContentStatusChange = payload => {
+    props.data.content[props.data.content.findIndex(section => section.id === payload.id)].isExpanded = payload.type === ENTRY_CONFIG.STATUS_TYPE_EXPAND
+
+}
+
+const handleContentHeightUpdate = payload => {
+    props.data.content[props.data.content.findIndex(section => section.id === payload.id)].height = parseInt(payload.height, 10)
+}
+
 </script>
 
 <style lang="postcss" scoped>
 .story {
     overflow: hidden;
     max-height: v-bind(maxHeight);
+    margin: 0 -6px;
+    padding: 0 6px;
+
+    margin-bottom: 10px;
+
+    h2 {
+        display: inline;
+    }
 }
 
 .toggle-enter-active {
@@ -58,7 +79,7 @@ const {
 
 .toggle-enter-from,
 .toggle-leave-to {
-    max-height: 0px;
+    max-height: 0;
 }
 
 .entry {
@@ -82,20 +103,6 @@ const {
 
     .control {
         text-align: right;
-    }
-}
-
-.story {
-    margin-bottom: 10px;
-
-    p {
-        text-indent: 12px;
-        text-align: justify;
-        margin-bottom: 6px;
-
-        &.footer {
-            text-align: right;
-        }
     }
 }
 </style>

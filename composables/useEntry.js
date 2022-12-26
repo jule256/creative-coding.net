@@ -2,10 +2,9 @@ import { ENTRY_CONFIG } from '../config/config.js'
 
 export const useEntry = (data, emit) => {
 
-    const isHover = ref(false);
+    const isHover = ref(false)
 
-    // estimate a max-height for the first toggle (should be higher, but now lower, than the measured height)
-    const contentMaxHeight = ref(`${data.height}px`)
+    const maxHeight = ref(`${data.height ? data.height + 'px' : 'none'}`)
 
     const handleToggle = () => {
         emit(
@@ -16,11 +15,10 @@ export const useEntry = (data, emit) => {
 
     const handleUpdateHeight = el => {
         const height = getComputedStyle(el).height
-        contentMaxHeight.value = height
+        maxHeight.value = height
         if (height !== `${data.height}px`) {
             // only emit update if the height has actually changed
             emit('update-height', { id: data.id, height })
-
         }
     }
 
@@ -33,7 +31,7 @@ export const useEntry = (data, emit) => {
     })
 
     return {
-        contentMaxHeight,
+        maxHeight,
         handleToggle,
         handleUpdateHeight,
         isHover,
