@@ -1,5 +1,5 @@
 <template>
-    <article class="entry XXX" :class="{ 'is-highlighted': isHighlighted }" :id="`cv-entry-${data.id}`">
+    <article class="entry" :class="{ 'is-highlighted': isHighlighted }" :id="`cv-entry-${data.id}`">
         <div class="header">
             <h2>{{ data.headline['en'] }}</h2>
             <div class="control">
@@ -13,8 +13,7 @@
             <div v-if="data.isExpanded" class="story">
                 <ul>
                     <CvSection v-for="(content, index) in data.content" :content="content" :index="index"
-                        @content-status-change="handleContentStatusChange"
-                        @update-content-height="handleContentHeightUpdate" />
+                        @status-change="handleContentStatusChange" @update-height="handleContentHeightUpdate" />
                 </ul>
             </div>
         </transition>
@@ -37,7 +36,7 @@ const props = defineProps({
 })
 
 const {
-    contentMaxHeight, // @todo → maybe refactor "content"
+    maxHeight,
     handleToggle,
     handleUpdateHeight,
     isHover,
@@ -59,7 +58,7 @@ const handleContentHeightUpdate = payload => {
 <style lang="postcss" scoped>
 .story {
     overflow: hidden;
-    max-height: v-bind(contentMaxHeight);
+    max-height: v-bind(maxHeight);
     margin: 0 -6px;
     padding: 0 6px;
 
