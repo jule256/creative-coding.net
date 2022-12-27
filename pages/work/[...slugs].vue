@@ -21,13 +21,9 @@
 <script setup>
 import { useQuery } from 'vue-query'
 import { fetchData } from '@/helpers/network'
-import { enrichEntryList, setExpandState, setHeadTitle } from '@/helpers/helpers'
+import { enrichEntryList, setExpandState } from '@/helpers/helpers'
 const emit = defineEmits(['updateTitle'])
 const pageId = 'work'
-
-useHead({
-    title: setHeadTitle(pageId)
-})
 
 const route = useRoute()
 

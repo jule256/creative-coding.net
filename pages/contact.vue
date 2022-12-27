@@ -50,13 +50,8 @@
 </template>
 
 <script setup>
-import { setHeadTitle } from '@/helpers/helpers'
 const emit = defineEmits(['updateTitle'])
 const pageId = 'contact'
-
-useHead({
-    title: setHeadTitle(pageId)
-})
 
 const techRaw = [
     {

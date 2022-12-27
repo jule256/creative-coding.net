@@ -16,15 +16,10 @@
 </template>
 
 <script setup>
-import { setHeadTitle } from '@/helpers/helpers'
 import { PAGES } from '@/config/pages'
 import { SitemapHome, SitemapWork, SitemapCv, SitemapContact } from '#components'
 const emit = defineEmits(['updateTitle'])
 const pageId = 'sitemap'
-
-useHead({
-    title: setHeadTitle(pageId)
-})
 
 const getComponent = id => {
     switch (id) {
