@@ -1,6 +1,10 @@
 <template>
   <!-- @todo ➔ implement light/dark/auto theme functionality -->
   <div class="container" id="top" :style="appVariables">
+
+    <Head>
+      <Title>{{ titleHead }}</Title>
+    </Head>
     <component :is="'style'">
       :root {
       --background-color-body: {{ rootVariables.backgroundColorBody }};
@@ -11,12 +15,13 @@
     }})</button>
     <Header :title="title" />
     <Navigation />
-    <NuxtPage @updateTitle="setTitle" />
+    <NuxtPage @updateTitle="setTitles" />
     <Footer />
   </div>
 </template>
 <script setup>
 import { PAGES } from '@/config/pages'
+import { setHeadTitle } from '@/helpers/helpers'
 import { themes as themeLibrary } from './config/themes'
 
 const route = useRoute()
@@ -24,6 +29,7 @@ const route = useRoute()
 const themeKey = ref('default')
 const isFocused = ref(true)
 const title = ref('')
+const titleHead = ref('')
 
 const faviconPath = computed(() => {
   const mapping = {
@@ -49,8 +55,9 @@ useHead({
   ]
 })
 
-const setTitle = id => {
+const setTitles = id => {
   title.value = PAGES.find(page => page.id === id).title.header['en']
+  titleHead.value = setHeadTitle(id)
 }
 
 
