@@ -1,6 +1,5 @@
 <template>
     <li class="section-entry" :class="{ 'is-section-highlighted': isHighlighted, 'is-compact': isCompact }">
-        <!-- @todo add no-padding-no-margin class if the v-else below applies   -->
         <div class="key">
             {{ content.key['en'] }}
             <div v-if="content.isExpandable" class="control">
