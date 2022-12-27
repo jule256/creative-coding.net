@@ -13,17 +13,26 @@
       }
     </component>
     <button class="temp" @click="themeKey = themeKey === 'default' ? 'crazy' : 'default'">changeTheme ({{ themeKey
-    }})</button>
+}})</button>
     <Header :title="title" />
     <Navigation />
-    <NuxtPage @updateTitle="setTitles" />
+    <NuxtPage @updatePageId="setPageId" />
     <Footer />
   </div>
 </template>
 <script setup>
 import { PAGES } from '@/config/pages'
-import { setHeadTitle } from '@/helpers/helpers'
+import { setHeadTitle, getPageTitle } from '@/helpers/helpers'
 import { themes as themeLibrary } from './config/themes'
+
+const BLURRED_TITLES = [
+  `Julian Mollik » __PAGE_TITLE__`,
+  `Julian Mollik  »__PAGE_TITLE__`,
+  `Julian Mollik  «__PAGE_TITLE__`,
+  `Julian Mollik « __PAGE_TITLE__`,
+  `Julian Mollik«  __PAGE_TITLE__`,
+  `Julian Mollik»  __PAGE_TITLE__`,
+]
 
 const route = useRoute()
 
@@ -31,6 +40,14 @@ const themeKey = ref('default')
 const isFocused = ref(true)
 const title = ref('')
 const titleHead = ref('')
+const pageId = ref('')
+
+let intervalId
+let intervalCount = 0
+
+const setPageId = id => {
+  pageId.value = id
+}
 
 const setTitles = id => {
   title.value = PAGES.find(page => page.id === id).title.header['en']
@@ -85,6 +102,26 @@ onMounted(() => {
   window.onblur = () => {
     isFocused.value = false
   }
+})
+
+const updateBlurredTitle = () => {
+  const titleIndex = intervalCount % BLURRED_TITLES.length
+  titleHead.value = BLURRED_TITLES[titleIndex].replace('__PAGE_TITLE__', getPageTitle(pageId.value))
+  intervalCount++
+}
+
+watch(isFocused, (isFocused) => {
+  if (isFocused) {
+    clearInterval(intervalId)
+    setTitles(pageId.value)
+  } else {
+    intervalCount = 0
+    intervalId = setInterval(updateBlurredTitle, 1000)
+  }
+})
+
+watch(pageId, (pageId) => {
+  setTitles(pageId)
 })
 
 </script>
