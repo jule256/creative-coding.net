@@ -100,7 +100,7 @@ const {
 
     &.is-compact {
         margin-top: 0;
-        margin-bottom: 3px;
+        margin-bottom: 6px;
         padding-top: 0;
         padding-bottom: 3px;
     }
