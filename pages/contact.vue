@@ -50,7 +50,8 @@
 </template>
 
 <script setup>
-const emit = defineEmits(['updateTitle']);
+const emit = defineEmits(['updatePageId'])
+const pageId = 'contact'
 
 const techRaw = [
     {
@@ -79,9 +80,9 @@ const techRaw = [
         text: 'CSS'
     },
     {
-        url: 'https://nuxtjs.org/',
-        title: 'The Intuitive Vue Framework',
-        text: 'NuxtJS'
+        url: 'https://nuxt.com/v3',
+        title: 'The Intuitive Web Framework',
+        text: 'Nuxt'
     },
     {
         url: 'https://github.com/',
@@ -123,6 +124,11 @@ const techRaw = [
         title: 'Using CSS custom properties (variables)',
         text: 'CSS variables'
     },
+    {
+        url: 'https://yoksel.github.io/url-encoder/',
+        title: 'URL-encoder for SVG',
+        text: 'URL-encoder for SVG'
+    },
 ]
 
 const techSorted = computed(() => {
@@ -130,7 +136,7 @@ const techSorted = computed(() => {
 })
 
 onMounted(() => {
-    emit('updateTitle', 'contact')
+    emit('updatePageId', pageId)
 })
 </script>
 <style lang="postcss" scoped>

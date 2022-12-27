@@ -1,5 +1,11 @@
 <template>
+  <!-- @todo ➔ implement light/dark/auto theme functionality -->
   <div class="container" id="top" :style="appVariables">
+
+    <Head>
+      <Title>{{ titleHead }}</Title>
+      <Link rel="icon" :href="`data:image/svg+xml,${faviconData}`" type="image/svg+xml" />
+    </Head>
     <component :is="'style'">
       :root {
       --background-color-body: {{ rootVariables.backgroundColorBody }};
@@ -7,22 +13,60 @@
       }
     </component>
     <button class="temp" @click="themeKey = themeKey === 'default' ? 'crazy' : 'default'">changeTheme ({{ themeKey
-    }})</button>
+}})</button>
     <Header :title="title" />
     <Navigation />
-    <NuxtPage @updateTitle="setTitle" />
+    <NuxtPage @updatePageId="setPageId" />
     <Footer />
   </div>
 </template>
 <script setup>
-import { themes as themeLibrary } from './config/themes.js'
+import { PAGES } from '@/config/pages'
+import { setHeadTitle, getPageTitle } from '@/helpers/helpers'
+import { themes as themeLibrary } from './config/themes'
+
+const BLURRED_TITLES = [
+  `Julian Mollik » __PAGE_TITLE__`,
+  `Julian Mollik  »__PAGE_TITLE__`,
+  `Julian Mollik  «__PAGE_TITLE__`,
+  `Julian Mollik « __PAGE_TITLE__`,
+  `Julian Mollik«  __PAGE_TITLE__`,
+  `Julian Mollik»  __PAGE_TITLE__`,
+]
 
 const route = useRoute()
 
-const title = ref('')
-const setTitle = newTitle => title.value = newTitle;
-
 const themeKey = ref('default')
+const isFocused = ref(true)
+const title = ref('')
+const titleHead = ref('')
+const pageId = ref('')
+
+let intervalId
+let intervalCount = 0
+
+const setPageId = id => {
+  pageId.value = id
+}
+
+const setTitles = id => {
+  title.value = PAGES.find(page => page.id === id).title.header['en']
+  titleHead.value = setHeadTitle(id)
+}
+
+// created with https://yoksel.github.io/url-encoder/
+const faviconData = computed(() => {
+  return [
+    `%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E`,
+    `%3Csvg viewBox='-0.001 0 100 85' width='100' height='85' xmlns='http://www.w3.org/2000/svg'%3E`,
+    `  %3Cg transform='matrix(3.13, 0, 0, 3.13, 0, 0)'%3E`,
+    `    %3Cpath d='M 15.988 -2.489 L 29.488 5.507 L 29.488 21.496 L 15.988 29.488 L 2.488 21.496 L 2.488 5.507 L 15.988 -2.489 Z' style='fill: %23${themeLibrary[themeKey.value].favicon[isFocused.value ? 'focus' : 'blur'].faviconColorFill1};' transform='matrix(0, 1, -1, 0, 30, -2.5)'/%3E`,
+    `    %3Cpath d='M 15.988 0.867 L 26.655 7.185 L 26.655 19.817 L 15.988 26.132 L 5.321 19.817 L 5.321 7.185 L 15.988 0.867 Z' style='fill: %23${themeLibrary[themeKey.value].favicon[isFocused.value ? 'focus' : 'blur'].faviconColorFill2}; stroke: %23${themeLibrary[themeKey.value].favicon[isFocused.value ? 'focus' : 'blur'].faviconColorStroke2}; stroke-width: 2px;' transform='matrix(0, 1, -1, 0, 30, -2.5)'/%3E`,
+    `  %3C/g%3E`,
+    `%3C/svg%3E`,
+  ].join('')
+})
+
 const appVariables = computed(() => ({
   '--font-color': themeLibrary[themeKey.value].fontColor,
   '--border-color': themeLibrary[themeKey.value].borderColor,
@@ -50,6 +94,36 @@ const rootVariables = computed(() => ({
 if (route.fullPath === '/') {
   await navigateTo('/home', { redirectCode: 301 })
 }
+
+onMounted(() => {
+  window.onfocus = () => {
+    isFocused.value = true
+  }
+  window.onblur = () => {
+    isFocused.value = false
+  }
+})
+
+const updateBlurredTitle = () => {
+  const titleIndex = intervalCount % BLURRED_TITLES.length
+  titleHead.value = BLURRED_TITLES[titleIndex].replace('__PAGE_TITLE__', getPageTitle(pageId.value))
+  intervalCount++
+}
+
+watch(isFocused, (isFocused) => {
+  if (isFocused) {
+    clearInterval(intervalId)
+    setTitles(pageId.value)
+  } else {
+    intervalCount = 0
+    intervalId = setInterval(updateBlurredTitle, 1000)
+  }
+})
+
+watch(pageId, (pageId) => {
+  setTitles(pageId)
+})
+
 </script>
 <style lang="postcss" scoped>
 .temp {

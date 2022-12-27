@@ -1,12 +1,14 @@
 <template>
     <div class="content">
         <main class="main">
-            <template v-for="entry in entries">
-                <section :class="entry.id">
+            <template v-for="page in mainNavigationPages">
+                <section :class="page.id">
                     <h1>
-                        <NuxtLink :to="navigationState.buildTo(entry)" class="entry">{{ entry.title['en'] }}</NuxtLink>
+                        <!-- @todo ➔ check if class .entry exists and if it needs to be refactored to .page -->
+                        <NuxtLink :to="page.to" class="entry">{{ page.title.header['en'] }}
+                        </NuxtLink>
                     </h1>
-                    <Component :is="entry.component" />
+                    <Component :is="page.component" />
                 </section>
             </template>
         </main>
@@ -14,10 +16,10 @@
 </template>
 
 <script setup>
+import { PAGES } from '@/config/pages'
 import { SitemapHome, SitemapWork, SitemapCv, SitemapContact } from '#components'
-import { SECTIONS } from '../config/sections.js'
-import { navigationState } from '@/helpers/navigation'
-const emit = defineEmits(['updateTitle'])
+const emit = defineEmits(['updatePageId'])
+const pageId = 'sitemap'
 
 const getComponent = id => {
     switch (id) {
@@ -32,18 +34,20 @@ const getComponent = id => {
     }
 }
 
-const entries = computed(() => {
-    const result = SECTIONS.map(section => {
-        return {
-            ...section,
-            component: getComponent(section.id)
-        }
-    })
+const mainNavigationPages = computed(() => {
+    const result = PAGES
+        .filter(page => page.mainNavigation)
+        .map(page => {
+            return {
+                ...page,
+                component: getComponent(page.id)
+            }
+        })
     return result
 })
 
 onMounted(() => {
-    emit('updateTitle', 'sitemap')
+    emit('updatePageId', pageId)
 })
 </script>
 <style lang="postcss" scoped>

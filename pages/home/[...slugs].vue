@@ -57,7 +57,8 @@
 import { useQuery } from 'vue-query'
 import { fetchData } from '@/helpers/network'
 import { enrichEntryList, setExpandState } from '@/helpers/helpers'
-const emit = defineEmits(['updateTitle'])
+const emit = defineEmits(['updatePageId'])
+const pageId = 'home'
 
 const route = useRoute()
 
@@ -130,10 +131,10 @@ watch(
 )
 
 onMounted(() => {
-    emit('updateTitle', 'home')
+    emit('updatePageId', pageId)
     newsList.value = enrichEntryList(queryStatus, 'news')
     setExpandState('news', route.params.slugs, expandById, expandDefaults)
-})  
+})
 </script>
 <style lang="postcss" scoped>
 .intro {

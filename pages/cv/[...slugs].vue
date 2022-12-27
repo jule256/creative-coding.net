@@ -26,7 +26,8 @@
 import { useQuery } from 'vue-query'
 import { fetchData } from '@/helpers/network'
 import { enrichEntryList, setExpandState } from '@/helpers/helpers'
-const emit = defineEmits(['updateTitle'])
+const emit = defineEmits(['updatePageId'])
+const pageId = 'cv'
 
 const route = useRoute()
 
@@ -87,7 +88,7 @@ watch(
 )
 
 onMounted(() => {
-    emit('updateTitle', 'curriculum vitae')
+    emit('updatePageId', pageId)
     cvList.value = enrichEntryList(queryStatus, 'cv')
     setExpandState('cv', route.params.slugs, expandById, expandDefaults)
 })

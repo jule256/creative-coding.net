@@ -1,16 +1,21 @@
 <template>
     <nav class="navigation">
         <ul>
-            <li v-for="entry in SECTIONS">
-                <NuxtLink :to="navigationState.buildTo(entry)" class="entry">{{ entry.title['en'] }}
+            <li v-for="page in mainNavigationPages">
+                <!-- @todo ➔ check if class .entry exists and if it needs to be refactored to .page -->
+                <NuxtLink :to="page.to" class="entry">{{ page.title.navigation['en'] }}
                 </NuxtLink>
             </li>
         </ul>
     </nav>
 </template>
 <script setup>
-import { SECTIONS } from '../config/sections.js'
-import { navigationState } from '@/helpers/navigation'
+import { PAGES } from '../config/pages'
+
+const mainNavigationPages = computed(() => {
+    return PAGES.filter(page => page.mainNavigation === true)
+})
+
 </script>
 
 <style lang="postcss" scoped>
