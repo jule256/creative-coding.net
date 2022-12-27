@@ -8,7 +8,7 @@
       }
     </component>
     <button class="temp" @click="themeKey = themeKey === 'default' ? 'crazy' : 'default'">changeTheme ({{ themeKey
-}})</button>
+    }})</button>
     <Header :title="title" />
     <Navigation />
     <NuxtPage @updateTitle="setTitle" />
@@ -21,12 +21,39 @@ import { themes as themeLibrary } from './config/themes'
 
 const route = useRoute()
 
+const themeKey = ref('default')
+const isFocused = ref(true)
 const title = ref('')
+
+const faviconPath = computed(() => {
+  const mapping = {
+    default: {
+      focus: 'default_focus.svg',
+      blur: 'default_blur.svg',
+    },
+    crazy: {
+      focus: 'crazy_focus.svg',
+      blur: 'crazy_blur.svg',
+    }
+  }
+  return `favicon/${mapping[themeKey.value][isFocused.value ? 'focus' : 'blur']}`
+})
+
+useHead({
+  link: [
+    {
+      rel: 'icon',
+      type: 'image/svg+xml',
+      href: faviconPath
+    }
+  ]
+})
+
 const setTitle = id => {
   title.value = PAGES.find(page => page.id === id).title.header['en']
 }
 
-const themeKey = ref('default')
+
 const appVariables = computed(() => ({
   '--font-color': themeLibrary[themeKey.value].fontColor,
   '--border-color': themeLibrary[themeKey.value].borderColor,
@@ -54,6 +81,16 @@ const rootVariables = computed(() => ({
 if (route.fullPath === '/') {
   await navigateTo('/home', { redirectCode: 301 })
 }
+
+onMounted(() => {
+  window.onfocus = () => {
+    isFocused.value = true
+  }
+  window.onblur = () => {
+    isFocused.value = false
+  }
+})
+
 </script>
 <style lang="postcss" scoped>
 .temp {
