@@ -18,7 +18,7 @@
 <script setup>
 import { PAGES } from '@/config/pages'
 import { SitemapHome, SitemapWork, SitemapCv, SitemapContact } from '#components'
-const emit = defineEmits(['updateTitle'])
+const emit = defineEmits(['updatePageId'])
 const pageId = 'sitemap'
 
 const getComponent = id => {
@@ -47,7 +47,7 @@ const mainNavigationPages = computed(() => {
 })
 
 onMounted(() => {
-    emit('updateTitle', pageId)
+    emit('updatePageId', pageId)
 })
 </script>
 <style lang="postcss" scoped>

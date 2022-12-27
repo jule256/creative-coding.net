@@ -50,7 +50,7 @@
 </template>
 
 <script setup>
-const emit = defineEmits(['updateTitle'])
+const emit = defineEmits(['updatePageId'])
 const pageId = 'contact'
 
 const techRaw = [
@@ -136,7 +136,7 @@ const techSorted = computed(() => {
 })
 
 onMounted(() => {
-    emit('updateTitle', pageId)
+    emit('updatePageId', pageId)
 })
 </script>
 <style lang="postcss" scoped>
