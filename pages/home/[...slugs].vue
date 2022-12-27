@@ -138,7 +138,7 @@ onMounted(() => {
     emit('updateTitle', pageId)
     newsList.value = enrichEntryList(queryStatus, 'news')
     setExpandState('news', route.params.slugs, expandById, expandDefaults)
-})  
+})
 </script>
 <style lang="postcss" scoped>
 .intro {
