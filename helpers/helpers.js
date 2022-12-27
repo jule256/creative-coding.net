@@ -44,6 +44,9 @@ export const getSitemapLinkParameter = (id, type, list, ignoreOpenDefaultEntries
 }
 
 export const setHeadTitle = id => {
-    const title = PAGES.find(page => page.id === id).title.head['en']
-    return `Julian Mollik » ${title}`
+    return `Julian Mollik » ${getPageTitle(id)}`
+}
+
+export const getPageTitle = id => {
+    return PAGES.find(page => page.id === id).title.head['en']
 }
