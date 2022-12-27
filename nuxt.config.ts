@@ -12,6 +12,9 @@ export default defineNuxtConfig({
     },
     app: {
         head: {
+            htmlAttrs: {
+                lang: 'en'
+            },
             title: "Julian Mollik",
             meta: [
                 { charset: "utf-8" },
@@ -21,9 +24,6 @@ export default defineNuxtConfig({
                     name: "description",
                     content: "description content"
                 }
-            ],
-            link: [
-                { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
             ]
         },
     }
