@@ -124,6 +124,11 @@ const techRaw = [
         title: 'Using CSS custom properties (variables)',
         text: 'CSS variables'
     },
+    {
+        url: 'https://yoksel.github.io/url-encoder/',
+        title: 'URL-encoder for SVG',
+        text: 'URL-encoder for SVG'
+    },
 ]
 
 const techSorted = computed(() => {
