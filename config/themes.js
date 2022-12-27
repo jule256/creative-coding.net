@@ -18,6 +18,18 @@ export const themes = {
         loadingColorActive4: '#666666',
         loadingColorActiveText: '#666666',
         extraAccentColor: '#931818',
+        favicon: {
+            focus: {
+                faviconColorFill1: 'C61919',
+                faviconColorFill2: 'CCCCCC',
+                faviconColorStroke2: 'C61919'
+            },
+            blur: {
+                faviconColorFill1: 'C61919',
+                faviconColorFill2: 'C61919',
+                faviconColorStroke2: 'C61919'
+            },
+        }
     },
     'crazy': {
         fontColor: '#8B5A1E',
@@ -38,5 +50,18 @@ export const themes = {
         loadingColorActive4: '#C43838',
         loadingColorActiveText: '#FF4A15',
         extraAccentColor: '#E43BFF',
+        favicon: {
+            focus: {
+                faviconColorFill1: 'FF1493',
+                faviconColorFill2: '00FFEE',
+                faviconColorStroke2: 'FF1493'
+            },
+            blur: {
+                faviconColorFill1: 'E43BFF',
+                faviconColorFill2: 'E43BFF',
+                faviconColorStroke2: 'E43BFF'
+            },
+        }
+
     }
 }
