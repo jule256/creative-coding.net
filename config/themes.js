@@ -5,12 +5,13 @@ export const themes = {
         backgroundColorContent: '#FFFFFF',
         backgroundColorBody: '#333333',
         backgroundImageBody: '/background/default.svg',
-        backgroundColorOuter: '#333333',
         transparentColor: 'transparent',
         gradientColorLight: '#427142',
         gradientColorDark: '#437243',
-        hoverColor: '#EEEEEE',
-        loadingColorLine: '#FFFFFF', //  '#931818',
+        hoverBackgroundColor: '#EEEEEE',
+        hoverColor: '#000000',
+        linkHoverColor: '#000000',
+        loadingColorLine: '#FFFFFF',
         loadingColorBase: '#FFFFFF',
         loadingColorActive1: '#EEEEEE',
         loadingColorActive2: '#AAAAAA',
@@ -18,30 +19,37 @@ export const themes = {
         loadingColorActive4: '#666666',
         loadingColorActiveText: '#666666',
         extraAccentColor: '#931818',
+        saturateValue: '1',
+        chooser: {
+            fill1: 'C61919',
+            fill2: 'CCCCCC',
+            stroke2: 'C61919'
+        },
         favicon: {
             focus: {
-                faviconColorFill1: 'C61919',
-                faviconColorFill2: 'CCCCCC',
-                faviconColorStroke2: 'C61919'
+                fill1: 'C61919',
+                fill2: 'CCCCCC',
+                stroke2: 'C61919'
             },
             blur: {
-                faviconColorFill1: 'C61919',
-                faviconColorFill2: 'C61919',
-                faviconColorStroke2: 'C61919'
+                fill1: 'C61919',
+                fill2: 'C61919',
+                stroke2: 'C61919'
             },
         }
     },
     'crazy': {
-        fontColor: '#8B5A1E',
+        fontColor: '#2B5C2D',
         borderColor: '#FF1493',
         backgroundColorContent: '#00FFEE',
         backgroundColorBody: '#3B783A',
         backgroundImageBody: '/background/crazy.svg',
-        backgroundColorOuter: '#333333',
         transparentColor: 'transparent',
         gradientColorLight: '#FF0000',
         gradientColorDark: '#FFFF00',
-        hoverColor: '#00FFEE',
+        hoverBackgroundColor: '#FF1493',
+        hoverColor: '#FFFFFF',
+        linkHoverColor: '#EE3131',
         loadingColorLine: '#00EDDD',
         loadingColorBase: '#00FFEE',
         loadingColorActive1: '#FF0000',
@@ -50,18 +58,62 @@ export const themes = {
         loadingColorActive4: '#C43838',
         loadingColorActiveText: '#FF4A15',
         extraAccentColor: '#E43BFF',
+        saturateValue: '2.5',
+        chooser: {
+            fill1: 'FF1493',
+            fill2: '00FFEE',
+            stroke2: 'FF1493'
+        },
         favicon: {
             focus: {
-                faviconColorFill1: 'FF1493',
-                faviconColorFill2: '00FFEE',
-                faviconColorStroke2: 'FF1493'
+                fill1: 'FF1493',
+                fill2: '00FFEE',
+                stroke2: 'FF1493'
             },
             blur: {
-                faviconColorFill1: 'E43BFF',
-                faviconColorFill2: 'E43BFF',
-                faviconColorStroke2: 'E43BFF'
+                fill1: 'E43BFF',
+                fill2: 'E43BFF',
+                stroke2: 'E43BFF'
             },
         }
-
+    },
+    'dark': {
+        fontColor: '#CCCCCC',
+        borderColor: '#555555',
+        backgroundColorContent: '#111111',
+        backgroundColorBody: '#000000',
+        backgroundImageBody: '/background/dark.svg',
+        transparentColor: 'transparent',
+        gradientColorLight: '#5D5D5D',
+        gradientColorDark: '#5E5E5E',
+        hoverBackgroundColor: '#AAAAAA',
+        hoverColor: '#202020',
+        linkHoverColor: '#CCCCCC',
+        loadingColorLine: '#FFFFFF',
+        loadingColorBase: '#FFFFFF',
+        loadingColorActive1: '#EEEEEE',
+        loadingColorActive2: '#AAAAAA',
+        loadingColorActive3: '#999999',
+        loadingColorActive4: '#666666',
+        loadingColorActiveText: '#666666',
+        extraAccentColor: '#AF6CD9',
+        saturateValue: '0.5',
+        chooser: {
+            fill1: '555555',
+            fill2: '333333',
+            stroke2: '555555'
+        },
+        favicon: {
+            focus: {
+                fill1: '555555',
+                fill2: 'CCCCCC',
+                stroke2: '555555'
+            },
+            blur: {
+                fill1: '555555',
+                fill2: '333333',
+                stroke2: '555555'
+            },
+        }
     }
 }
