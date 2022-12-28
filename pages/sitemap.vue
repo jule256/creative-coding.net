@@ -4,7 +4,6 @@
             <template v-for="page in mainNavigationPages">
                 <section :class="page.id">
                     <h1>
-                        <!-- @todo ➔ check if class .entry exists and if it needs to be refactored to .page -->
                         <NuxtLink :to="page.to" class="entry">{{ page.title.header['en'] }}
                         </NuxtLink>
                     </h1>
