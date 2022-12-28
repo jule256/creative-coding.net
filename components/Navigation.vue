@@ -2,8 +2,7 @@
     <nav class="navigation">
         <ul>
             <li v-for="page in mainNavigationPages">
-                <!-- @todo ➔ check if class .entry exists and if it needs to be refactored to .page -->
-                <NuxtLink :to="page.to" class="entry">{{ page.title.navigation['en'] }}
+                <NuxtLink :to="page.to" class="navigation-entry">{{ page.title.navigation['en'] }}
                 </NuxtLink>
             </li>
         </ul>
@@ -42,7 +41,7 @@ const mainNavigationPages = computed(() => {
     }
 }
 
-.entry {
+.navigation-entry {
     display: block;
     height: 30px;
     text-align: center;
@@ -55,7 +54,8 @@ const mainNavigationPages = computed(() => {
     transition: background-color var(--mouseover-transition-duration) ease-in;
 
     &:hover {
-        background-color: var(--hover-color);
+        background-color: var(--hover-background-color);
+        color: var(--hover-color);
     }
 }
 </style>

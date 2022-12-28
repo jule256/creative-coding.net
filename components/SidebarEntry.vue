@@ -39,6 +39,7 @@ const handleMouseLeave = () => {
     display: grid;
     grid-template-columns: 130px 42px;
     gap: 0 10px;
-    margin-bottom: 10px;
+    padding: 0;
+    margin: 0 0 10px 0;
 }
 </style>

@@ -5,8 +5,8 @@
             <div class="control">
                 [ <NuxtLink @mouseover="isHover = true" @mouseleave="isHover = false" @click="handleToggle"
                     :title="toggleTitle">{{ data.isExpanded ?
-                            'hide' : 'show'
-                    }}</NuxtLink> ]
+        'hide' : 'show'
+}}</NuxtLink> ]
             </div>
         </div>
         <transition name="toggle" @after-enter="handleUpdateHeight" @before-leave="handleUpdateHeight">
@@ -46,6 +46,17 @@ const {
 .story {
     overflow: hidden;
     max-height: v-bind(maxHeight);
+    margin-bottom: 10px;
+
+    p {
+        text-indent: 12px;
+        text-align: justify;
+        margin-bottom: 6px;
+
+        &.footer {
+            text-align: right;
+        }
+    }
 }
 
 .toggle-enter-active {
@@ -58,44 +69,6 @@ const {
 
 .toggle-enter-from,
 .toggle-leave-to {
-    max-height: 0px;
-}
-
-.entry {
-    margin: 0 -6px;
-    padding: 0 6px;
-
-    transition: background-color var(--mouseover-transition-duration) ease-in;
-    border-radius: 4px;
-
-    &.is-highlighted {
-        background-color: var(--hover-color);
-    }
-}
-
-.header {
-    display: grid;
-    grid-template-columns: 370px 100px;
-    gap: 0 12px;
-    height: 26px;
-    line-height: 26px;
-
-    .control {
-        text-align: right;
-    }
-}
-
-.story {
-    margin-bottom: 10px;
-
-    p {
-        text-indent: 12px;
-        text-align: justify;
-        margin-bottom: 6px;
-
-        &.footer {
-            text-align: right;
-        }
-    }
+    max-height: 0;
 }
 </style>
