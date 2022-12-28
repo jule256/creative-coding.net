@@ -50,3 +50,33 @@ export const setHeadTitle = id => {
 export const getPageTitle = id => {
     return PAGES.find(page => page.id === id).title.head['en']
 }
+
+export const getSvg = (fill1, fill2, stroke2, withXMLTag = false, sanitized = false) => {
+    let svg = `
+        <svg viewBox='0 0 100 85' width='100' height='85' xmlns='http://www.w3.org/2000/svg'>
+            <g transform='matrix(3.13, 0, 0, 3.13, 0, 0)'>
+                <path
+                    d='M 15.988 -2.489 L 29.488 5.507 L 29.488 21.496 L 15.988 29.488 L 2.488 21.496 L 2.488 5.507 L 15.988 -2.489 Z'
+                    style='fill: #__FILL_1__;' transform='matrix(0, 1, -1, 0, 30, -2.5)' />
+                <path
+                    d='M 15.988 0.867 L 26.655 7.185 L 26.655 19.817 L 15.988 26.132 L 5.321 19.817 L 5.321 7.185 L 15.988 0.867 Z'
+                    style='fill: #__FILL_2__; stroke: #__STROKE_2__; stroke-width: 2px;'
+                    transform='matrix(0, 1, -1, 0, 30, -2.5)' />
+            </g>
+        </svg>`
+        .replace('__FILL_1__', fill1).replace('__FILL_2__', fill2).replace('__STROKE_2__', stroke2)
+    if (withXMLTag) {
+        svg = `<?xml version='1.0' encoding='utf-8'?>${svg}`
+    }
+    if (sanitized) {
+        svg = svg
+            .split(/\r?\n/)
+            .map(line => line.trim())
+            .join(' ')
+            .replace(/</gm, '%3C')
+            .replace(/>/gm, '%3E')
+            .replace(/\?/gm, '%3F')
+            .replace(/#/gm, '%23')
+    }
+    return svg
+}
