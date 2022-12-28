@@ -12,13 +12,3 @@
         </li>
     </ul>
 </template>
-
-<script setup>
-
-</script>
-
-<style lang="postcss" scoped>
-.section {
-    background-color: lightseagreen;
-}
-</style>

@@ -102,6 +102,7 @@ a {
 
     &:hover {
         text-decoration: none;
+        color: var(--link-hover-color);
     }
 
     &.multiline {
@@ -114,8 +115,41 @@ a {
     }
 }
 
+.is-highlighted {
+    a {
+        color: var(--hover-color);
+    }
+}
+
+.entry {
+    margin: 0 -6px;
+    padding: 0 6px;
+
+    transition: background-color var(--mouseover-transition-duration) ease-in, color var(--mouseover-transition-duration) ease-in;
+
+    border-radius: 4px;
+
+    &.is-highlighted {
+        background-color: var(--hover-background-color);
+        color: var(--hover-color);
+    }
+
+    .header {
+        display: grid;
+        grid-template-columns: 370px 100px;
+        gap: 0 12px;
+        height: 26px;
+        line-height: 26px;
+    
+        .control {
+            text-align: right;
+        }
+    }
+}
+
 .framed {
     border: 3px double var(--border-color);
+    filter: saturate(var(--saturate-value));
 }
 
 .loading-enter-active,

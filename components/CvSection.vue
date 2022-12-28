@@ -74,7 +74,12 @@ const {
     border-radius: 4px;
 
     &.is-section-highlighted {
-        background-color: var(--hover-color);
+        background-color: var(--hover-background-color);
+        color: var(--hover-color);
+
+        a {
+            color: var(--hover-color);
+        }
     }
 
     &:first-of-type {
@@ -122,5 +127,13 @@ const {
 .toggle-enter-from,
 .toggle-leave-to {
     max-height: 0;
+}
+</style>
+<style lang="postcss">
+/* the <a> tags are created during runtime and therefore are not scoped */
+.is-section-highlighted {
+    a {
+        color: var(--hover-color);
+    }
 }
 </style>
