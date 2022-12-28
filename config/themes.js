@@ -39,7 +39,7 @@ export const themes = {
         }
     },
     'crazy': {
-        fontColor: '#2B5C2D',
+        fontColor: '#0B180C',
         borderColor: '#FF1493',
         backgroundColorContent: '#00FFEE',
         backgroundColorBody: '#3B783A',
