@@ -21,6 +21,8 @@ const props = defineProps({
 
 const emit = defineEmits(['changeTheme'])
 
+const containerWidth = ref(`${(Object.keys(themeLibrary).length * 40) + 20}px`)
+
 const getSvg = (fill1, fill2, stroke2) => {
     return `
         <svg viewBox="-0.001 0 100 84.436" width="100" height="84.436" xmlns="http://www.w3.org/2000/svg">
@@ -44,7 +46,6 @@ const handleThemeChange = name => {
 const getTitle = name => {
     return name === props.currentTheme ? `active theme "${props.currentTheme}"` : `switch to theme "${name}"`
 }
-
 </script>
 
 <style lang="postcss" scoped>
@@ -52,8 +53,7 @@ const getTitle = name => {
     position: absolute;
     top: -2px;
     right: 0;
-    /* @todo → width should factor in the number of available themes */
-    width: 140px;
+    width: v-bind(containerWidth);
     height: 35px;
     background-color: var(--background-color-content);
     border: 2px solid var(--border-color);
@@ -67,7 +67,7 @@ const getTitle = name => {
 
     li {
         transform: scale(0.3);
-        height: 12px;
+        height: 13px;
         width: 40px;
 
         &:not(.is-active) {
