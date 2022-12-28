@@ -1,5 +1,4 @@
 <template>
-  <!-- @todo ➔ implement auto theme functionality -->
   <div class="container" id="top" :style="appVariables">
 
     <Head>
@@ -22,7 +21,7 @@
 <script setup>
 import { PAGES } from '@/config/pages'
 import { setHeadTitle, getPageTitle, getSvg } from '@/helpers/helpers'
-import { themes as themeLibrary } from './config/themes'
+import { themes as themeLibrary } from '@/config/themes'
 
 const BLURRED_TITLES = [
   `Julian Mollik » __PAGE_TITLE__`,
@@ -35,7 +34,11 @@ const BLURRED_TITLES = [
 
 const route = useRoute()
 
-const themeKey = ref('default')
+const {
+  changeTheme,
+  themeKey,
+} = useTheme()
+
 const isFocused = ref(true)
 const title = ref('')
 const titleHead = ref('')
@@ -44,13 +47,7 @@ const pageId = ref('')
 let intervalId
 let intervalCount = 0
 
-const changeTheme = name => {
-  themeKey.value = name
-}
-
-const setPageId = id => {
-  pageId.value = id
-}
+const setPageId = id => pageId.value = id
 
 const setTitles = id => {
   title.value = PAGES.find(page => page.id === id).title.header['en']
