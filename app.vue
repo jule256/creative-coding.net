@@ -1,5 +1,5 @@
 <template>
-  <!-- @todo ➔ implement light/dark/auto theme functionality -->
+  <!-- @todo ➔ implement auto theme functionality -->
   <div class="container" id="top" :style="appVariables">
 
     <Head>
@@ -21,7 +21,7 @@
 </template>
 <script setup>
 import { PAGES } from '@/config/pages'
-import { setHeadTitle, getPageTitle } from '@/helpers/helpers'
+import { setHeadTitle, getPageTitle, getSvg } from '@/helpers/helpers'
 import { themes as themeLibrary } from './config/themes'
 
 const BLURRED_TITLES = [
@@ -57,18 +57,15 @@ const setTitles = id => {
   titleHead.value = setHeadTitle(id)
 }
 
-// created with https://yoksel.github.io/url-encoder/
-// @todo → maybe put svg somethere and encode it on-the-fly
 const faviconData = computed(() => {
-  return [
-    `%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E`,
-    `%3Csvg viewBox='-0.001 0 100 85' width='100' height='85' xmlns='http://www.w3.org/2000/svg'%3E`,
-    `  %3Cg transform='matrix(3.13, 0, 0, 3.13, 0, 0)'%3E`,
-    `    %3Cpath d='M 15.988 -2.489 L 29.488 5.507 L 29.488 21.496 L 15.988 29.488 L 2.488 21.496 L 2.488 5.507 L 15.988 -2.489 Z' style='fill: %23${themeLibrary[themeKey.value].favicon[isFocused.value ? 'focus' : 'blur'].fill1};' transform='matrix(0, 1, -1, 0, 30, -2.5)'/%3E`,
-    `    %3Cpath d='M 15.988 0.867 L 26.655 7.185 L 26.655 19.817 L 15.988 26.132 L 5.321 19.817 L 5.321 7.185 L 15.988 0.867 Z' style='fill: %23${themeLibrary[themeKey.value].favicon[isFocused.value ? 'focus' : 'blur'].fill2}; stroke: %23${themeLibrary[themeKey.value].favicon[isFocused.value ? 'focus' : 'blur'].stroke2}; stroke-width: 2px;' transform='matrix(0, 1, -1, 0, 30, -2.5)'/%3E`,
-    `  %3C/g%3E`,
-    `%3C/svg%3E`,
-  ].join('')
+  const statusKey = isFocused.value ? 'focus' : 'blur'
+  return getSvg(
+    themeLibrary[themeKey.value].favicon[statusKey].fill1,
+    themeLibrary[themeKey.value].favicon[statusKey].fill2,
+    themeLibrary[themeKey.value].favicon[statusKey].stroke2,
+    true,
+    true
+  )
 })
 
 const appVariables = computed(() => ({
