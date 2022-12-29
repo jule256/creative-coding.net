@@ -4,12 +4,14 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
+    "generate:prod": "dotenv -e .env.production nuxt generate",
     "preview": "nuxt preview"
   },
   "devDependencies": {
     "nuxt": "3.0.0",
     "postcss": "^8.4.20",
-    "postcss-nested": "^6.0.0"
+    "postcss-nested": "^6.0.0",
+    "dotenv-cli": "^6.0.0"
   },
   "dependencies": {
     "marked": "^4.0.17",
