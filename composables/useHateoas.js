@@ -7,7 +7,7 @@ export const useHateoas = () => {
 
     const hateoasQuery = reactive(useQuery(
         ['hateoas'],
-        () => getIndex(config.public.hateoasIndex),
+        () => getIndex(config.public.HATEOAS_INDEX),
         { staleTime: 10000000 }
     ))
 
