@@ -61,6 +61,11 @@ export default defineNuxtConfig({
                 }
             ]
         },
+    },
+    runtimeConfig: {
+        public: {
+            hateoasIndex: process.env.HATEOAS_INDEX || "https://un.de.fin.ed",
+        }
     }
 })
 
