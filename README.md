@@ -12,7 +12,7 @@ npm install
 
 create an `.env` file with
 
-```
+```bash
 HATEOAS_INDEX: 'http://path.to.local.api'
 ```
 
@@ -26,7 +26,7 @@ npm run dev
 
 create an `.env.production` file with
 
-```
+```bash
 HATEOAS_INDEX: 'https://path.to.production.api/'
 ```
 
