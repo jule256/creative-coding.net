@@ -1,40 +1,39 @@
-### @todo
+# creative-coding.net
 
-## Setup
+[personal website](https://www.creative-coding.net/) of Julian Mollik
 
-Make sure to install the dependencies:
+## setup
 
 ```bash
-# yarn
-yarn install
-
-# npm
 npm install
-
-# pnpm
-pnpm install --shamefully-hoist
 ```
 
-## Development Server
+## development
 
-Start the development server on http://localhost:3000
+create an `.env` file with
+
+```
+HATEOAS_INDEX: 'http://path.to.local.api'
+```
+
+start the development server with
 
 ```bash
 npm run dev
 ```
 
-## Production
+## production
 
-Build the application for production:
+create an `.env.production` file with
 
-```bash
-npm run build
+```
+HATEOAS_INDEX: 'https://path.to.production.api/'
 ```
 
-Locally preview production build:
+generate a static production build:
 
 ```bash
-npm run preview
+npm run generate:prod 
 ```
 
-Checkout the [deployment documentation](https://v3.nuxtjs.org/guide/deploy/presets) for more information.
+copy the content of `.output/public` to any static hosting
