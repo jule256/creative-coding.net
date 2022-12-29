@@ -1,18 +1,11 @@
-import { HATEOAS_INDEX } from '../config/config.js'
-
-const fetchWrapper = (url, options = {}) => {
-    const defaultOptions = {
-        // headers: new Headers({ 'content-type': 'application/json' })
-    }
-    return fetch(url, { ...defaultOptions, ...options })
-        .then((response) =>
-            response.json()
-        )
+const fetchWrapper = async (url, options = {}) => {
+    const response = await fetch(url, { ...options })
+    return await response.json()
 }
 
-export const getIndex = async (options = {}) => {
-    return await fetchWrapper(HATEOAS_INDEX, options)
-        .catch(e => console.log(`Error fetching index from '${HATEOAS_INDEX}':`, e))
+export const getIndex = async (hateoasIndex, options = {}) => {
+    return await fetchWrapper(hateoasIndex, options)
+        .catch(e => console.log(`Error fetching index from '${hateoasIndex}':`, e))
 }
 
 export const fetchData = async (url, options = {}) => {
