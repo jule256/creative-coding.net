@@ -8,10 +8,11 @@
     "preview": "nuxt preview"
   },
   "devDependencies": {
+    "dotenv-cli": "^6.0.0",
     "nuxt": "3.0.0",
     "postcss": "^8.4.20",
     "postcss-nested": "^6.0.0",
-    "dotenv-cli": "^6.0.0"
+    "axios": "^1.2.2"
   },
   "dependencies": {
     "marked": "^4.0.17",
