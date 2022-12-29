@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default defineNuxtConfig({
     ssr: false,
     css: [
@@ -61,6 +63,22 @@ export default defineNuxtConfig({
                 }
             ]
         },
+    },
+    runtimeConfig: {
+        public: {
+            HATEOAS_INDEX: process.env.HATEOAS_INDEX || "https://un.de.fin.ed",
+            IDS_ENDPOINT: process.env.IDS_ENDPOINT || "https://un.de.fin.ed",
+        }
+    },
+    hooks: {
+        // get all possible paths from the API in order to be able to add static routes during build-time
+        async 'nitro:config'(nitroConfig) {
+            if (nitroConfig.dev) { return }
+            const response = await axios.get(nitroConfig.runtimeConfig?.public.IDS_ENDPOINT)
+            if (nitroConfig && nitroConfig.prerender && nitroConfig.prerender.routes) {
+                nitroConfig.prerender.routes.push(...response.data.paths)
+            }
+        }
     }
 })
 

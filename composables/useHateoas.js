@@ -3,9 +3,11 @@ import { getIndex } from '../helpers/network'
 
 export const useHateoas = () => {
 
+    const config = useRuntimeConfig()
+
     const hateoasQuery = reactive(useQuery(
         ['hateoas'],
-        () => getIndex(),
+        () => getIndex(config.public.HATEOAS_INDEX),
         { staleTime: 10000000 }
     ))
 
