@@ -66,6 +66,9 @@ export default defineNuxtConfig({
         public: {
             hateoasIndex: process.env.HATEOAS_INDEX || "https://un.de.fin.ed",
         }
+    },
+    generate: {
+        routes: ['/home', '/work', '/cv', '/contact', '/sitemap']
     }
 })
 
