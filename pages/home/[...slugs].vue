@@ -8,11 +8,11 @@
                         Zürich, Switzerland.
                     </p>
                     <p>
-                        In July 2006 I graduated from the University of Applied Sciences in Hagenberg, Upper Austria, in
-                        <NuxtLink href="http://dm.fh-hagenberg.at/"
-                            title="external link: website Digital Media (german)">Digital Media</NuxtLink> with the
-                        special
-                        field "Interactive Media". More details on my master's thesis "Automatic Location of
+                        In July 2006 I graduated from the <NuxtLink
+                            href="https://www.fh-ooe.at/en/hagenberg-campus/study/degree-programmes/"
+                            title="external link: website Digital Media (german)">University of Applied Sciences in
+                            Hagenberg, Upper Austria</NuxtLink> in Digital Media with the special field "Interactive
+                        Media". More details on my master's thesis "Automatic Location of
                         Text-Elements in Visual Media" can be found on the <NuxtLink
                             href="http://thesis.creative-coding.net/"
                             title="external link: website thesis Julian Mollik (german)">project's website</NuxtLink>.
