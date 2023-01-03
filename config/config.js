@@ -7,5 +7,3 @@ export const ENTRY_CONFIG = {
     STATUS_TYPE_COLLAPSE: 'collapse',
     STATUS_TYPE_EXPAND: 'expand',
 }
-
-export const HATEOAS_INDEX = 'https://api.creative-coding.net/'

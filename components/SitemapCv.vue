@@ -5,7 +5,7 @@
     <transition name="loading">
         <ul v-if="showLoadedContent" class="sitemap">
             <li v-for="cvEntry in cvList">
-                <NuxtLink :to="`cv${getSitemapLinkParameter(cvEntry.id, 'cv', cvList, true)}`">
+                <NuxtLink :to="`/cv${getSitemapLinkParameter(cvEntry.id, 'cv', cvList, true)}`">
                     {{ cvEntry.headline['en'] }}
                 </NuxtLink>
             </li>

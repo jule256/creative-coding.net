@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default defineNuxtConfig({
     ssr: false,
     css: [
@@ -22,10 +24,61 @@ export default defineNuxtConfig({
                 {
                     hid: "description",
                     name: "description",
-                    content: "description content"
+                    content: "Website of Julian Mollik MSc; software engineer & alumnus of the University of Applied Siences in Hagenberg/Austria (master's program Digital Media)"
+                },
+                {
+                    hid: "author",
+                    name: "author",
+                    content: "Julian Mollik"
+                },
+                {
+                    hid: "copyright",
+                    name: "copyright",
+                    content: "Julian Mollik"
+                },
+                {
+                    hid: "keywords",
+                    name: "keywords",
+                    content: "Julian, Mollik, Hagenberg, Zürich, Digital, Media, internet, coding, code, programming, frontend, HTML, CSS, Javascript, Vue, devops, engineer"
+                },
+                {
+                    hid: "robots",
+                    name: "robots",
+                    content: "index,follow"
+                },
+                {
+                    hid: "generator",
+                    name: "generator",
+                    content: "Microsoft VSCode, JetBrains WebStorm, Sublime Text"
+                },
+                {
+                    hid: "theme-color",
+                    name: "theme-color",
+                    content: "#C61919"
+                },
+                {
+                    hid: "date",
+                    name: "date",
+                    content: "2023-01-01T20:23:01+01:00"
                 }
             ]
         },
+    },
+    runtimeConfig: {
+        public: {
+            HATEOAS_INDEX: process.env.HATEOAS_INDEX || "https://un.de.fin.ed",
+            IDS_ENDPOINT: process.env.IDS_ENDPOINT || "https://un.de.fin.ed",
+        }
+    },
+    hooks: {
+        // get all possible paths from the API in order to be able to add static routes during build-time
+        async 'nitro:config'(nitroConfig) {
+            if (nitroConfig.dev) { return }
+            const response = await axios.get(nitroConfig.runtimeConfig?.public.IDS_ENDPOINT)
+            if (nitroConfig && nitroConfig.prerender && nitroConfig.prerender.routes) {
+                nitroConfig.prerender.routes.push(...response.data.paths)
+            }
+        }
     }
 })
 

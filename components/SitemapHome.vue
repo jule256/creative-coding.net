@@ -5,8 +5,8 @@
     <transition name="loading">
         <ul v-if="showLoadedContent" class="sitemap">
             <li v-for="newsEntry in newsList">
-                <NuxtLink :to="`home${getSitemapLinkParameter(newsEntry.id, 'news', newsList)}`">{{ newsEntry.headline
-                }}
+                <NuxtLink :to="`/home${getSitemapLinkParameter(newsEntry.id, 'news', newsList)}`">{{ newsEntry.headline
+                    }}
                 </NuxtLink>
             </li>
         </ul>
