@@ -71,19 +71,6 @@ const {
 </script>
 
 <style lang="postcss" scoped>
-.toggle-enter-active {
-    transition: max-height 1s ease-out;
-}
-
-.toggle-leave-active {
-    transition: max-height 1s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.toggle-enter-from,
-.toggle-leave-to {
-    max-height: 0;
-}
-
 .story {
     overflow: hidden;
     max-height: v-bind(maxHeight);
@@ -117,6 +104,19 @@ const {
             margin-top: 10px;
         }
     }
+}
+
+.toggle-enter-active {
+    transition: max-height 1s ease-out;
+}
+
+.toggle-leave-active {
+    transition: max-height 1s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.toggle-enter-from,
+.toggle-leave-to {
+    max-height: 0;
 }
 
 .wrapper {

@@ -42,7 +42,7 @@ copy the content of `.output/public` to any static hosting
 
 ### ... issues
 
-- [ ] sliding mechanism in [/work](https://2023.creative-coding.net/work) does not work 🤨
+- [x] sliding mechanism in [/work](https://2023.creative-coding.net/work) does not work 🤨
 - [ ] initial hiding in [/cv](https://2023.creative-coding.net/cv) does not work
 
 ### ... features
