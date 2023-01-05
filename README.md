@@ -43,7 +43,7 @@ copy the content of `.output/public` to any static hosting
 ### ... issues
 
 - [x] sliding mechanism in [/work](https://2023.creative-coding.net/work) does not work 🤨
-- [ ] initial hiding in [/cv](https://2023.creative-coding.net/cv) does not work
+- [x] initial hiding in [/cv](https://2023.creative-coding.net/cv) does not work
 
 ### ... features
 
@@ -52,3 +52,5 @@ copy the content of `.output/public` to any static hosting
 - [ ] automated testing
 - [ ] deploy the result of `npm run nuxt build`
 - [ ] archive the PHP version of the page
+- [ ] TypeScript
+- [ ] eslint & prettier
