@@ -1,4 +1,5 @@
 import axios from 'axios'
+import pkg from './package.json'
 
 export default defineNuxtConfig({
     ssr: false,
@@ -68,6 +69,7 @@ export default defineNuxtConfig({
         public: {
             HATEOAS_INDEX: process.env.HATEOAS_INDEX || "https://un.de.fin.ed",
             IDS_ENDPOINT: process.env.IDS_ENDPOINT || "https://un.de.fin.ed",
+            VERSION: pkg.version || "0.0.0"
         }
     },
     hooks: {

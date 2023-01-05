@@ -2,7 +2,9 @@
     <footer class="footer">
         <div class="content">
             <div class="copyright">
-                &copy; Julian Mollik {{ new Date().getFullYear() }}
+                &copy; Julian Mollik {{ new Date().getFullYear() }}, <NuxtLink
+                    title="external link: view this website's project on GitHub"
+                    href="https://github.com/jule256/creative-coding.net">v{{ version }}</NuxtLink>
             </div>
             <transition name="loading">
                 <div v-if="scrollY > 0">
@@ -18,6 +20,7 @@
 
 <script setup>
 import useDebouncedRef from '../composables/useDebouncedRef'
+const config = useRuntimeConfig()
 
 const HEADER_OFFSET_TOP = 40
 
@@ -27,13 +30,16 @@ const scrollHandler = () => {
     scrollY.value = window.scrollY - HEADER_OFFSET_TOP
 }
 
+const version = computed(() => {
+    return config.public.VERSION
+})
+
 onMounted(() => {
     addEventListener('scroll', scrollHandler)
 })
 
 onUnmounted(() => {
     removeEventListener('scroll', scrollHandler)
-
 })
 
 const scrollToTop = () => {

@@ -47,7 +47,7 @@ copy the content of `.output/public` to any static hosting
 
 ### ... features
 
-- [ ] read `package.json`'s version and display it somewhere
+- [x] read `package.json`'s version and display it ~~somewhere~~ in the footer
 - [ ] i18n
 - [ ] automated testing
 - [ ] deploy the result of `npm run nuxt build`
