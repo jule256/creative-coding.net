@@ -4,9 +4,10 @@
             <h2>{{ data.headline['en'] }}</h2>
             <div class="control">
                 [ <NuxtLink @mouseover="isHover = true" @mouseleave="isHover = false" @click="handleToggle"
-                    :title="toggleTitle">{{ data.isExpanded ?
-        'hide' : 'show'
-}}</NuxtLink> ]
+                    :title="toggleTitle">{{
+                        data.isExpanded ?
+                            'hide' : 'show'
+                    }}</NuxtLink> ]
             </div>
         </div>
         <transition name="toggle" @after-enter="handleUpdateHeight" @before-leave="handleUpdateHeight">
