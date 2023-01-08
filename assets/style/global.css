@@ -159,7 +159,7 @@ a {
 
     .header {
         display: grid;
-        grid-template-columns: 1fr 105px;
+        grid-template-columns: 1fr 50px;
         gap: 0 12px;
         height: 26px;
         line-height: 26px;
