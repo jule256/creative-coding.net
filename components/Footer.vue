@@ -51,12 +51,16 @@ const scrollToTop = () => {
 <style lang="postcss" scoped>
 .footer {
     position: relative;
-    width: 480px;
+    width: calc(100% - 34px);
     height: 28px;
     border: 3px solid var(--border-color);
     border-width: 0 3px 3px 3px;
     background-color: var(--background-color-content);
-    padding: 0px 20px 0px 20px;
+    padding: 0 20px 0 20px;
+
+    @media only screen and (min-width: 700px) {
+        width: 480px;
+    }
 
     &::before,
     &::after {
@@ -86,7 +90,7 @@ const scrollToTop = () => {
 
     .content {
         position: absolute;
-        width: 440px;
+        width: calc(100% - 80px);
         left: 80px;
         top: 3px;
         z-index: 3;

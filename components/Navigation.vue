@@ -19,7 +19,7 @@ const mainNavigationPages = computed(() => {
 
 <style lang="postcss" scoped>
 .navigation {
-    width: 520px;
+    width: calc(100% + 6px);
     height: 30px;
 
     background-color: var(--background-color-content);
@@ -38,6 +38,10 @@ const mainNavigationPages = computed(() => {
                 border-right: 0;
             }
         }
+    }
+
+    @media only screen and (min-width: 700px) {
+        width: 520px;
     }
 }
 

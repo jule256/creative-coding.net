@@ -139,7 +139,7 @@ onMounted(() => {
 <style lang="postcss" scoped>
 .intro {
     display: grid;
-    grid-template-columns: 372px 90px;
+    grid-template-columns: 1fr 95px;
     gap: 0 12px;
     margin-bottom: 19px;
 

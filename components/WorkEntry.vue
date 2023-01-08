@@ -4,9 +4,10 @@
             <h2>{{ data.headline }}</h2>
             <div class="control">
                 [ <NuxtLink @mouseover="isHover = true" @mouseleave="isHover = false" @click="handleToggle"
-                    :title="toggleTitle">{{ data.isExpanded ?
-        'hide' : 'show'
-}}</NuxtLink> ]
+                    :title="toggleTitle">{{
+                        data.isExpanded ?
+                            'hide' : 'show'
+                    }}</NuxtLink> ]
             </div>
         </div>
         <transition name="toggle" @after-enter="handleUpdateHeight" @before-leave="handleUpdateHeight">
@@ -122,11 +123,11 @@ const {
 .wrapper {
     display: grid;
     gap: 0 8px;
-    grid-template-columns: 210px 260px;
+    grid-template-columns: 210px 1fr;
 
     &.reverse {
         gap: 0 14px;
-        grid-template-columns: 260px 210px;
+        grid-template-columns: 1fr 206px;
 
         .picture {
             order: 1;
