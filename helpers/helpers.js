@@ -80,3 +80,10 @@ export const getSvg = (fill1, fill2, stroke2, withXMLTag = false, sanitized = fa
     }
     return svg
 }
+
+// taken from https://stackoverflow.com/a/4819886
+export const isTouchDevice = () => {
+    return (('ontouchstart' in window) ||
+        (navigator.maxTouchPoints > 0) ||
+        (navigator.msMaxTouchPoints > 0))
+}
