@@ -143,7 +143,7 @@ onMounted(() => {
 .contact,
 .techstack {
     width: 240px;
-    margin: 100px auto 0px auto;
+    margin: 100px auto 0 auto;
 }
 
 .contact {

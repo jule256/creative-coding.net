@@ -346,7 +346,7 @@ onUnmounted(() => {
     .d0,
     .f0,
     .h0 {
-        left: 0px;
+        left: 0;
     }
 
     .b1,
