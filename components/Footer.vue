@@ -3,8 +3,8 @@
         <div class="content">
             <div class="copyright">
                 &copy; Julian Mollik {{ new Date().getFullYear() }}, <NuxtLink
-                    title="external link: view this website's project on GitHub"
-                    href="https://github.com/jule256/creative-coding.net">v{{ version }}</NuxtLink>
+                    title="external link: view this website's project on GitHub" to="version-history">v{{ version }}
+                </NuxtLink>
             </div>
             <transition name="loading">
                 <div v-if="scrollY > 0">
