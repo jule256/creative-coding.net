@@ -3,7 +3,7 @@
         <div class="content">
             <div class="copyright">
                 &copy; Julian Mollik {{ new Date().getFullYear() }}, <NuxtLink
-                    title="external link: view this website's project on GitHub" to="version-history">v{{ version }}
+                    title="external link: view this website's project on GitHub" to="/version-history">v{{ version }}
                 </NuxtLink>
             </div>
             <transition name="loading">
