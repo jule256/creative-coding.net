@@ -81,7 +81,7 @@ const getTitle = name => {
     background-color: var(--background-color-content);
     border: 2px solid var(--border-color);
     border-right: none;
-    border-radius: 13px 0px 0px 95px / 42px 0px 0px 100px;
+    border-radius: 13px 0 0 95px / 42px 0 0 100px;
     padding-left: 7px;
 
     ul {

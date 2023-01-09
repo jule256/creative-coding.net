@@ -1,4 +1,5 @@
 import { ENTRY_CONFIG } from '../config/config.js'
+import { isTouchDevice } from '../helpers/helpers'
 
 export const useEntry = (data, emit) => {
 
@@ -7,6 +8,7 @@ export const useEntry = (data, emit) => {
     const maxHeight = ref(`${data.height ? data.height + 'px' : 'none'}`)
 
     const handleToggle = () => {
+        isTouchDevice() ? isHover.value = false : null
         emit(
             'status-change',
             { id: data.id, type: data.isExpanded ? ENTRY_CONFIG.STATUS_TYPE_COLLAPSE : ENTRY_CONFIG.STATUS_TYPE_EXPAND }

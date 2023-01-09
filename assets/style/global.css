@@ -3,26 +3,44 @@ body {
     background-image: var(--background-image-body, url('/background/default.svg'));
     font-size: 10px;
     font-family: Verdana, Arial, SunSans-Regular, sans-serif;
+    margin: 0;
+
+    @media only screen and (min-width: 700px) { /**/
+        margin: 8px;
+    }
 }
 
 .container {
-    margin: 40px auto 0px auto;
-    width: 740px;
+    margin: 40px 0 40px 0;
+    width: calc(100vw - 12px);
     color: var(--font-color);
+
+    @media only screen and (min-width: 700px) {
+        width: 740px;
+        margin: 40px auto 0 auto;
+    }
 }
 
 .content {
-    display: flex;
-    justify-content: space-between;
+    width: calc(100% + 12px);
+
+    @media only screen and (min-width: 700px) {
+        display: flex;
+        justify-content: space-between;
+        width: auto;
+    }
 
     .main {
         position: relative;
-        width: 480px;
         min-height: 600px;
         background-color: var(--background-color-content);
         border: solid var(--border-color);
         border-width: 3px 3px 0 3px;
         padding: 25px 20px 20px 20px;
+
+        @media only screen and (min-width: 700px) {
+            width: 480px;
+        }
 
         &::before, &::after {
             display: block;
@@ -56,13 +74,18 @@ body {
     }
 
     .sidebar {
-        position: relative;
-        width: 180px;
-        border: 3px solid var(--border-color);
-        background-color: var(--background-color-content);
-        padding: 25px 10px 10px 10px;
-        height: 60vh;
-        overflow: hidden;
+        display: none;
+
+        @media only screen and (min-width: 700px) {
+            display: block;
+            position: relative;
+            width: 180px;
+            border: 3px solid var(--border-color);
+            background-color: var(--background-color-content);
+            padding: 25px 10px 10px 10px;
+            height: 60vh;
+            overflow: hidden;
+        }
 
         &::before,
         &::after {
@@ -136,7 +159,7 @@ a {
 
     .header {
         display: grid;
-        grid-template-columns: 370px 100px;
+        grid-template-columns: 1fr 50px;
         gap: 0 12px;
         height: 26px;
         line-height: 26px;

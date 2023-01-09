@@ -64,7 +64,7 @@ const {
 <style lang="postcss" scoped>
 .section-entry {
     display: grid;
-    grid-template-columns: 150px fit-content(320px);
+    grid-template-columns: 150px fit-content(490px);
     gap: 0 12px;
 
     margin: 0 -6px 4px -6px;

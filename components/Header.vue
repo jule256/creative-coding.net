@@ -18,7 +18,7 @@ const props = defineProps({
 <style lang="postcss" scoped>
 .header {
     position: relative;
-    width: 514px;
+    width: 100%;
     height: 52px;
     background-color: var(--background-color);
     border: solid var(--border-color);
@@ -29,12 +29,16 @@ const props = defineProps({
             var(--transparent-color) 40%,
             var(--gradient-color-light) 83%,
             var(--gradient-color-dark) 100%);
+
+    @media only screen and (min-width: 700px) {
+        width: 514px;
+    }
 }
 
 .header::before,
 .header::after {
     display: block;
-    width: 520px;
+    width: 100%;
     height: 58px;
     position: absolute;
     top: 0;
@@ -42,6 +46,10 @@ const props = defineProps({
     content: '';
     background-color: var(--background-color-content);
     z-index: -1;
+
+    @media only screen and (min-width: 700px) {
+        width: 520px;
+    }
 }
 
 .header::after {

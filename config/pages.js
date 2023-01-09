@@ -76,10 +76,26 @@ export const PAGES = [
                 en: 'sitemap'
             },
             navigation: {
-                en: 'contact'
+                en: ''
             },
         },
-        to: '/sitemap',
+        to: '/',
+        mainNavigation: false
+    },
+    {
+        id: 'version',
+        title: {
+            header: {
+                en: 'version history'
+            },
+            head: {
+                en: 'version history'
+            },
+            navigation: {
+                en: ''
+            },
+        },
+        to: '/version-history',
         mainNavigation: false
     }
 ]
