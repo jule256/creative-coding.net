@@ -1,19 +1,26 @@
 {
+  "author": "Julian Mollik <jule@creative-coding.net> (https://www.mollik.net/)",
+  "name": "creative-coding.net",
   "version": "1.1.0",
+  "homepage": "https://github.com/jule256/creative-coding.net/",
   "private": true,
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "generate:prod": "dotenv -e .env.production nuxt generate",
-    "preview": "nuxt preview"
+    "preview": "nuxt preview",
+    "test:unit": "dotenv -e .env.unittest vitest"
   },
   "devDependencies": {
+    "@nuxt/test-utils": "^3.0.0",
+    "@vue/test-utils": "^2.2.7",
     "dotenv-cli": "^6.0.0",
+    "jsdom": "^21.0.0",
     "nuxt": "3.0.0",
     "postcss": "^8.4.20",
     "postcss-nested": "^6.0.0",
-    "axios": "^1.2.2"
+    "vitest": "^0.27.0"
   },
   "dependencies": {
     "marked": "^4.0.17",
