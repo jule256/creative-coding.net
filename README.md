@@ -2,6 +2,10 @@
 
 [personal website](https://www.creative-coding.net/) of Julian Mollik
 
+## requirements
+
+Node.js 18 (with [global `fetch`](https://nodejs.org/de/blog/announcements/v18-release-announce/))
+
 ## setup
 
 ```bash
