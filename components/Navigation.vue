@@ -2,17 +2,23 @@
     <nav class="navigation">
         <ul>
             <li v-for="page in mainNavigationPages">
-                <NuxtLink :to="page.to" class="navigation-entry">{{ page.title.navigation['en'] }}
+                <NuxtLink :to="page.to" class="navigation-entry">x {{ page.title.navigation['en'] }}
                 </NuxtLink>
             </li>
         </ul>
     </nav>
 </template>
 <script setup>
-import { PAGES } from '../config/pages'
+
+const props = defineProps({
+    pages: {
+        type: Array,
+        default: () => []
+    }
+})
 
 const mainNavigationPages = computed(() => {
-    return PAGES.filter(page => page.mainNavigation === true)
+    return props.pages.filter(page => page.mainNavigation === true)
 })
 
 </script>
