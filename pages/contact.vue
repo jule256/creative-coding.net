@@ -129,6 +129,11 @@ const techRaw = [
         title: 'URL-encoder for SVG',
         text: 'URL-encoder for SVG'
     },
+    {
+        url: 'https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens',
+        title: 'Supercharge Git within VS Code',
+        text: 'GitLens'
+    },
 ]
 
 const techSorted = computed(() => {
