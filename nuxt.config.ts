@@ -1,4 +1,3 @@
-import axios from 'axios'
 import pkg from './package.json'
 
 export default defineNuxtConfig({
@@ -67,18 +66,28 @@ export default defineNuxtConfig({
     },
     runtimeConfig: {
         public: {
-            HATEOAS_INDEX: process.env.HATEOAS_INDEX || "https://un.de.fin.ed",
-            IDS_ENDPOINT: process.env.IDS_ENDPOINT || "https://un.de.fin.ed",
-            VERSION: pkg.version || "0.0.0"
+            HATEOAS_INDEX: process.env.HATEOAS_INDEX || "https://un.de.fin.edx/x",
+            IDS_ENDPOINT: process.env.IDS_ENDPOINT || "https://un.de.fin.ed/",
+            VERSION: pkg.version || "0.0.0",
+            IS_UNIT_TEST: process.env.IS_UNIT_TEST || false,
         }
     },
     hooks: {
         // get all possible paths from the API in order to be able to add static routes during build-time
         async 'nitro:config'(nitroConfig) {
             if (nitroConfig.dev) { return }
-            const response = await axios.get(nitroConfig.runtimeConfig?.public.IDS_ENDPOINT)
+            if (nitroConfig.runtimeConfig?.public.IS_UNIT_TEST) { return }
+
+            const response = await fetch(nitroConfig.runtimeConfig?.public.IDS_ENDPOINT)
+            let json = {}
+            if (response.ok) {
+                json = await response.json()
+            } else {
+                console.error(`response not ok:`, response)
+            }
+
             if (nitroConfig && nitroConfig.prerender && nitroConfig.prerender.routes) {
-                nitroConfig.prerender.routes.push(...response.data.paths)
+                nitroConfig.prerender.routes.push(...json.paths)
             }
         }
     }
