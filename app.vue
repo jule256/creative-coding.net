@@ -13,13 +13,14 @@
     </component>
     <ThemeSwitcher :currentTheme="themeKey" @changeTheme="changeTheme" />
     <Header :title="title" />
-    <Navigation />
+    <Navigation :pages="PAGES" />
     <NuxtPage @updatePageId="setPageId" />
     <Footer />
   </div>
 </template>
 <script setup>
 import { themes as themeLibrary } from '@/config/themes'
+import { PAGES } from '@/config/pages'
 
 const route = useRoute()
 
