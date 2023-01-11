@@ -42,6 +42,20 @@ npm run generate:prod
 
 copy the content of `.output/public` to any static hosting
 
+## unit testing
+
+create an `.env.unittest` file with
+
+```bash
+IS_UNIT_TEST: true
+```
+
+run all available unit tests
+
+```bash
+npm run test:unit
+```
+
 ## open ...
 
 ### ... issues
