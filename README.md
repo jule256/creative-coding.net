@@ -63,6 +63,8 @@ npm run test:unit
 - [x] sliding mechanism in [/work](https://www.creative-coding.net/work) does not work 🤨
 - [x] initial hiding in [/cv](https://www.creative-coding.net/cv) does not work
 - [ ] _http_ ➔ _https_ redirect
+- [ ] enable opening hide/show links in new tabs
+- [ ] get rid of the "`[ goto ]`" formatting error
 
 ### ... features
 
