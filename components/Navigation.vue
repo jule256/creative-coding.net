@@ -2,7 +2,7 @@
     <nav class="navigation">
         <ul>
             <li v-for="page in mainNavigationPages">
-                <NuxtLink :to="page.to" class="navigation-entry">x {{ page.title.navigation['en'] }}
+                <NuxtLink :to="page.to" class="navigation-entry">{{ page.title.navigation['en'] }}
                 </NuxtLink>
             </li>
         </ul>
