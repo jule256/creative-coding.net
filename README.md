@@ -44,7 +44,9 @@ copy the content of `.output/public` to any static hosting
 
 - [x] sliding mechanism in [/work](https://www.creative-coding.net/work) does not work 🤨
 - [x] initial hiding in [/cv](https://www.creative-coding.net/cv) does not work
-- [ ] _http_ ➔ _https_ redirect
+- [x] _http_ ➔ _https_ redirect
+- [x] get rid of the "`[ goto ]`" formatting error
+- [ ] enable opening hide/show links in new tabs
 
 ### ... features
 
