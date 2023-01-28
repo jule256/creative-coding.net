@@ -2,8 +2,9 @@
     <div class="entry">
         <h1>{{ headline }}</h1>
         <div>
-            [ <NuxtLink @mouseover="handleMouseEnter" @mouseleave="handleMouseLeave" @click="handleGoTo">go to
-            </NuxtLink> ]
+            [
+            <NuxtLink @mouseover="handleMouseEnter" @mouseleave="handleMouseLeave" @click="handleGoTo">go to</NuxtLink>
+            ]
         </div>
     </div>
 </template>
