@@ -37,12 +37,12 @@ const historyRaw = [
         version: '1.1.0',
         title: 'mobile viewport',
         text: 'adds support for mobile devices with less than 700px viewport-width'
-    }, ,
+    },
     {
         version: '1.1.1',
         title: 'dependency updates',
         text: 'updates various dependencies'
-    },
+    }
 ]
 
 const history = computed(() => {
