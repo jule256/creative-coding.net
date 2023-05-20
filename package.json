@@ -10,7 +10,8 @@
     "generate": "nuxt generate",
     "generate:prod": "dotenv -e .env.production nuxt generate",
     "preview": "nuxt preview",
-    "test:unit": "dotenv -e .env.unittest vitest"
+    "test:unit": "dotenv -e .env.unittest vitest",
+    "test:unit:x": "dotenv -e .env.unittest vitest --coverage"
   },
   "devDependencies": {
     "@nuxt/test-utils": "^3.0.0",

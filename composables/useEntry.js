@@ -8,6 +8,10 @@ export const useEntry = (data, emit) => {
     const maxHeight = ref(`${data.height ? data.height + 'px' : 'none'}`)
 
     const handleToggle = () => {
+        // console.log(`handleToggle()`, data.isExpanded)
+
+        // console.log(`isTouchDevice() returns`, isTouchDevice())
+
         isTouchDevice() ? isHover.value = false : null
         emit(
             'status-change',
@@ -24,6 +28,7 @@ export const useEntry = (data, emit) => {
         }
     }
 
+    // @todo ➔ stabilize, an undefined data.isHighlighted makes it unstable
     const isHighlighted = computed(() => {
         return isHover.value || data.isHighlighted
     })

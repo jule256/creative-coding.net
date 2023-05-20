@@ -1,5 +1,5 @@
-import { ENTRY_CONFIG } from '@/config/config'
-import { PAGES } from '@/config/pages'
+import { ENTRY_CONFIG } from '../config/config'
+import { PAGES } from '../config/pages'
 
 export const isElementInViewport = (el, expandedHeight) => {
     const lowerEnd = el.offsetTop + el.offsetHeight + expandedHeight
@@ -83,6 +83,9 @@ export const getSvg = (fill1, fill2, stroke2, withXMLTag = false, sanitized = fa
 
 // taken from https://stackoverflow.com/a/4819886
 export const isTouchDevice = () => {
+    console.log(`the READ isTouchDevice`)
+    return 'TRUE!!!'
+
     return (('ontouchstart' in window) ||
         (navigator.maxTouchPoints > 0) ||
         (navigator.msMaxTouchPoints > 0))

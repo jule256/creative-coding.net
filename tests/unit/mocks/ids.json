@@ -1,0 +1,14 @@
+{
+	"meta": {
+		"version": "1",
+		"timestamp": ""
+	},
+	"paths": [
+		"/contact",
+		"/cv",
+		"/home",
+		"/sitemap",
+		"/version-history",
+		"/work"
+	]
+}
