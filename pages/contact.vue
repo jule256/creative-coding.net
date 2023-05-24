@@ -5,9 +5,9 @@
                 <h1>Julian Mollik</h1>
                 <p>
                     <NuxtLink class="multiline"
-                        to="https://www.google.ch/maps/search/saumackerstrasse+52+8048+Z%C3%BCrich+Switzerland/"
+                        to="https://www.google.ch/maps/search/grimselstrasse+24+8048+Z%C3%BCrich+Switzerland/"
                         title="external link: Julian Mollik's address on Google Maps">
-                        Saumackerstrasse 52<br>
+                        Grimselstrasse 24<br>
                         8048 Zürich<br>
                         Switzerland
                     </NuxtLink>
@@ -25,8 +25,8 @@
                     </dd>
                     <dt>email</dt>
                     <dd>
-                        <NuxtLink class="link2" to="mailto:jule@creative-coding.net"
-                            title="send email to Julian Mollik">jule@creative-coding.net</NuxtLink>
+                        <NuxtLink class="link2" to="mailto:jule@creative-coding.net" title="send email to Julian Mollik">
+                            jule@creative-coding.net</NuxtLink>
                     </dd>
                     <dt>Twitter</dt>
                     <dd>
