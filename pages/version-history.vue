@@ -63,7 +63,6 @@ onMounted(() => {
 
         h1 {
             margin-right: 6px;
-
         }
     }
 
