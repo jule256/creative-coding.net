@@ -28,10 +28,10 @@
                         <NuxtLink class="link2" to="mailto:jule@creative-coding.net" title="send email to Julian Mollik">
                             jule@creative-coding.net</NuxtLink>
                     </dd>
-                    <dt>Twitter</dt>
+                    <dt>Bluesky</dt>
                     <dd>
-                        <NuxtLink class="link2" to="https://twitter.com/jule2048"
-                            title="external link: Twitter account of Julian Mollik">@jule2048</NuxtLink>
+                        <NuxtLink class="link2" to="https://bsky.app/profile/jule256.bsky.social"
+                            title="external link: Bluesky account of Julian Mollik">@jule256</NuxtLink>
                     </dd>
                 </dl>
             </div>
