@@ -42,6 +42,11 @@ const historyRaw = [
         version: '1.1.1',
         title: 'dependency updates',
         text: 'updates various dependencies'
+    },
+    {
+        version: '1.1.2',
+        title: 'dependency updates and Bluesky',
+        text: 'updates various dependencies and replaced Twitter by Bluesky'
     }
 ]
 
